@@ -18,7 +18,12 @@ angular
   'ncy-angular-breadcrumb',
   'angular-loading-bar',
   'ngStorage',
-  'toastr'
+  'toastr',
+
+  // factories
+  'factory.url',
+  'factory.toast',
+  'factory.request',
 ])
 .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
   cfpLoadingBarProvider.includeSpinner = false;
