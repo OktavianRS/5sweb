@@ -177,10 +177,6 @@ angular
     url: '/login',
     templateUrl: 'views/pages/login.html'
   })
-  .state('appSimple.register', {
-    url: '/register',
-    templateUrl: 'views/pages/register.html'
-  })
   .state('appSimple.404', {
     url: '/404',
     templateUrl: 'views/pages/404.html'
