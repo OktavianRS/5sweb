@@ -7282,6 +7282,10 @@ body {
 base-chart.chart {
   display: block !important; }
 
+.dashboard__select {
+  margin: 5px;
+  padding: 5px; }
+
 .dropdown-item {
   position: relative;
   padding: 10px 20px;
