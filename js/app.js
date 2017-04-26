@@ -16,16 +16,30 @@ angular
   'ui.router',
   'oc.lazyLoad',
   'ncy-angular-breadcrumb',
-  'angular-loading-bar'
+  'angular-loading-bar',
+  'ngStorage',
+  'toastr',
+
+  // factories
+  'factory.url',
+  'factory.toast',
+  'factory.request',
 ])
 .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
   cfpLoadingBarProvider.includeSpinner = false;
   cfpLoadingBarProvider.latencyThreshold = 1;
 }])
-.run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
+.run(['$rootScope', '$state', '$stateParams', '$sessionStorage', '$localStorage', function($rootScope, $state, $stateParams, $sessionStorage, $localStorage) {
   $rootScope.$on('$stateChangeSuccess',function(){
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   });
+  if($sessionStorage.auth_key) {
+    $rootScope.isLogged = true;
+    userModel.getCurrent(function() {
+    });
+  } else {
+      $state.go('login');
+  }
   $rootScope.$state = $state;
   return $rootScope.$stateParams = $stateParams;
 }]);

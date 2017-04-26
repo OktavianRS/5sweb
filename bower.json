@@ -13,7 +13,9 @@
     "fontawesome": "latest",
     "simple-line-icons": "latest",
     "chart.js": "^2.3.0",
-    "angular-chart.js": "^1.0.3"
+    "angular-chart.js": "^1.0.3",
+    "ngstorage": "^0.3.10",
+    "angular-toastr": "^2.1.1"
   },
   "private": true
 }
