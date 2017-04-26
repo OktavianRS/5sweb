@@ -1,0 +1,62 @@
+<div class="animated fadeIn">
+    <div class="card" ng-controller="workplacesCtrl">
+        <!--<div class="btn-group buttons">-->
+            <!--<button type="button" class="btn moveall btn-default" title="Move all teh elementz!!!">-->
+                <!--<i class="icon-arrow-right"></i>-->
+                <!--<i class="icon-arrow-right"></i>-->
+            <!--</button>-->
+            <!--<button type="button" class="btn move btn-default"  title="MOVE SELECTED">-->
+                <!--<i class="icon-arrow-right"></i>-->
+            <!--</button>-->
+        <!--</div>-->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-plus-square-o"></i>Workplace creation
+                        <div class="card-actions">
+                            <a ng-if="departmentState" ng-click="handleMinimize()"><i class="icon-arrow-up"></i></a>
+                            <a ng-if="!departmentState" ng-click="handleMinimize()"><i class="icon-arrow-down"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-block department-form" ng-if="departmentState">
+                        <input type="text">
+                        <input type="text">
+        <select
+                ng-model="model"
+                ng-options="obj as obj.text for obj in list track by obj.id"
+                multiple
+                bs-duallistbox
+                bootstrap2="{{ settings.bootstrap2 }}"
+
+                move-on-select="{{ settings.moveOnSelect }}"
+                preserve-selection="{{ settings.preserveSelection }}"
+
+                move-selected-label="{{ settings.moveSelectedLabel }}"
+                move-all-label="{{ settings.moveAllLabel }}"
+                remove-selected-label="{{ settings.removeSelectedLabel }}"
+                remove-all-label="{{ settings.removeAllLabel }}"
+
+                non-selected-list-label="{{ settings.nonSelectedListLabel }}"
+                selected-list-label="{{ settings.selectedListLabel }}"
+
+                postfix="{{ settings.postfix }}"
+                select-min-height="{{ settings.selectMinHeight }}"
+
+                filter="{{ settings.filter }}"
+                filter-values="{{ settings.filterValues }}"
+                filter-non-selected="settings.filterNonSelected"
+                filter-selected="settings.filterSelected"
+                filter-placeholder="{{ settings.filterPlaceholder }}"
+                filter-clear="{{ settings.filterClear }}"
+                info-all="{{ settings.infoAll }}"
+                info-filtered="{{ settings.infoFiltered }}"
+                info-empty="{{ settings.infoEmpty }}"
+        >
+        </select>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
