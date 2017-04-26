@@ -19,6 +19,19 @@ function DashboardChart($scope){
         return result;
     }
 
+
+
+        // generate color for last week
+    function lastWeekColor (currentWeekColor) {
+
+       return currentWeekColor.map (
+                 function (item, i, arr){
+                     return convertHex (arr[i], 50);
+                 }
+         )
+    }
+
+
     // function random(min,max) {
     //     return Math.floor(Math.random()*(max-min+1)+min);
     // }
@@ -34,33 +47,86 @@ function DashboardChart($scope){
         data3.push(65);
     }*/
 
-    var data1 =  [100, 100, 100, 100, 100, 100],
-        data2 =  [80, 80, 80, 80, 80, 80],
-        data3 =  [90, 90, 90, 90, 90, 90],
-        data4 =  [65, 59, 80, 85, 47, 58],
-        data5 =  [28, 48, 40, 45, 85, 95];
+// show in tooltips which week
+function week (tooltipItems) {
+    if (tooltipItems.datasetIndex === 0) weekTitle ='current week';
+    if (tooltipItems.datasetIndex === 1) weekTitle ='previous week';
+    return  weekTitle;
+};
 
+    var data1 = [65, 59, 80, 85, 47, 58],
+        data2 = [28, 48, 40, 45, 85, 95],
+        data3 =  [90, 90, 90, 90, 90, 90],
+        data4 =   [100, 100, 100, 100, 100, 100],
+        data5 =  [80, 80, 80, 80, 80, 80];
+
+    var color = ['#FF0000', '#008000', '#FFFF00', '#A52A2A', '#808080', '#0000FF'];
 
     $scope.labels = ['Lagerbereich 1', 'Breitgang', 'Ladegeräte', 'SOS-Station', 'Feuerlöscher', 'Kontrolle 1'];
     $scope.series = ["Current", "Target", "Last"];
     $scope.data = [ data1, data2, data3, data4, data5];
-    $scope.colors = [{
-        backgroundColor: 'red',
-        borderColor: brandInfo,
+    $scope.colors = [
+        {
+        backgroundColor: color,
+        borderColor: color,
         pointHoverBackgroundColor: '#fff'
     },
         {
-        backgroundColor: 'green',
-        borderColor: brandSuccess,
+        backgroundColor: lastWeekColor(color),
+        borderColor: color,
         pointHoverBackgroundColor: '#fff'
     },
-    //     {
-    //     backgroundColor: 'transparent',
-    //     borderColor: brandDanger,
-    //     pointHoverBackgroundColor: '#fff',
-    //     borderWidth: 1,
-    //     borderDash: [8, 5]
-    // }
+    ];
+
+    $scope.datasetOverride = [
+        {},{},
+        {
+            label: "target",
+            borderWidth: 3,
+            type: 'line',
+            pointRadius: 0,
+            backgroundColor:'transparent',
+            borderColor: '#a32428',
+            pointHoverBackgroundColor: '#a32428',
+            pointHoverBorderColor	: '#a32428'
+        },
+        {
+
+            label: "last",
+            borderWidth: 3,
+            type: 'line',
+            pointRadius: 0,
+            backgroundColor:'transparent',
+            borderColor: '#339163',
+            pointHoverBackgroundColor: '#339163',
+            pointHoverBorderColor	: '#339163'
+        },
+        {
+            label: "current",
+            borderWidth: 3,
+            type: 'line',
+            pointRadius: 0,
+            backgroundColor:'transparent',
+            borderColor: '#e8f170',
+            pointHoverBackgroundColor: '#e8f170',
+            pointHoverBorderColor	: '#e8f170'
+        },
+
+        // {
+        //     label: ['current'],
+        //     borderWidth: 1,
+        //     type: 'bar',
+        //     borderColor:'transparent',
+        //     backgroundColor: ['rgba(75,192,192,1)','rgba(75,192,192,1)', 'rgba(75,192,192,1)', 'rgba(255, 66, 66, 1)','rgba(255, 66, 66, 1)', 'rgba(54, 64, 247, 1)']
+        // },
+        // {
+        //     label: ['last'],
+        //     borderWidth: 1,
+        //     type: 'bar',
+        //     borderColor:'transparent',
+        //     backgroundColor: ['rgba(75,192,192,0.5)','rgba(75,192,192,0.5)', 'rgba(75,192,192,0.5)', 'rgba(255, 66, 66, 0.5)','rgba(255, 66, 66, 0.5)', 'rgba(54, 64, 247, 0.5)']
+        // },
+
     ];
     $scope.options = {
         responsive: true,
@@ -70,7 +136,7 @@ function DashboardChart($scope){
             mode: 'single',
             callbacks: {
                 label: function (tooltipItems, data) {
-                    return tooltipItems.yLabel + '%';
+                    return tooltipItems.yLabel + '% ' + (week(tooltipItems));
                 }
             }
         },
