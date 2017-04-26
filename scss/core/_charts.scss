@@ -30,6 +30,27 @@
     line-height: 25px;
   }
 
+
+}
+
+.card-block{
+  .nav-item.dropdown{
+    display:inline-block!important;
+  }
+  .dropdown-item{
+    top: 0%;
+    left: 0%;
+  }
+  .dropdown-menu{
+    left:100%;
+    top:0;
+  }
+.nav-link.dropdown-toggle.start::after{
+  border-top: 0.3em solid transparent!important;
+  border-left: 0.3em solid!important;
+  border-bottom: 0.3em solid transparent!important;
+}
+
 }
 
 #auditTable{
@@ -52,6 +73,8 @@
   .equal{
     display:none;
   }
+
+
 }
 
 // scss-lint:disable QualifyingElement

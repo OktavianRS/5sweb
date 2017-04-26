@@ -7297,6 +7297,22 @@ body {
     color: #339163;
     line-height: 25px; }
 
+.card-block .nav-item.dropdown {
+  display: inline-block !important; }
+
+.card-block .dropdown-item {
+  top: 0%;
+  left: 0%; }
+
+.card-block .dropdown-menu {
+  left: 100%;
+  top: 0; }
+
+.card-block .nav-link.dropdown-toggle.start::after, .card-block .navbar .dropdown-toggle.start::after, .navbar .card-block .dropdown-toggle.start::after {
+  border-top: 0.3em solid transparent !important;
+  border-left: 0.3em solid !important;
+  border-bottom: 0.3em solid transparent !important; }
+
 #auditTable .down {
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
