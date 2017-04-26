@@ -21,6 +21,7 @@ angular
   'toastr',
   'color.picker',
   'frapontillo.bootstrap-duallistbox',
+  'ngDialog',
 
   //models
   'model.login',

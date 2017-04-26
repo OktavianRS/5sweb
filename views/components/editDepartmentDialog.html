@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-header">
+              <i class="fa fa-pencil-square-o"></i>Edit department
+          </div>
+          <div class="card-block department-form">
+              <form class="form-2orizontal">
+                  <div class="form-group">
+                      <label class="form-control-label" for="prependedInput">Name</label>
+                      <div class="controls">
+                          <div class="input-prepend input-group">
+                              <input
+                                id="prependedInput"
+                                class="form-control"
+                                size="16"
+                                type="text"
+                                ng-model="department.name"
+                              >
+                          </div>
+                          <p class="help-block">Enter department name here</p>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="form-control-label" for="prependedInput">Color</label>
+                      <div class="controls">
+                          <div class="input-prepend input-group">
+                              <color-picker
+                                options="options"
+                                ng-model="department.name"
+                              ></color-picker>
+                          </div>
+                          <p class="help-block">Enter department color here</p>
+                      </div>
+                  </div>
+                  <div class="form-actions">
+                      <button type="submit" class="btn btn-primary">Update department</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+  <!--/.col-->
+</div>

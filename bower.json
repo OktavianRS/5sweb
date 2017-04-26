@@ -17,7 +17,9 @@
     "ngstorage": "^0.3.10",
     "angular-toastr": "^2.1.1",
     "angular-color-picker": "angularjs-color-picker#^3.2.1",
-    "angular-bootstrap-duallistbox": "^0.1.0"
+    "angular-bootstrap-duallistbox": "^0.1.0",
+    "ng-dialog": "^1.1.0"
+
   },
   "private": true
 }
