@@ -19,6 +19,7 @@ angular
   'angular-loading-bar',
   'ngStorage',
   'toastr',
+  'color.picker',
 
   //models
   'model.login',

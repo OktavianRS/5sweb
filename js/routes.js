@@ -55,7 +55,7 @@ angular
     templateUrl: 'views/main.html',
     //page title goes here
     ncyBreadcrumb: {
-      label: 'Home',
+      label: 'Dashboard',
     },
     //page subtitle goes here
     params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
@@ -77,6 +77,24 @@ angular
         // you can lazy load controllers
         return $ocLazyLoad.load({
           files: ['js/controllers/main.js']
+        });
+      }]
+    }
+  })
+  .state('app.departments', {
+    url: '/departments',
+    templateUrl: 'views/pages/departments.html',
+    //page title goes here
+    ncyBreadcrumb: {
+      label: 'Departments',
+    },
+    //page subtitle goes here
+    params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/departments.js']
         });
       }]
     }

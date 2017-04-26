@@ -1,0 +1,114 @@
+<div class="animated fadeIn">
+
+
+    <div class="card" ng-controller="departmentsCtrl">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-plus-square-o"></i>Department creation
+                    <div class="card-actions">
+                        <a ng-if="departmentState" ng-click="handleMinimize()"><i class="icon-arrow-up"></i></a>
+                        <a ng-if="!departmentState" ng-click="handleMinimize()"><i class="icon-arrow-down"></i></a>
+                    </div>
+                </div>
+                <div class="card-block department-form" ng-if="departmentState">
+                    <form class="form-2orizontal">
+                        <div class="form-group">
+                            <label class="form-control-label" for="prependedInput">Name</label>
+                            <div class="controls">
+                                <div class="input-prepend input-group">
+                                    <input
+                                      id="prependedInput"
+                                      class="form-control"
+                                      size="16"
+                                      type="text"
+                                      ng-model="department.name"
+                                    >
+                                </div>
+                                <p class="help-block">Enter department name here</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="prependedInput">Color</label>
+                            <div class="controls">
+                                <div class="input-prepend input-group">
+                                    <color-picker
+                                      options="options"
+                                      ng-model="department.name"
+                                    ></color-picker>
+                                </div>
+                                <p class="help-block">Enter department color here</p>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Save department</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+      </div>
+
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="card">
+                  <div class="card-header">
+                      <i class="fa fa-align-justify"></i> Department list
+                  </div>
+                  <div class="card-block">
+                      <table class="table table-bordered table-striped table-sm">
+                          <thead>
+                              <tr>
+                                  <th>Name</th>
+                                  <th>Workplaces</th>
+                                  <th>Actions</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>Vishnu Serghei</td>
+                                  <td>
+                                    <button type="button" class="btn btn-outline-primary">Primary</button>
+                                  </td>
+                                  <td>
+                                    <button type="button" class="btn btn-outline-primary">Primary</button>
+                                    <button type="button" class="btn btn-outline-danger">Danger</button>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Zbyněk Phoibos</td>
+                                  <td>2012/02/01</td>
+                                  <td>Staff</td>
+                              </tr>
+                              <tr>
+                                  <td>Einar Randall</td>
+                                  <td>2012/02/01</td>
+                                  <td>Admin</td>
+                              </tr>
+                              <tr>
+                                  <td>Félix Troels</td>
+                                  <td>2012/03/01</td>
+                                  <td>Member</td>
+                              </tr>
+                              <tr>
+                                  <td>Aulus Agmundr</td>
+                                  <td>2012/01/21</td>
+                                  <td>Staff</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          <!--/.col-->
+      </div>
+      <!--/.row-->
+
+    </div>
+    <!--/.card-->
+
+
+
+</div>
