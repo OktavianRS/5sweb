@@ -135,6 +135,24 @@ angular
       }]
     }
   })
+  .state('app.users', {
+    url: '/users',
+    templateUrl: 'views/pages/users.html',
+    //page title goes here
+    ncyBreadcrumb: {
+      label: 'Users',
+    },
+    //page subtitle goes here
+    params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/users.js']
+        });
+      }]
+    }
+  })
   .state('appSimple', {
     abstract: true,
     templateUrl: 'views/common/layouts/simple.html',
