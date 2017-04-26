@@ -20,6 +20,7 @@ angular
   'ngStorage',
   'toastr',
   'color.picker',
+  'ngDialog',
 
   //models
   'model.login',
