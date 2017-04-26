@@ -20,6 +20,7 @@ angular
   'ngStorage',
   'toastr',
   'color.picker',
+  'frapontillo.bootstrap-duallistbox',
 
   //models
   'model.login',

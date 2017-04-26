@@ -3,7 +3,7 @@
   "version": "1.0.0-alpha.5 (AngularJS)",
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
-    "jquery": "^3.0.0",
+    "jquery": ">3.0.0",
     "tether": "latest",
     "angular": "latest",
     "angular-ui-router": "1.0.0-beta.3",
@@ -16,7 +16,8 @@
     "angular-chart.js": "^1.0.3",
     "ngstorage": "^0.3.10",
     "angular-toastr": "^2.1.1",
-    "angular-color-picker": "angularjs-color-picker#^3.2.1"
+    "angular-color-picker": "angularjs-color-picker#^3.2.1",
+    "angular-bootstrap-duallistbox": "^0.1.0"
   },
   "private": true
 }
