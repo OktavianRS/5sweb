@@ -4,11 +4,11 @@ angular.module('factory.toast', [])
         return function(type, text, description) {
           switch(type) {
             case 'error':
-              toastr.error(text, description);
+              return toastr.error(text, description);
             case 'success':
-              toastr.success(text, description);
+              return toastr.success(text, description);
             default:
-              toastr.warning(text, description);
+              return toastr.warning(text, description);
           }
 
         }

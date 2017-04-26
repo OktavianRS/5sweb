@@ -20,6 +20,9 @@ angular
   'ngStorage',
   'toastr',
 
+  //models
+  'model.login',
+
   // factories
   'factory.url',
   'factory.toast',
@@ -29,17 +32,17 @@ angular
   cfpLoadingBarProvider.includeSpinner = false;
   cfpLoadingBarProvider.latencyThreshold = 1;
 }])
-.run(['$rootScope', '$state', '$stateParams', '$sessionStorage', '$localStorage', function($rootScope, $state, $stateParams, $sessionStorage, $localStorage) {
+.run(['$rootScope', '$state', '$stateParams', '$sessionStorage', '$localStorage', '$location', function($rootScope, $state, $stateParams, $sessionStorage, $localStorage, $location) {
+  $rootScope.$on('$locationChangeStart',
+  function(event, toState, toParams, fromState, fromParams){
+    if (!$sessionStorage.auth_key) {
+      $location.path('/login');
+    }
+  })
   $rootScope.$on('$stateChangeSuccess',function(){
     document.body.scrollTop = document.documentElement.scrollTop = 0;
+    alert('sus');
   });
-  if($sessionStorage.auth_key) {
-    $rootScope.isLogged = true;
-    userModel.getCurrent(function() {
-    });
-  } else {
-      $state.go('login');
-  }
   $rootScope.$state = $state;
   return $rootScope.$stateParams = $stateParams;
 }]);

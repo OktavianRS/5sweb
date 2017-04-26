@@ -1,4 +1,4 @@
-<header class="app-header navbar">
+<header class="app-header navbar" ng-controller="navbarCtrl">
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">&#9776;</button>
     <a class="navbar-brand" ui-sref="app.main"></a>
     <ul class="nav navbar-nav d-md-down-none">
@@ -6,5 +6,20 @@
             <a class="nav-link navbar-toggler sidebar-toggler" href="#">&#9776;</a>
         </li>
 
+    </ul>
+    <ul class="nav navbar-nav ml-auto d-md-down-none user-nav">
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              <span class="d-md-down-none">admin</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+
+              <div class="dropdown-header text-center">
+                  <strong>Account</strong>
+              </div>
+              <a class="dropdown-item" href="#" ng-click="logout()"><i class="fa fa-lock"></i> Logout</a>
+
+          </div>
+      </li>
     </ul>
 </header>
