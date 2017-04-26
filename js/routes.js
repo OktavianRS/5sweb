@@ -171,6 +171,24 @@ angular
       }],
     }
   })
+  .state('app.companies', {
+    url: '/companies',
+    templateUrl: 'views/pages/companies.html',
+    //page title goes here
+    ncyBreadcrumb: {
+      label: 'Companies',
+    },
+    //page subtitle goes here
+    params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/companies.js']
+        });
+      }]
+    }
+  })
 
   // Additional Pages
   .state('appSimple.login', {

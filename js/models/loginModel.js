@@ -8,6 +8,8 @@ angular.module('model.login', [])
             function(res) {
               if (res.status) {
                 $sessionStorage.auth_key = res.auth_key;
+                $sessionStorage.username = res.username;
+                $sessionStorage.role = res.role;
                 $location.path('/dashboard');
               } else {
                 let errorText = res.msg.password[0] || 'PLease try again';

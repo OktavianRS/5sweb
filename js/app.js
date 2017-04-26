@@ -40,6 +40,9 @@ angular
     if (!$sessionStorage.auth_key) {
       $location.path('/login');
     }
+    if ($location.$$url === '/companies') {
+      $sessionStorage.role !== 'site admin' && $location.path('/dashboard');
+    }
   })
   $rootScope.$on('$stateChangeSuccess',function(){
     document.body.scrollTop = document.documentElement.scrollTop = 0;
