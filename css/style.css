@@ -8546,6 +8546,9 @@ base-chart.chart {
         margin: 2px 0 0;
         font-size: 18px; }
 
+.app-header .user-nav {
+  margin: 0 20px; }
+
 @media all and (-ms-high-contrast: none) {
   html {
     display: flex;
