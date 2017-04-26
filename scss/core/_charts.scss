@@ -1,14 +1,90 @@
+.dashboard__select{
+  margin:5px;
+  padding:5px;
+  float:right;
+};
+
 .chart-wrapper {
+  margin-bottom: 20px;
+
+
   canvas {
     width: 100% !important;
   }
+
+  #js-legend{
+    font-size: 16px;
+  }
+
+
+  .chart-legend .target {
+    color: #a32428;
+    line-height: 25px;
+  };
+  .chart-legend .last {
+    color: #e8f170;
+    line-height: 25px;
+  };
+  .chart-legend .current {
+    color: #339163;
+    line-height: 25px;
+  }
+
+
 }
+
+.card-block{
+  .nav-item.dropdown{
+    display:inline-block!important;
+  }
+  .dropdown-item{
+    top: 0%;
+    left: 0%;
+  }
+  .dropdown-menu{
+    left:100%;
+    top:0;
+  }
+.nav-link.dropdown-toggle.start::after{
+  border-top: 0.3em solid transparent!important;
+  border-left: 0.3em solid!important;
+  border-bottom: 0.3em solid transparent!important;
+}
+
+}
+
+#auditTable{
+  .down {
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    color: red;
+  }
+
+  .up{
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    color: green;
+  }
+
+  .equal{
+    display:none;
+  }
+
+
+}
+
 // scss-lint:disable QualifyingElement
 base-chart.chart {
   display: block !important;
 }
 
-.dashboard__select{
-  margin:5px;
-  padding:5px;
-}
+
+
+
+
+
+

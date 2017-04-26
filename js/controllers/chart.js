@@ -100,6 +100,7 @@ function DashboardChart($scope) {
     $scope.options = {
         responsive: true,
         maintainAspectRatio: false,
+        scaleShowLabels: false,
         tooltips: {
             enabled: true,
             mode: 'single',
@@ -110,35 +111,16 @@ function DashboardChart($scope) {
             }
         },
         scales: {
-            xAxes: [{
-                gridLines: {
-                    drawOnChartArea: false,
-                },
-                ticks: {
-                    callback: function (value) {
-                        return value;
-                    }
-                }
-            }],
             yAxes: [{
                 ticks: {
-                    beginAtZero: true,
-                    maxTicksLimit: 5,
-                    stepSize: 10,
                     max: 100,
+                    min: 0,
+                    stepSize: 10,
                     callback: function (value, index, values) {
                         return value + '%';
                     }
                 }
             }]
-        },
-        elements: {
-            point: {
-                radius: 0,
-                hitRadius: 10,
-                hoverRadius: 4,
-                hoverBorderWidth: 3,
-            }
         },
     }
 
@@ -149,12 +131,12 @@ function DashboardChart($scope) {
             id: 12,
             color: 'rgba(75,192,192,1)',
             places: [
-                {name: 'Lagerbereich 1', id: 56},
-                {name: 'Breitgang', id: 89},
-                {name: 'Ladegeräte', id: 84},
-                {name: 'Lagerbereich 1', id: 546},
-                {name: 'Breitgang', id: 57},
-                {name: 'Ladegeräte', id: 86754},
+                {name: 'Lagerbereich 1', id: 56, current:77, previeus: 100, last:83},
+                {name: 'Breitgang', id: 89, current:77, previeus: 100, last:83},
+                {name: 'Ladegeräte', id: 84, current:99, previeus: 58, last:83},
+                {name: 'Lagerbereich 1', id: 546, current:77, previeus: 100, last:83},
+                {name: 'Breitgang', id: 57, current:77, previeus: 100, last:83},
+                {name: 'Ladegeräte', id: 86754, current:77, previeus: 100, last:83},
             ]
         },
         {
@@ -162,14 +144,14 @@ function DashboardChart($scope) {
             id: 13,
             color: 'rgba(255, 66, 66, 1)',
             places: [
-                {name: 'SOS-Station', id: 56},
-                {name: 'Feuerlöscher', id: 564},
-                {name: 'SOS-Station', id: 44},
-                {name: 'Feuerlöscher', id: 5654},
-                {name: 'SOS-Station', id: 565},
-                {name: 'Feuerlöscher', id: 54564},
-                {name: 'SOS-Station', id: 8},
-                {name: 'Feuerlöscher', id: 56764},
+                {name: 'SOS-Station', id: 56, current:77, previeus: 100, last:83},
+                {name: 'Feuerlöscher', id: 564, current:77, previeus: 100, last:83},
+                {name: 'SOS-Station', id: 44, current:77, previeus: 100, last:83},
+                {name: 'Feuerlöscher', id: 5654, current:77, previeus: 100, last:83},
+                {name: 'SOS-Station', id: 565, current:77, previeus: 100, last:83},
+                {name: 'Feuerlöscher', id: 54564, current:77, previeus: 77, last:83},
+                {name: 'SOS-Station', id: 8, current:77, previeus: 100, last:100},
+                {name: 'Feuerlöscher', id: 56764, current:83, previeus: 83, last:83},
                 {name: 'SOS-Station', id: 4764},
                 {name: 'Feuerlöscher', id: 545654},
                 {name: 'SOS-Station', id: 5655},
@@ -246,8 +228,6 @@ function DashboardChart($scope) {
     ],
 
     $scope.search = {};
-    // $scope.search.department = $scope.departments[0];
-    // $scope.search.place = $scope.places[0];
 
     var allDepartment = {
             name: 'Show all departments',
@@ -255,6 +235,7 @@ function DashboardChart($scope) {
         },
         allWorkplaces ={name:'Show all workplaces', id:'null'};
 
+    $scope.onlyDepartments = Object.assign({}, $scope.departments);
     $scope.departments.splice(0,0, allDepartment)
     $scope.places.splice(0,0, allWorkplaces)
 
@@ -281,14 +262,15 @@ function DashboardChart($scope) {
                pointHoverBackgroundColor: '#fff'
            },
        ];
+
     }
 
     function selectPlace (item) {
-        $scope.labels = ['Lagerbereich 1', 'Breitgang', 'Ladegeräte', 'SOS-Station', 'Feuerlöscher', 'Kontrolle 1'];
-        $scope.series = ["Current", "Target", "Last"];
-        data1 = [68, 85, 22, 33, 64, 85],
-        $scope.data = [data1, data2, data3, data4, data5];
-        $scope.colors = [
+         $scope.labels = ['Lagerbereich 1', 'Breitgang', 'Ladegeräte', 'SOS-Station', 'Feuerlöscher', 'Kontrolle 1'];
+         $scope.series = ["Current", "Target", "Last"];
+         data1 = [68, 85, 22, 33, 64, 85],
+         $scope.data = [data1, data2, data3, data4, data5];
+         $scope.colors = [
             {
                 backgroundColor: color,
                 borderColor: color,
