@@ -15,7 +15,7 @@
                                 class="form-control"
                                 size="16"
                                 type="text"
-                                ng-model="department.name"
+                                ng-model="editElement.name"
                               >
                           </div>
                           <p class="help-block">Enter department name here</p>
@@ -27,14 +27,20 @@
                           <div class="input-prepend input-group">
                               <color-picker
                                 options="options"
-                                ng-model="department.name"
+                                ng-model="editElement.color"
                               ></color-picker>
                           </div>
                           <p class="help-block">Enter department color here</p>
                       </div>
                   </div>
                   <div class="form-actions">
-                      <button type="submit" class="btn btn-primary">Update department</button>
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                        ng-click="updateDepartment(editElement.id, editElement.name, editElement.color)"
+                      >
+                        Update department
+                      </button>
                   </div>
               </form>
           </div>
