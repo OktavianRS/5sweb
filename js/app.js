@@ -28,6 +28,7 @@ angular
   'model.companies',
   'model.workplaces',
   'model.departments',
+  'model.criterias',
 
   // factories
   'factory.url',
