@@ -12,11 +12,21 @@ function workplacesCtrl($scope, ngDialog, workplacesModel) {
     function constuctor() {
         workplacesModel.fetchWorkplaces(function(result) {
             $scope.workplacesList = result;
+            console.log($scope.workplacesList);
         });
+        // workplacesModel.fetchWorkplaces(function(result) {
+        //     $scope.workplacesList = result;
+        //     console.log($scope.workplacesList);
+        // });
+        // workplacesModel.fetchWorkplaces(function(result) {
+        //     $scope.workplacesList = result;
+        //     console.log($scope.workplacesList);
+        // });
+
     }
     constuctor();
 
-    console.log($scope.workplacesList);
+
 
     $scope.workPlaceState = true;
 

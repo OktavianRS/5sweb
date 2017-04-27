@@ -28,6 +28,14 @@ angular.module('factory.url', [])
             fetchWorkplaces: baseUrl + '/place/index',
             deleteWorkplace: baseUrl + '/place/delete',
             updateWorkplace: baseUrl + '/place/update',
+
+
+          //criteriaModel
+          createCriteria: baseUrl + '/criteria/create',
+          fetchCriterias: baseUrl + '/criteria/index',
+          deleteCriteria: baseUrl + '/criteria/delete',
+          updateCriteria: baseUrl + '/criteria/update',
+
         }
       }
     ]);
