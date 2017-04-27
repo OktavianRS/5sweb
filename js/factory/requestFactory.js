@@ -31,7 +31,7 @@ angular.module('factory.request', [
           }
 
           if($sessionStorage.auth_key) {
-            config.url = url + '?access-token=' + $sessionStorage.auth_key;
+            config.url = url + '?auth_key=' + $sessionStorage.auth_key;
           } else {
             config.url = url;
           }
