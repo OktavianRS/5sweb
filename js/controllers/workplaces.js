@@ -5,8 +5,8 @@ angular
     .module('app')
     .controller('workplacesCtrl', workplacesCtrl)
 
-workplacesCtrl.$inject = ['$scope'];
-function workplacesCtrl($scope) {
+workplacesCtrl.$inject = ['$scope', 'ngDialog'];
+function workplacesCtrl($scope, ngDialog) {
 
     $scope.departmentState = true;
 
@@ -174,4 +174,25 @@ function workplacesCtrl($scope) {
         $scope.search = {};
 
     $scope.search.department =   $scope.departments[0];
+
+    $scope.showCriterias = function() {
+        ngDialog.open({
+            template:'/views/components/criteriasDialog.html',
+            className: 'ngdialog-theme-default'
+        });
+    }
+
+    // $scope.editDepartment = function() {
+    //     ngDialog.open({
+    //         template:'/views/components/editDepartmentDialog.html',
+    //         className: 'ngdialog-theme-default'
+    //     });
+    // }
+
+    $scope.editWorkplace = function() {
+        ngDialog.open({
+            template:'/views/components/editDepartmentDialog.html',
+            className: 'ngdialog-theme-default'
+        });
+    }
 }
