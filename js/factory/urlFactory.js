@@ -21,6 +21,13 @@ angular.module('factory.url', [])
           fetchCompanies: baseUrl + '/company/index',
           deleteCompany: baseUrl + '/company/delete',
           updateCompany: baseUrl + '/company/update',
+
+
+            //workplacesModel
+            createWorkplace: baseUrl + '/place/create',
+            fetchWorkplace: baseUrl + '/place/index',
+            deleteWorkplace: baseUrl + '/place/delete',
+            updateWorkplace: baseUrl + '/place/update',
         }
       }
     ]);
