@@ -8,10 +8,10 @@ angular
 workplacesCtrl.$inject = ['$scope', 'ngDialog'];
 function workplacesCtrl($scope, ngDialog) {
 
-    $scope.departmentState = true;
+    $scope.workPlaceState = true;
 
     $scope.handleMinimize = function() {
-        $scope.departmentState = !$scope.departmentState;
+        $scope.workPlaceState = !$scope.workPlaceState;
     }
 
     var lastIndex = 1;
@@ -191,7 +191,7 @@ function workplacesCtrl($scope, ngDialog) {
 
     $scope.editWorkplace = function() {
         ngDialog.open({
-            template:'/views/components/editDepartmentDialog.html',
+            template:'/views/components/editWorkplaceDialog.html',
             className: 'ngdialog-theme-default'
         });
     }

@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-header">
+              <i class="fa fa-pencil-square-o"></i>Edit workplace
+          </div>
+          <div class="card-block department-form"">
+              <form class="form-2orizontal">
+                  <div class="form-group row">
+                      <div class="col-sm-12 col-md-6">
+                          <label class="form-control-label" for="prependedInputWorkplace">Name</label>
+                          <div class="controls">
+                              <div class="input-prepend input-group">
+                                  <input
+                                          id="prependedInputWorkplace"
+                                          class="form-control"
+                                          size="16"
+                                          type="text"
+                                          ng-model="workplace.name"
+                                  >
+                              </div>
+                              <p class="help-block">Enter workplace name here</p>
+                          </div>
+                      </div>
+                      <div class="col-sm-12 col-md-6">
+                          <label class="form-control-label" for="prependedInputDepartment">Name</label>
+                          <div class="controls">
+                              <div class="input-prepend input-group">
+                                  <select
+                                          class="form-control" name="prependedInputDepartment" id="prependedInputDepartment"
+                                          ng-options="department.name for department in departments track by department.id"
+                                          ng-model="search.department" ng-change="selectPlace(search.department)"
+
+                                  >
+                                  </select>
+                              </div>
+                              <p class="help-block">Choose department name here</p>
+                          </div>
+                      </div>
+                  </div>
+                  <label class="form-control-label" for="prependedInputCriteria">Available Criteria</label>
+                  <select
+                          ng-model="model"
+                          id="prependedInputCriteria"
+                          name="prependedInputCriteria"
+                          ng-options="obj as obj.text for obj in list track by obj.id"
+                          multiple
+                          bs-duallistbox
+                          bootstrap2="{{ settings.bootstrap2 }}"
+
+                          move-on-select="{{ settings.moveOnSelect }}"
+                          preserve-selection="{{ settings.preserveSelection }}"
+
+                          move-selected-label="{{ settings.moveSelectedLabel }}"
+                          move-all-label="{{ settings.moveAllLabel }}"
+                          remove-selected-label="{{ settings.removeSelectedLabel }}"
+                          remove-all-label="{{ settings.removeAllLabel }}"
+
+                          non-selected-list-label="{{ settings.nonSelectedListLabel }}"
+                          selected-list-label="{{ settings.selectedListLabel }}"
+
+                          postfix="{{ settings.postfix }}"
+                          select-min-height="{{ settings.selectMinHeight }}"
+
+                          filter="{{ settings.filter }}"
+                          filter-values="{{ settings.filterValues }}"
+                          filter-non-selected="settings.filterNonSelected"
+                          filter-selected="settings.filterSelected"
+                          filter-placeholder="{{ settings.filterPlaceholder }}"
+                          filter-clear="{{ settings.filterClear }}"
+                          info-all="{{ settings.infoAll }}"
+                          info-filtered="{{ settings.infoFiltered }}"
+                          info-empty="{{ settings.infoEmpty }}"
+
+                  >
+                  </select>
+                  <div style="padding: 15px 0 0 0;" class="form-actions">
+                      <button type="submit" class="btn btn-primary">Save workplace</button>
+                  </div>
+              </form>
+
+          </div>
+      </div>
+  </div>
+  <!--/.col-->
+</div>
