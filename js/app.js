@@ -26,6 +26,7 @@ angular
   //models
   'model.login',
   'model.companies',
+  'model.workplaces',
 
   // factories
   'factory.url',

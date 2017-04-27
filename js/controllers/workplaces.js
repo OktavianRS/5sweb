@@ -5,14 +5,47 @@ angular
     .module('app')
     .controller('workplacesCtrl', workplacesCtrl)
 
-workplacesCtrl.$inject = ['$scope', 'ngDialog'];
-function workplacesCtrl($scope, ngDialog) {
+workplacesCtrl.$inject = ['$scope', 'ngDialog' , 'workplacesModel'];
+function workplacesCtrl($scope, ngDialog, workplacesModel) {
+
+    // fetch all initial data
+    function constuctor() {
+        workplacesModel.fetchWorkplaces(function(result) {
+            $scope.workplacesList = result;
+        });
+    }
+    constuctor();
+
+    console.log($scope.workplacesList);
 
     $scope.workPlaceState = true;
 
     $scope.handleMinimize = function() {
         $scope.workPlaceState = !$scope.workPlaceState;
     }
+
+    $scope.createWorkPlace = function() {
+        workplacesModel.createWorkPlace($scope.workPlace, constuctor);
+    }
+
+    $scope.deleteWorkPlace = function(id) {
+        workplacesModel.deleteWorkPlace({ id }, constuctor);
+    }
+
+    $scope.updateWorkPlace = function(id, name) {
+        workplacesModel.updateWorkPlace({ id, name }, constuctor);
+        ngDialog.closeAll();
+    }
+
+    $scope.editWorkplace = function(data) {
+        $scope.editElement = Object.create(data);
+        ngDialog.open({
+            template:'/views/components/editWorkplaceDialog.html',
+            className: 'ngdialog-theme-default',
+            scope: $scope,
+        });
+    }
+
 
     var lastIndex = 1;
     $scope.list = [];
@@ -182,18 +215,5 @@ function workplacesCtrl($scope, ngDialog) {
         });
     }
 
-    // $scope.editDepartment = function() {
-    //     ngDialog.open({
-    //         template:'/views/components/editDepartmentDialog.html',
-    //         className: 'ngdialog-theme-default'
-    //     });
-    // }
 
-    $scope.editWorkplace = function() {
-        ngDialog.open({
-            template:'/views/components/editWorkplaceDialog.html',
-            className: 'ngdialog-theme-default',
-            scope: $scope,
-        });
-    }
 }

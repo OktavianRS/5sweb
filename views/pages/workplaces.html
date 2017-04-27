@@ -115,15 +115,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="workplace-name" ng-click="editWorkplace()"><i class="fa fa-pencil"></i> Some worplace</td>
-                                <td class="department-name"> Some department</td>
+                            <tr tr ng-repeat="workplace in workplaceList track by $index">
+                                <td class="workplace-name" ng-click="editWorkplace(workplace)"><i class="fa fa-pencil"></i> {{workplace.name}}</td>
+                                <td class="department-name"> {{workplace.name}}</td>
 
                                 <td>
                                     <button type="button" class="btn btn-outline-primary" ng-click="showCriterias()">Show Critetia</button>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-outline-danger">Delete</button>
+                                    <button type="button" class="btn btn-outline-danger"  ng-click="deleteWorkplace(company.id)">Delete</button>
                                 </td>
                             </tr>
                             </tbody>

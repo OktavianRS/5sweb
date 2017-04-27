@@ -25,7 +25,7 @@ angular.module('factory.url', [])
 
             //workplacesModel
             createWorkplace: baseUrl + '/place/create',
-            fetchWorkplace: baseUrl + '/place/index',
+            fetchWorkplaces: baseUrl + '/place/index',
             deleteWorkplace: baseUrl + '/place/delete',
             updateWorkplace: baseUrl + '/place/update',
         }

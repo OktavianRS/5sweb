@@ -2,32 +2,32 @@ angular.module('model.workplaces', [])
     .service('workplacesModel', ['url', 'api', 'toast', '$q', '$location', '$sessionStorage',
       function(url, api, toast, $q, $location, $sessionStorage) {
 
-      	this.createCompany = function(req, callback) {
+      	this.createWorkplace = function(req, callback) {
           api.post(
-            url.createCompany,
+            url.createWorkplace,
             req,
             function(res) {
               if (typeof res.created_at !== 'undefined') {
                 toast('success', 'Created successfully', '');
                 callback();
               } else {
-                toast('error', 'Some error occured', 'Company not created');
+                toast('error', 'Some error occured', 'workplace not created');
               }
             })
         }
 
-        this.fetchCompanies = function(callback) {
+        this.fetchWorkplaces = function(callback) {
           api.get(
-            url.fetchCompanies,
+            url.fetchWorkplaces,
             {},
             function(res) {
               callback(res);
             })
         }
 
-        this.deleteCompany = function(req, callback) {
+        this.deleteWorkplace = function(req, callback) {
           api.delete(
-            url.deleteCompany,
+            url.deleteWorkplace,
             req,
             function() {
               callback();
@@ -35,9 +35,9 @@ angular.module('model.workplaces', [])
           );
         }
 
-        this.updateCompany = function(req, callback) {
+        this.updateWorkplace = function(req, callback) {
           api.put(
-            url.updateCompany,
+            url.updateWorkplace,
             req,
             function(res) {
               callback();
