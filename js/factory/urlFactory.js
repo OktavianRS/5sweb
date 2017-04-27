@@ -22,7 +22,6 @@ angular.module('factory.url', [])
           deleteCompany: baseUrl + '/company/delete',
           updateCompany: baseUrl + '/company/update',
 
-
           //workplacesModel
           createWorkplace: baseUrl + '/place/create',
           fetchWorkplaces: baseUrl + '/place/index',
@@ -34,6 +33,13 @@ angular.module('factory.url', [])
           fetchDepartments: baseUrl + '/department/index',
           deleteDepartment: baseUrl + '/department/delete',
           updateDepartment: baseUrl + '/department/update',
+
+          //criteriaModel
+          createCriteria: baseUrl + '/criteria/create',
+          fetchCriterias: baseUrl + '/criteria/index',
+          deleteCriteria: baseUrl + '/criteria/delete',
+          updateCriteria: baseUrl + '/criteria/update',
+
         }
       }
     ]);
