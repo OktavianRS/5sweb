@@ -4,8 +4,8 @@ angular.module('model.criterias', [])
 
             this.createCriteria = function(req, callback) {
                 api.post(
-                    url.createCriteria
-                req,
+                    url.createCriteria,
+                    req,
                     function(res) {
                         if (typeof res.created_at !== 'undefined') {
                             toast('success', 'Created successfully', '');
