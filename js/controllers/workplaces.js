@@ -192,7 +192,8 @@ function workplacesCtrl($scope, ngDialog) {
     $scope.editWorkplace = function() {
         ngDialog.open({
             template:'/views/components/editWorkplaceDialog.html',
-            className: 'ngdialog-theme-default'
+            className: 'ngdialog-theme-default',
+            scope: $scope,
         });
     }
 }

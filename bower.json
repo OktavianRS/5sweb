@@ -18,8 +18,8 @@
     "angular-toastr": "^2.1.1",
     "angular-color-picker": "angularjs-color-picker#^3.2.1",
     "angular-bootstrap-duallistbox": "^0.1.0",
-    "ng-dialog": "^1.1.0"
-
+    "ng-dialog": "^1.1.0",
+    "glyphicons-only-bootstrap": "^0.0.1"
   },
   "private": true
 }
