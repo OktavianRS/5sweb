@@ -30,7 +30,13 @@
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">Save company</button>
+                            <button
+                              type="submit"
+                              class="btn btn-primary"
+                              ng-click="createCompany()"
+                            >
+                              Save company
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -54,28 +60,18 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <tr>
-                                  <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Vishnu Serghei</td>
-                                  <td>
-                                    <button type="button" class="btn btn-outline-danger">Delete</button>
+                              <tr ng-repeat="company in companiesList track by $index">
+                                  <td class="department-name" ng-click="editCompany(company)">
+                                    <i class="fa fa-pencil"></i> {{company.name}}
                                   </td>
-                              </tr>
-                              <tr>
-                                  <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Vishnu Serghei</td>
                                   <td>
-                                    <button type="button" class="btn btn-outline-danger">Delete</button>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Vishnu Serghei</td>
-                                  <td>
-                                    <button type="button" class="btn btn-outline-danger">Delete</button>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Vishnu Serghei</td>
-                                  <td>
-                                    <button type="button" class="btn btn-outline-danger">Delete</button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-danger"
+                                      ng-click="deleteCompany(company.id)"
+                                    >
+                                      Delete
+                                    </button>
                                   </td>
                               </tr>
                           </tbody>

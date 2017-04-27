@@ -11,7 +11,16 @@ angular.module('factory.url', [])
 
         return {
           baseUrl: baseUrl,
-          login: baseUrl + '/user/login'
+
+          // loginModel
+          login: baseUrl + '/user/login',
+
+
+          //companiesModel
+          createCompany: baseUrl + '/company/create',
+          fetchCompanies: baseUrl + '/company/index',
+          deleteCompany: baseUrl + '/company/delete',
+          updateCompany: baseUrl + '/company/update',
         }
       }
     ]);
