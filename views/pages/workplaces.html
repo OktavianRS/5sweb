@@ -20,43 +20,117 @@
                         </div>
                     </div>
                     <div class="card-block department-form" ng-if="departmentState">
-                        <input type="text">
-                        <input type="text">
-        <select
-                ng-model="model"
-                ng-options="obj as obj.text for obj in list track by obj.id"
-                multiple
-                bs-duallistbox
-                bootstrap2="{{ settings.bootstrap2 }}"
+                            <form class="form-2orizontal">
+                                <div class="form-group row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <label class="form-control-label" for="prependedInputWorkplace">Name</label>
+                                        <div class="controls">
+                                            <div class="input-prepend input-group">
+                                                <input
+                                                        id="prependedInputWorkplace"
+                                                        class="form-control"
+                                                        size="16"
+                                                        type="text"
+                                                        ng-model="workplace.name"
+                                                >
+                                            </div>
+                                            <p class="help-block">Enter workplace name here</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <label class="form-control-label" for="prependedInputDepartment">Name</label>
+                                        <div class="controls">
+                                            <div class="input-prepend input-group">
+                                                <select
+                                                        class="form-control" name="prependedInputDepartment" id="prependedInputDepartment"
+                                                        ng-options="department.name for department in departments track by department.id"
+                                                        ng-model="search.department" ng-change="selectPlace(search.department)"
 
-                move-on-select="{{ settings.moveOnSelect }}"
-                preserve-selection="{{ settings.preserveSelection }}"
+                                                >
+                                                </select>
+                                            </div>
+                                            <p class="help-block">Choose department name here</p>
+                                        </div>
+                                    </div>
+                                </div>
 
-                move-selected-label="{{ settings.moveSelectedLabel }}"
-                move-all-label="{{ settings.moveAllLabel }}"
-                remove-selected-label="{{ settings.removeSelectedLabel }}"
-                remove-all-label="{{ settings.removeAllLabel }}"
+                                <select
+                                        ng-model="model"
+                                        ng-options="obj as obj.text for obj in list track by obj.id"
+                                        multiple
+                                        bs-duallistbox
+                                        bootstrap2="{{ settings.bootstrap2 }}"
 
-                non-selected-list-label="{{ settings.nonSelectedListLabel }}"
-                selected-list-label="{{ settings.selectedListLabel }}"
+                                        move-on-select="{{ settings.moveOnSelect }}"
+                                        preserve-selection="{{ settings.preserveSelection }}"
 
-                postfix="{{ settings.postfix }}"
-                select-min-height="{{ settings.selectMinHeight }}"
+                                        move-selected-label="{{ settings.moveSelectedLabel }}"
+                                        move-all-label="{{ settings.moveAllLabel }}"
+                                        remove-selected-label="{{ settings.removeSelectedLabel }}"
+                                        remove-all-label="{{ settings.removeAllLabel }}"
 
-                filter="{{ settings.filter }}"
-                filter-values="{{ settings.filterValues }}"
-                filter-non-selected="settings.filterNonSelected"
-                filter-selected="settings.filterSelected"
-                filter-placeholder="{{ settings.filterPlaceholder }}"
-                filter-clear="{{ settings.filterClear }}"
-                info-all="{{ settings.infoAll }}"
-                info-filtered="{{ settings.infoFiltered }}"
-                info-empty="{{ settings.infoEmpty }}"
-        >
-        </select>
-    </div>
-    </div>
-    </div>
-    </div>
+                                        non-selected-list-label="{{ settings.nonSelectedListLabel }}"
+                                        selected-list-label="{{ settings.selectedListLabel }}"
+
+                                        postfix="{{ settings.postfix }}"
+                                        select-min-height="{{ settings.selectMinHeight }}"
+
+                                        filter="{{ settings.filter }}"
+                                        filter-values="{{ settings.filterValues }}"
+                                        filter-non-selected="settings.filterNonSelected"
+                                        filter-selected="settings.filterSelected"
+                                        filter-placeholder="{{ settings.filterPlaceholder }}"
+                                        filter-clear="{{ settings.filterClear }}"
+                                        info-all="{{ settings.infoAll }}"
+                                        info-filtered="{{ settings.infoFiltered }}"
+                                        info-empty="{{ settings.infoEmpty }}"
+
+                                >
+                                </select>
+
+                                <div class="form-actions">
+                                    <button type="submit" style="margin-top:20px;" class="btn btn-primary">Save workplace</button>
+                                </div>
+                            </form>
+                      </div>
+                  </div>
+            </div>
+         </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> Workplace list
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Critetia</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="workplace-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Some worplace</td>
+                                <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Some department</td>
+
+                                <td>
+                                    <button type="button" class="btn btn-outline-primary" ng-click="showCritetia()">Show Critetia</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
