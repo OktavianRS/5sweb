@@ -15,14 +15,20 @@
                                 class="form-control"
                                 size="16"
                                 type="text"
-                                ng-model="criteria.name"
+                                ng-model="editElement.name"
                               >
                           </div>
                           <p class="help-block">Enter criteria name here</p>
                       </div>
                   </div>
                   <div class="form-actions">
-                      <button type="submit" class="btn btn-primary">Update criteria</button>
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                        ng-click="updateCriteria(editElement.id, editElement.name)"
+                      >
+                        Update criteria
+                      </button>
                   </div>
               </form>
           </div>
