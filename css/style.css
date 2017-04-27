@@ -8616,6 +8616,23 @@ base-chart.chart {
   .departments .department-name:hover i {
     opacity: 1; }
 
+.workplaces .workplace-name {
+  padding: 10px 10px;
+  color: #46565f; }
+  .workplaces .workplace-name i {
+    transition: .3s all;
+    opacity: 0; }
+
+.workplaces .department-name {
+  padding: 10px 10px;
+  color: #46565f; }
+
+.workplaces .workplace-name:hover {
+  cursor: pointer;
+  color: #000; }
+  .workplaces .workplace-name:hover i {
+    opacity: 1; }
+
 @media all and (-ms-high-contrast: none) {
   html {
     display: flex;

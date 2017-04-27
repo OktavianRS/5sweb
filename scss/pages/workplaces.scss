@@ -1,0 +1,22 @@
+.workplaces {
+  .workplace-name {
+    padding: 10px 10px;
+    color: #46565f;
+    i {
+      transition: .3s all;
+      opacity: 0;
+    }
+  }
+
+  .department-name{
+    padding: 10px 10px;
+    color: #46565f;
+  }
+  .workplace-name:hover {
+    cursor: pointer;
+    color: #000;
+    i {
+      opacity: 1;
+    }
+  }
+}

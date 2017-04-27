@@ -16,18 +16,19 @@
                         <!--<div class="btn-group mr-3" data-toggle="buttons" aria-label="First group">-->
                             <!--<span>Departments</span>-->
                             <select
-                                    class="dashboard__select" name="departmentSelect" id="departmentSelect"
-                                    ng-options="department.name for department in departments track by department.id"
-                                    ng-model="search.department" ng-change="selectDepartment(search.department)"
-                            >
-                            </select>
-                            <!--<span>Workplaces</span>-->
-                            <select
-                                    class="dashboard__select" name="placeSelect" id="placeSelect"
+                                    class="dashboard__select" name="workplaceSelect" id="workplaceSelect"
                                     ng-options="place.name for place in places track by place.id"
                                     ng-model="search.place" ng-change="selectPlace(search.place)"
                             >
                             </select>
+                    <select
+                            class="dashboard__select" name="departmentSelect" id="departmentSelect"
+                            ng-options="department.name for department in departments track by department.id"
+                            ng-model="search.department" ng-change="selectDepartment(search.department)"
+                    >
+                    </select>
+                            <!--<span>Workplaces</span>-->
+                          -
                             <!--<label class="btn btn-outline-secondary">-->
                                 <!--<input type="radio" name="options" id="option1">Day-->
                             <!--</label>-->
