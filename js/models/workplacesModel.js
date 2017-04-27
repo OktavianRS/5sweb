@@ -2,9 +2,9 @@ angular.module('model.workplaces', [])
     .service('workplacesModel', ['url', 'api', 'toast', '$q', '$location', '$sessionStorage',
       function(url, api, toast, $q, $location, $sessionStorage) {
 
-      	this.createWorkplace = function(req, callback) {
+      	this.createWorkPlace = function(req, callback) {
           api.post(
-            url.createWorkplace,
+            url.createWorkPlace,
             req,
             function(res) {
               if (typeof res.created_at !== 'undefined') {
@@ -16,18 +16,18 @@ angular.module('model.workplaces', [])
             })
         }
 
-        this.fetchWorkplaces = function(callback) {
+        this.fetchWorkPlaces = function(callback) {
           api.get(
-            url.fetchWorkplaces,
+            url.fetchWorkPlaces,
             {},
             function(res) {
               callback(res);
             })
         }
 
-        this.deleteWorkplace = function(req, callback) {
+        this.deleteWorkPlace = function(req, callback) {
           api.delete(
-            url.deleteWorkplace,
+            url.deleteWorkPlace,
             req,
             function() {
               callback();
@@ -35,9 +35,9 @@ angular.module('model.workplaces', [])
           );
         }
 
-        this.updateWorkplace = function(req, callback) {
+        this.updateWorkPlace = function(req, callback) {
           api.put(
-            url.updateWorkplace,
+            url.updateWorkPlace,
             req,
             function(res) {
               callback();

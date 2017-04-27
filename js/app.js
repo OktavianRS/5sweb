@@ -26,6 +26,7 @@ angular
   //models
   'model.login',
   'model.companies',
+  'model.departments',
   'model.workplaces',
   'model.criterias',
 

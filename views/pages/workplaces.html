@@ -43,8 +43,8 @@
                                             <div class="input-prepend input-group">
                                                 <select
                                                         class="form-control" name="prependedInputDepartment" id="prependedInputDepartment"
-                                                        ng-options="department.name for department in departments track by department.id"
-                                                        ng-model="search.department" ng-change="selectPlace(search.department)"
+                                                        ng-options="department.name for department in departmentsList track by department.id"
+                                                        ng-model="workplace.department" ng-change="selectPlace(workplace.department)"
 
                                                 >
                                                 </select>
@@ -55,10 +55,10 @@
                                 </div>
                                 <label class="form-control-label" for="prependedInputCriteria">Available Criteria</label>
                                 <select
-                                        ng-model="model"
+                                        ng-model="workplace.criteria"
                                         id="prependedInputCriteria"
                                         name="prependedInputCriteria"
-                                        ng-options="obj as obj.text for obj in list track by obj.id"
+                                        ng-options="obj as obj.name for obj in criteriasList track by obj.id"
                                         multiple
                                         bs-duallistbox
                                         bootstrap2="{{ settings.bootstrap2 }}"
@@ -90,7 +90,10 @@
                                 >
                                 </select>
                                 <div style="padding: 15px 0 0 0;" class="form-actions">
-                                    <button type="submit" class="btn btn-primary">Save workplace</button>
+                                    <button type="submit"
+                                            class="btn btn-primary"
+                                            ng-click="createWorkPlace()"
+                                    >Save workplace</button>
                                 </div>
                             </form>
                       </div>
@@ -115,7 +118,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr tr ng-repeat="workplace in workplaceList track by $index">
+                            <tr ng-repeat="workplace in workplacesList track by $index">
                                 <td class="workplace-name" ng-click="editWorkplace(workplace)"><i class="fa fa-pencil"></i> {{workplace.name}}</td>
                                 <td class="department-name"> {{workplace.name}}</td>
 

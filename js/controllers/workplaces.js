@@ -5,27 +5,36 @@ angular
     .module('app')
     .controller('workplacesCtrl', workplacesCtrl)
 
-workplacesCtrl.$inject = ['$scope', 'ngDialog' , 'workplacesModel'];
-function workplacesCtrl($scope, ngDialog, workplacesModel) {
+workplacesCtrl.$inject = ['$scope', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
+function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
+
+    $scope.workplacesState = true;
+    $scope.workplacesList = [];
+    $scope.editElement = {};
+    $scope.workplace = {
+        name: ''
+    }
+    // $scope.search = {};
 
     // fetch all initial data
     function constuctor() {
-        workplacesModel.fetchWorkplaces(function(result) {
+        debugger
+        workplacesModel.fetchWorkPlaces(function(result) {
             $scope.workplacesList = result;
             console.log($scope.workplacesList);
         });
-        // workplacesModel.fetchWorkplaces(function(result) {
-        //     $scope.workplacesList = result;
-        //     console.log($scope.workplacesList);
-        // });
-        // workplacesModel.fetchWorkplaces(function(result) {
-        //     $scope.workplacesList = result;
-        //     console.log($scope.workplacesList);
-        // });
+        criteriasModel.fetchCriterias(function(result) {
+            $scope.criteriasList = result;
+            console.log($scope.criteriasList);
+        });
+        departmentsModel.fetchDepartments(function(result) {
+            $scope.departmentsList = result;
+            $scope.workplace.department =   $scope.departmentsList[0];
+            console.log($scope.departmentsList);
+        });
 
     }
     constuctor();
-
 
 
     $scope.workPlaceState = true;
@@ -35,7 +44,9 @@ function workplacesCtrl($scope, ngDialog, workplacesModel) {
     }
 
     $scope.createWorkPlace = function() {
-        workplacesModel.createWorkPlace($scope.workPlace, constuctor);
+        debugger
+        $scope.workplace.department_id = $scope.workplace.department.id;
+        workplacesModel.createWorkPlace($scope.workplace, constuctor);
     }
 
     $scope.deleteWorkPlace = function(id) {
@@ -214,9 +225,9 @@ function workplacesCtrl($scope, ngDialog, workplacesModel) {
         {name:'Ladegeräte', id:86754},
     ],
 
-        $scope.search = {};
 
-    $scope.search.department =   $scope.departments[0];
+
+
 
     $scope.showCriterias = function() {
         ngDialog.open({
