@@ -9,7 +9,7 @@ angular.module('model.workplaces', [])
             function(res) {
               if (typeof res.created_at !== 'undefined') {
                 toast('success', 'Created successfully', '');
-                callback();
+                callback(res);
               } else {
                 toast('error', 'Some error occured', 'workplace not created');
               }
@@ -44,5 +44,19 @@ angular.module('model.workplaces', [])
             }
           );
         }
+
+          this.addCriteriaToWorkPlace = function(req, callback) {
+              api.post(
+                  url.addCriteriaToWorkPlace,
+                  req,
+                  function(res) {
+                      if (typeof res.created_at !== 'undefined') {
+                          // toast('success', 'Created successfully', '');
+                          callback();
+                      } else {
+                          toast('error', 'Some error occured', 'criteria not added to workplace');
+                      }
+                  })
+          }
 
       }])

@@ -18,7 +18,7 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
 
     // fetch all initial data
     function constuctor() {
-        debugger
+
         workplacesModel.fetchWorkPlaces(function(result) {
             $scope.workplacesList = result;
             console.log($scope.workplacesList);
@@ -44,9 +44,8 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
     }
 
     $scope.createWorkPlace = function() {
-        debugger
         $scope.workplace.department_id = $scope.workplace.department.id;
-        workplacesModel.createWorkPlace($scope.workplace, constuctor);
+        workplacesModel.createWorkPlace($scope.workplace, addCriteriaToWorkPlace);
     }
 
     $scope.deleteWorkPlace = function(id) {
@@ -57,6 +56,24 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
         workplacesModel.updateWorkPlace({ id, name }, constuctor);
         ngDialog.closeAll();
     }
+
+    $scope.addCriteriaToWorkPlace = addCriteriaToWorkPlace;
+    function addCriteriaToWorkPlace (res) {
+
+        $scope.workplace.criteria.forEach(function (item, i, arr){
+            console.log(item, i, arr);
+            if (i < arr.length-1){
+                workplacesModel.addCriteriaToWorkPlace({place_id:res.id,criteria_id:item.id});
+            } else{
+                workplacesModel.addCriteriaToWorkPlace({place_id:res.id,criteria_id:item.id}, constuctor);
+            }
+        });
+        // var place_id = ;
+        // var criteria_id = ;
+        // $scope.workplace.department_id = $scope.workplace.department.id;
+        // workplacesModel.addCriteriaToWorkPlace({place_id:,criteria_id:}, constuctor);
+    }
+
 
     $scope.editWorkplace = function(data) {
         $scope.editElement = Object.create(data);

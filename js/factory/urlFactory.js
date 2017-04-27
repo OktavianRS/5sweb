@@ -27,6 +27,8 @@ angular.module('factory.url', [])
           fetchWorkPlaces: baseUrl + '/place/index',
           deleteWorkPlace: baseUrl + '/place/delete',
           updateWorkPlace: baseUrl + '/place/update',
+          addCriteriaToWorkPlace: baseUrl + '/place/add-criteria',
+          removeCriteriaFromWorkPlace: baseUrl + '/place/remove-criteria',
 
           //departmentsModel
           createDepartment: baseUrl + '/department/create',
@@ -39,6 +41,7 @@ angular.module('factory.url', [])
           fetchCriterias: baseUrl + '/criteria/index',
           deleteCriteria: baseUrl + '/criteria/delete',
           updateCriteria: baseUrl + '/criteria/update',
+
 
         }
       }
