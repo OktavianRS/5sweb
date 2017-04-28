@@ -4,7 +4,7 @@
           <div class="card-header">
               <i class="fa fa-pencil-square-o"></i>Edit workplace
           </div>
-          <div class="card-block department-form"">
+          <div class="card-block department-form">
               <form class="form-2orizontal">
                   <div class="form-group row">
                       <div class="col-sm-12 col-md-6">
@@ -16,7 +16,7 @@
                                           class="form-control"
                                           size="16"
                                           type="text"
-                                          ng-model="workplace.name"
+                                          ng-model="editElement.name"
                                   >
                               </div>
                               <p class="help-block">Enter workplace name here</p>
@@ -28,8 +28,8 @@
                               <div class="input-prepend input-group">
                                   <select
                                           class="form-control" name="prependedInputDepartment" id="prependedInputDepartment"
-                                          ng-options="department.name for department in departments track by department.id"
-                                          ng-model="search.department" ng-change="selectPlace(search.department)"
+                                          ng-options="department.name for department in departmentsList track by department.id"
+                                          ng-model="workplace.department" ng-change="selectPlace(workplace.department)"
 
                                   >
                                   </select>
@@ -40,10 +40,10 @@
                   </div>
                   <label class="form-control-label" for="prependedInputCriteria">Available Criteria</label>
                   <select
-                          ng-model="model"
+                          ng-model="workplace.criteria"
                           id="prependedInputCriteria"
                           name="prependedInputCriteria"
-                          ng-options="obj as obj.text for obj in list track by obj.id"
+                          ng-options="obj as obj.name for obj in criteriasList track by obj.id"
                           multiple
                           bs-duallistbox
                           bootstrap2="{{ settings.bootstrap2 }}"
@@ -75,7 +75,10 @@
                   >
                   </select>
                   <div style="padding: 15px 0 0 0;" class="form-actions">
-                      <button type="submit" class="btn btn-primary">Update workplace</button>
+                      <button type="submit"
+                              class="btn btn-primary"
+                              ng-click="createWorkPlace()"
+                      >Save workplace</button>
                   </div>
               </form>
 

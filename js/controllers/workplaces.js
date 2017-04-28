@@ -33,6 +33,12 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
             console.log($scope.departmentsList);
         });
 
+        departmentsModel.fetchPlacesList(function(result) {
+            $scope.AllPlacesList = result;
+            // $scope.workplace.department =   $scope.departmentsList[0];
+            console.log($scope.AllPlacesList);
+        });
+
     }
     constuctor();
 
@@ -49,6 +55,7 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
     }
 
     $scope.deleteWorkPlace = function(id) {
+        debugger
         workplacesModel.deleteWorkPlace({ id }, constuctor);
     }
 
@@ -76,7 +83,9 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
 
 
     $scope.editWorkplace = function(data) {
+        debugger
         $scope.editElement = Object.create(data);
+
         ngDialog.open({
             template:'/views/components/editWorkplaceDialog.html',
             className: 'ngdialog-theme-default',
@@ -86,23 +95,23 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
 
 
     var lastIndex = 1;
-    $scope.list = [];
+    // $scope.list = [];
 
-    var updateList = function() {
-        $scope.list.push({
-            'id': '_1',
-            'text': 'one'
-        },{
-            'id': '_2',
-            'text': 'two'
-        },{
-            'id': '_3',
-            'text': 'three'
-        },{
-            'id': '_4',
-            'text': 'four'
-        });
-    };
+    // var updateList = function() {
+    //     $scope.list.push({
+    //         'id': '_1',
+    //         'text': 'one'
+    //     },{
+    //         'id': '_2',
+    //         'text': 'two'
+    //     },{
+    //         'id': '_3',
+    //         'text': 'three'
+    //     },{
+    //         'id': '_4',
+    //         'text': 'four'
+    //     });
+    // };
 
     $scope.reset = function() {
         $scope.model = [];
@@ -137,7 +146,7 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
         filterValues: true
     };
 
-    updateList();
+    // updateList();
 
 
     $scope.departments = [
@@ -248,6 +257,7 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
 
     $scope.showCriterias = function() {
         ngDialog.open({
+            scope:$scope,
             template:'/views/components/criteriasDialog.html',
             className: 'ngdialog-theme-default'
         });

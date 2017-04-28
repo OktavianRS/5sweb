@@ -45,4 +45,13 @@ angular.module('model.departments', [])
           );
         }
 
+          this.fetchPlacesList = function(callback) {
+              api.get(
+                  url.fetchPlacesList,
+                  {},
+                  function(res) {
+                      callback(res);
+                  })
+          }
+
       }])

@@ -9,23 +9,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>criteria 1</td>
-                </tr>
-                <tr>
-                    <td>criteria 2</td>
-                </tr>
-                <tr>
-                    <td>criteria 3</td>
-                </tr>
-                <tr>
-                    <td>criteria 4</td>
-                </tr>
-                <tr>
-                    <td>criteria 5</td>
-                </tr>
-                <tr>
-                    <td>criteria 6</td>
+                <tr ng-repeat="criteria in ::criteriasList track by criteria.id">
+                    <td ng-bind="::criteria.name"></td>
                 </tr>
             </tbody>
         </table>

@@ -117,16 +117,16 @@
                                 <th>Actions</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr ng-repeat="workplace in workplacesList track by $index">
-                                <td class="workplace-name" ng-click="editWorkplace(workplace)"><i class="fa fa-pencil"></i> {{workplace.name}}</td>
-                                <td class="department-name"> {{workplace.name}}</td>
+                            <tbody ng-repeat="department in AllPlacesList track by $index">
+                            <tr ng-repeat="place in department.places track by $index">
+                                <td class="workplace-name" ng-click="editWorkplace(place)"><i class="fa fa-pencil"></i> {{place.name}}</td>
+                                <td class="department-name"> {{department.name}}</td>
 
                                 <td>
                                     <button type="button" class="btn btn-outline-primary" ng-click="showCriterias()">Show Critetia</button>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-outline-danger"  ng-click="deleteWorkplace(company.id)">Delete</button>
+                                    <button type="button" class="btn btn-outline-danger"  ng-click="deleteWorkPlace(place.id)">Delete</button>
                                 </td>
                             </tr>
                             </tbody>
