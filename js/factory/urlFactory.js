@@ -26,6 +26,7 @@ angular.module('factory.url', [])
           createWorkPlace: baseUrl + '/place/create',
           fetchWorkPlaces: baseUrl + '/place/index',
           fetchWorkPlace: baseUrl + '/place/view',
+          fetchAllWorkPlaces:  baseUrl + '/place/all',
           deleteWorkPlace: baseUrl + '/place/delete',
           updateWorkPlace: baseUrl + '/place/update',
           addCriteriaToWorkPlace: baseUrl + '/place/add-criteria',

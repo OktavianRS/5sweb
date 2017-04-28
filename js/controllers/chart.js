@@ -38,7 +38,7 @@ function DashboardChart($scope, departmentsModel, workplacesModel) {
     // fetch all initial data
     function constuctor() {
 
-        workplacesModel.fetchWorkPlaces(function(result) {
+        workplacesModel.fetchAllWorkPlaces(function(result) {
             $scope.workplacesList = result;
             $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
             $scope.withHeaderWorkPlaces.splice(0,0, HeaderWorkplaces);

@@ -25,8 +25,16 @@ angular.module('model.workplaces', [])
             })
         }
 
+          this.fetchAllWorkPlaces = function(callback) {
+              api.get(
+                  url.fetchAllWorkPlaces,
+                  {},
+                  function(res) {
+                      callback(res);
+                  })
+          }
+
           this.fetchWorkPlace = function(req, callback) {
-              debugger
               api.get(
                   url.fetchWorkPlace,
                   req,
