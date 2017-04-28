@@ -50,7 +50,7 @@ angular.module('model.workplaces', [])
                   url.addCriteriaToWorkPlace,
                   req,
                   function(res) {
-                      if (typeof res.created_at !== 'undefined') {
+                      if ( res === true) {
                           // toast('success', 'Created successfully', '');
                           callback();
                       } else {

@@ -10,6 +10,9 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
 
     $scope.workplacesState = true;
     $scope.workplacesList = [];
+    $scope.criteriasList = [];
+    $scope.departmentsList = [];
+    $scope.AllPlacesList = [];
     $scope.editElement = {};
     $scope.workplace = {
         name: ''
@@ -55,7 +58,6 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
     }
 
     $scope.deleteWorkPlace = function(id) {
-        debugger
         workplacesModel.deleteWorkPlace({ id }, constuctor);
     }
 
@@ -66,15 +68,24 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
 
     $scope.addCriteriaToWorkPlace = addCriteriaToWorkPlace;
     function addCriteriaToWorkPlace (res) {
+        if ( $scope.workplace.criteria !== undefined){
+            var arrCriteria_id = [];
+            $scope.workplace.criteria.forEach(function (item, i, arr){
+                arrCriteria_id.push(item.id);
+            });
+            workplacesModel.addCriteriaToWorkPlace({place_id:res.id,criteria_id:arrCriteria_id},constuctor );
+        } else {
+            constuctor();
+        }
 
-        $scope.workplace.criteria.forEach(function (item, i, arr){
-            console.log(item, i, arr);
-            if (i < arr.length-1){
-                workplacesModel.addCriteriaToWorkPlace({place_id:res.id,criteria_id:item.id});
-            } else{
-                workplacesModel.addCriteriaToWorkPlace({place_id:res.id,criteria_id:item.id}, constuctor);
-            }
-        });
+        // $scope.workplace.criteria.forEach(function (item, i, arr){
+        //     console.log(item, i, arr);
+        //     if (i < arr.length-1){
+        //         workplacesModel.addCriteriaToWorkPlace({place_id:res.id,criteria_id:item.id});
+        //     } else{
+        //         workplacesModel.addCriteriaToWorkPlace({place_id:res.id,criteria_id:item.id}, constuctor);
+        //     }
+        // });
         // var place_id = ;
         // var criteria_id = ;
         // $scope.workplace.department_id = $scope.workplace.department.id;
@@ -83,7 +94,6 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
 
 
     $scope.editWorkplace = function(data) {
-        debugger
         $scope.editElement = Object.create(data);
 
         ngDialog.open({
@@ -256,6 +266,7 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
 
 
     $scope.showCriterias = function() {
+
         ngDialog.open({
             scope:$scope,
             template:'/views/components/criteriasDialog.html',

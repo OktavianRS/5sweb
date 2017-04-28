@@ -17,13 +17,13 @@
                             <!--<span>Departments</span>-->
                             <select
                                     class="dashboard__select" name="workplaceSelect" id="workplaceSelect"
-                                    ng-options="place.name for place in places track by place.id"
+                                    ng-options="place.name for place in withHeaderWorkPlaces track by place.id"
                                     ng-model="search.place" ng-change="selectPlace(search.place)"
                             >
                             </select>
                     <select
                             class="dashboard__select" name="departmentSelect" id="departmentSelect"
-                            ng-options="department.name for department in departments track by department.id"
+                            ng-options="department.name for department in withHeaderDepartments track by department.id"
                             ng-model="search.department" ng-change="selectDepartment(search.department)"
                     >
                     </select>
@@ -66,7 +66,7 @@
                         <strong>Choose department</strong>
                     </div>
 
-                    <a class="dropdown-item" href="#" ng-repeat="department in onlyDepartments track by department.id">{{department.name}}<span class="badge badge-info"></span></a>
+                    <a class="dropdown-item" href="#" ng-repeat="department in departmentsList track by department.id">{{department.name}}<span class="badge badge-info"></span></a>
                 </div>
             </div>
 
@@ -81,10 +81,10 @@
                     <th style="width: 15%;">Current</th>
                 </tr>
                 </thead>
-                <tbody class="list" ng-repeat="department in departments track by department.id">
+                <tbody class="list" ng-repeat="department in departmentsList track by department.id">
                 <tr ng-repeat="place in department.places track by place.id">
                     <td class="station" >{{place.name}}</td>
-                    <td style="background-color: {{department.color}}" class="department">{{department.name}}</td>
+                    <td ng-style="{backgroundColor: department.color}" class="department">{{department.name}}</td>
                     <td style="width: 15%;" class="last-week">
                         <i class="fa fa-long-arrow-right"  aria-hidden="true" ng-class="
                                                                     {'up': (place.previeus - place.last) >0,

@@ -55,7 +55,7 @@ function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, 
   $scope.showWorkplaces = function() {
     ngDialog.open({
       template:'/views/components/workplacesDialog.html',
-      className: 'ngdialog-theme-default'
+      className: 'ngdialog-theme-default',
     });
   }
 
