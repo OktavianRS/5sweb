@@ -2,11 +2,13 @@ angular
 .module('app')
 .controller('departmentsCtrl', departmentsCtrl)
 
-departmentsCtrl.$inject = ['$scope', 'toast', 'loginModel', 'ngDialog', 'departmentsModel', 'companiesModel'];
-function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, companiesModel) {
+departmentsCtrl.$inject = ['$scope', 'toast', 'loginModel', 'ngDialog', 'departmentsModel', 'companiesModel', 'workplacesModel'];
+function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, companiesModel, workplacesModel) {
   $scope.departmentState = true;
   $scope.companiesList = [];
   $scope.departmentsList = [];
+  $scope.workPlacesList = [];
+  $scope.placesForDepartment = [];
 
   $scope.department = {
     name: '',
@@ -26,7 +28,8 @@ function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, 
     });
     companiesModel.fetchCompanies((result) => {
       $scope.companiesList = result;
-    })
+    });
+
   }
   constuctor();
 
@@ -52,10 +55,35 @@ function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, 
     $scope.department.company_id = id;
   }
 
-  $scope.showWorkplaces = function() {
+  $scope.showWorkplaces = function(department_id) {
+    debugger
+    // departmentsCtrl.$inject =
     ngDialog.open({
       template:'/views/components/workplacesDialog.html',
       className: 'ngdialog-theme-default',
+      scope: $scope,
+      controller: function  (popUpPlaceList) {
+        console.log($scope, popUpPlaceList);
+        console.log(popUpPlaceList);
+
+        // $scope.placesForDepartment = popUpPlaceList;
+      },
+      resolve: {
+        popUpPlaceList: function popUpPlaceList() {
+        return departmentsModel.fetchPlacesList(
+              function (res) {
+                $scope.placesForDepartment = [];
+               for (var i=0; i<res.length; i++){
+                 if (res[i].id === department_id){
+                    $scope.placesForDepartment = res[i];
+                   console.log($scope.placesForDepartment);
+                 // return  $scope.placesForDepartment
+                   return res[i];
+                 }
+               }
+          })
+        }
+      }
     });
   }
 

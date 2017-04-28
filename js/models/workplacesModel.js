@@ -25,6 +25,16 @@ angular.module('model.workplaces', [])
             })
         }
 
+          this.fetchWorkPlace = function(req, callback) {
+              debugger
+              api.get(
+                  url.fetchWorkPlace,
+                  req,
+                  function(res) {
+                      callback(res);
+                  })
+          }
+
         this.deleteWorkPlace = function(req, callback) {
           api.delete(
             url.deleteWorkPlace,

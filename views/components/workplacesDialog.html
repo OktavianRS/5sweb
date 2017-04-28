@@ -9,23 +9,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Samppa Nori</td>
+                <tr ng-repeat="workPlace in placesForDepartment.places track by $index">
+                    <td>{{workPlace.name}}</td>
                 </tr>
-                <tr>
-                    <td>Samppa Nori</td>
-                </tr>
-                <tr>
-                    <td>Samppa Nori</td>
-                </tr>
-                <tr>
-                    <td>Samppa Nori</td>
-                </tr>
-                <tr>
-                    <td>Samppa Nori</td>
-                </tr>
-                <tr>
-                    <td>Samppa Nori</td>
+                <tr ng-if="placesForDepartment.places.length === 0">
+                    <td style="color:orange">List is empty</td>
                 </tr>
             </tbody>
         </table>
