@@ -71,7 +71,22 @@
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">Create user</button>
+                            <button
+                              type="submit"
+                              class="btn btn-primary"
+                              ng-if="user.password === '' && user.password_repeat === '' || user.password !== user.password_repeat"
+                              disabled
+                            >
+                              Create user
+                            </button>
+                            <button
+                              type="submit"
+                              class="btn btn-primary"
+                              ng-if="user.password === user.password_repeat && user.password !== ''"
+                              ng-click="submit()"
+                            >
+                              Create user
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -97,44 +112,45 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <tr>
-                                  <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Vishnu Serghei</td>
-                                  <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Vishnu Serghei</td>
-                                  <td>
-                                    <button type="button" class="btn btn-outline-success">Active</button>
+                              <tr
+                                ng-repeat="user in usersList track by $index"
+                              >
+                                  <td
+                                    class="department-name"
+                                    ng-click="editUser(user)">
+                                    <i class="fa fa-pencil"></i>
+                                     {{user.username}}
+                                   </td>
+                                  <td
+                                    class="department-name"
+                                    ng-click="editUser(user)">
+                                    <i class="fa fa-pencil"></i>
+                                     {{user.email}}
+                                   </td>
+                                  <td ng-if="user.status===10">
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-success"
+                                    >
+                                      Active
+                                    </button>
+                                  </td>
+                                  <td ng-if="user.status!==10">
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-danger"
+                                    >
+                                      Deleted
+                                    </button>
                                   </td>
                                   <td>
-                                    <button type="button" class="btn btn-outline-danger">Delete</button>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Vishnu Serghei</td>
-                                  <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Vishnu Serghei</td>
-                                  <td>
-                                    <button type="button" class="btn btn-outline-success">Active</button>
-                                  </td>
-                                  <td>
-                                    <button type="button" class="btn btn-outline-danger">Delete</button>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Vishnu Serghei</td>
-                                  <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Vishnu Serghei</td>
-                                  <td>
-                                    <button type="button" class="btn btn-outline-success">Active</button>
-                                  </td>
-                                  <td>
-                                    <button type="button" class="btn btn-outline-danger">Delete</button>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Vishnu Serghei</td>
-                                  <td class="department-name" ng-click="editDepartment()"><i class="fa fa-pencil"></i> Vishnu Serghei</td>
-                                  <td>
-                                    <button type="button" class="btn btn-outline-success">Active</button>
-                                  </td>
-                                  <td>
-                                    <button type="button" class="btn btn-outline-danger">Delete</button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-danger"
+                                      ng-click="deleteUser(user.id)"
+                                    >
+                                      Delete
+                                    </button>
                                   </td>
                               </tr>
                           </tbody>

@@ -30,6 +30,7 @@ angular
   'model.workplaces',
   'model.departments',
   'model.criterias',
+  'model.users',
 
   // factories
   'factory.url',
