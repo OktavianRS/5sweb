@@ -312,7 +312,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
            ];
 
            // $scope.departmentsList = result;
-           debugger
+
            $scope.departmentsList = $scope.AllDepartmentsList.filter(
                function (value) {
                     return value.id === item.id
@@ -355,7 +355,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
     function selectPlace (item) {
 
         chartsModel.fetchChartByPlace({place_id:item.id}, function callback (result) {
-debugger
+
             console.log(result, 'result');
 
             if (typeof result.placeName !== 'object' ) {
@@ -398,7 +398,7 @@ debugger
                 },
             ];
         });
-debugger
+
         // $scope.table = $scope.departmentsList.filter(
         //     function (value) {
         //         // for (var i=0; i<$scope.departmentsList.length; i++){
@@ -423,7 +423,7 @@ debugger
                     }
                 }
                 if (a) {
-                    debugger
+
                     console.log(value);
                 }
 

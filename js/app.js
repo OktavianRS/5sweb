@@ -31,6 +31,8 @@ angular
   'model.departments',
   'model.criterias',
   'model.charts',
+  'model.users',
+
 
   // factories
   'factory.url',

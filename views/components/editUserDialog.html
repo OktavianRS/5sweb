@@ -15,7 +15,7 @@
                               class="form-control"
                               size="16"
                               type="text"
-                              ng-model="user.email"
+                              ng-model="editElement.email"
                               placeholder="Email"
                             >
                         </div>
@@ -31,7 +31,7 @@
                               class="form-control"
                               size="16"
                               type="text"
-                              ng-model="user.username"
+                              ng-model="editElement.username"
                               placeholder="Username"
                             >
                         </div>
@@ -47,7 +47,7 @@
                               class="form-control"
                               size="16"
                               type="password"
-                              ng-model="user.password"
+                              ng-model="editElement.password"
                               placeholder="Password"
                             >
                             <input
@@ -55,7 +55,7 @@
                               class="form-control"
                               size="16"
                               type="password"
-                              ng-model="user.password_repeat"
+                              ng-model="editElement.password_repeat"
                               placeholder="Repeat password"
                             >
                         </div>
@@ -63,7 +63,22 @@
                     </div>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Update user</button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    ng-if="editElement.password !== editElement.password_repeat"
+                    disabled
+                  >
+                    Update user
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    ng-if="editElement.password === editElement.password_repeat"
+                    ng-click="updateUser(editElement.id, editElement.email, editElement.username, editElement.password)"
+                  >
+                    Update user
+                  </button>
                 </div>
             </form>
           </div>

@@ -48,6 +48,12 @@ angular.module('factory.url', [])
           deleteCriteria: baseUrl + '/criteria/delete',
           updateCriteria: baseUrl + '/criteria/update',
 
+          //userModel
+          createUser: baseUrl + '/user/create',
+          fetchUsers: baseUrl + '/user/index',
+          deleteUser: baseUrl + '/user/delete',
+          updateUser: baseUrl + '/user/update',
+
 
         }
       }
