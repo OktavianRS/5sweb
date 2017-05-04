@@ -32,6 +32,7 @@ angular
   'model.criterias',
   'model.charts',
   'model.users',
+  'model.audit',
 
 
   // factories

@@ -54,6 +54,10 @@ angular.module('factory.url', [])
           deleteUser: baseUrl + '/user/delete',
           updateUser: baseUrl + '/user/update',
 
+          //auditModel
+          startAudit: baseUrl + '/audit/start',
+          stopAudit: baseUrl + '/audit/stop',
+          fetchAudits: baseUrl + '/audit/all',
 
         }
       }

@@ -1,0 +1,170 @@
+<div class="animated fadeIn departments">
+
+
+    <div class="card" ng-controller="usersCtrl">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-plus-square-o"></i>User creation
+                    <div class="card-actions">
+                        <a ng-if="departmentState" ng-click="handleMinimize()"><i class="icon-arrow-up"></i></a>
+                        <a ng-if="!departmentState" ng-click="handleMinimize()"><i class="icon-arrow-down"></i></a>
+                    </div>
+                </div>
+                <div class="card-block department-form" ng-if="usersState">
+                    <form class="form-2orizontal">
+                        <div class="form-group">
+                            <label class="form-control-label" for="prependedInput">Email</label>
+                            <div class="controls">
+                                <div class="input-prepend input-group">
+                                    <input
+                                      id="prependedInput"
+                                      class="form-control"
+                                      size="16"
+                                      type="text"
+                                      ng-model="user.email"
+                                      placeholder="Email"
+                                    >
+                                </div>
+                                <p class="help-block">Enter email here</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="prependedInput">Username</label>
+                            <div class="controls">
+                                <div class="input-prepend input-group">
+                                    <input
+                                      id="prependedInput"
+                                      class="form-control"
+                                      size="16"
+                                      type="text"
+                                      ng-model="user.username"
+                                      placeholder="Username"
+                                    >
+                                </div>
+                                <p class="help-block">Enter username here</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="prependedInput">Password</label>
+                            <div class="controls">
+                                <div class="input-prepend input-group">
+                                    <input
+                                      id="prependedInput"
+                                      class="form-control"
+                                      size="16"
+                                      type="password"
+                                      ng-model="user.password"
+                                      placeholder="Password"
+                                    >
+                                    <input
+                                      id="prependedInput"
+                                      class="form-control"
+                                      size="16"
+                                      type="password"
+                                      ng-model="user.password_repeat"
+                                      placeholder="Repeat password"
+                                    >
+                                </div>
+                                <p class="help-block">Enter password here</p>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button
+                              type="submit"
+                              class="btn btn-primary"
+                              ng-if="user.password === '' && user.password_repeat === '' || user.password !== user.password_repeat"
+                              disabled
+                            >
+                              Create user
+                            </button>
+                            <button
+                              type="submit"
+                              class="btn btn-primary"
+                              ng-if="user.password === user.password_repeat && user.password !== ''"
+                              ng-click="submit()"
+                            >
+                              Create user
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+      </div>
+
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="card">
+                  <div class="card-header">
+                      <i class="fa fa-align-justify"></i> User list
+                  </div>
+                  <div class="card-block">
+                      <table class="table table-bordered table-striped table-sm">
+                          <thead>
+                              <tr>
+                                  <th>Name</th>
+                                  <th>Email</th>
+                                  <th>Status</th>
+                                  <th>Actions</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr
+                                ng-repeat="user in usersList track by $index"
+                              >
+                                  <td
+                                    class="department-name"
+                                    ng-click="editUser(user)">
+                                    <i class="fa fa-pencil"></i>
+                                     {{user.username}}
+                                   </td>
+                                  <td
+                                    class="department-name"
+                                    ng-click="editUser(user)">
+                                    <i class="fa fa-pencil"></i>
+                                     {{user.email}}
+                                   </td>
+                                  <td ng-if="user.status===10">
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-success"
+                                    >
+                                      Active
+                                    </button>
+                                  </td>
+                                  <td ng-if="user.status!==10">
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-danger"
+                                    >
+                                      Deleted
+                                    </button>
+                                  </td>
+                                  <td>
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-danger"
+                                      ng-click="deleteUser(user.id)"
+                                    >
+                                      Delete
+                                    </button>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          <!--/.col-->
+      </div>
+      <!--/.row-->
+
+    </div>
+    <!--/.card-->
+
+
+
+</div>

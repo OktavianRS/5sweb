@@ -153,6 +153,24 @@ angular
       }]
     }
   })
+      .state('app.audit', {
+        url: '/audit',
+        templateUrl: 'views/pages/audit.html',
+        //page title goes here
+        ncyBreadcrumb: {
+          label: 'Audit',
+        },
+        //page subtitle goes here
+        params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            // you can lazy load controllers
+            return $ocLazyLoad.load({
+              files: ['js/controllers/audit.js']
+            });
+          }]
+        }
+      })
   .state('appSimple', {
     abstract: true,
     templateUrl: 'views/common/layouts/simple.html',
