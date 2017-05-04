@@ -57,23 +57,23 @@
                                 <div class="input-group input-group-small">
                                     <label class="form-control-label audit__selectLabel2" for="prependedInput">User</label>
                                     <select
-                                            class="audit__select form-control" name="workplaceSelect" id="workplaceSelect"
-                                            ng-options="place.name for place in withHeaderWorkPlaces track by place.id"
-                                            ng-model="search.place" ng-change="selectPlace(search.place)"
+                                            class="audit__select form-control" name="UserSelect" id="UserSelect"
+                                            ng-options="user.username for user in usersList track by user.id"
+                                            ng-model="search.user" ng-change="selectUser(search.user)"
                                     >
                                     </select>
                                     <label class="form-control-label audit__selectLabel2" for="prependedInput">Department</label>
                                     <select
                                             class="audit__select form-control" name="departmentSelect" id="departmentSelect"
-                                            ng-options="department.name for department in withHeaderDepartments track by department.id"
+                                            ng-options="department.name for department in departmentsList track by department.id"
                                             ng-model="search.department" ng-change="selectDepartment(search.department)"
                                     >
                                     </select>
                                     <label class="form-control-label audit__selectLabel2" for="prependedInput">Workplace</label>
                                     <select
                                             class="audit__select form-control" name="workplaceSelect" id="workplaceSelect"
-                                            ng-options="place.name for place in withHeaderWorkPlaces track by place.id"
-                                            ng-model="search.place" ng-change="selectPlace(search.place)"
+                                            ng-options="place.name for place in workPlacesList track by place.id"
+                                            ng-model="search.workplace" ng-change="selectPlace(search.workplace)"
                                     >
                                     </select>
                                 </div>
@@ -112,52 +112,52 @@
                           <thead>
                               <tr>
                                   <th>Name</th>
-                                  <th>Email</th>
-                                  <th>Status</th>
-                                  <th>Actions</th>
+                                  <th>Description</th>
+                                  <th>Target</th>
+                                  <th>Date</th>
                               </tr>
                           </thead>
                           <tbody>
                               <tr
                                 ng-repeat="audit in auditList track by $index"
                               >
-                                  <td
-                                    class="audit-name"
-                                    ng-click="editUser(user)">
-                                    <i class="fa fa-pencil"></i>
+                                  <td class="audit-name">
                                      {{audit.name}}
                                    </td>
-                                  <td
-                                    class="audit-name"
-                                    ng-click="editUser(user)">
-                                    <i class="fa fa-pencil"></i>
-                                     {{user.email}}
+                                  <td class="audit-name">
+                                     {{audit.description}}
                                    </td>
-                                  <td ng-if="user.status===10">
-                                    <button
-                                      type="button"
-                                      class="btn btn-outline-success"
-                                    >
-                                      Active
-                                    </button>
+                                  <td class="audit-name">
+                                      {{audit.target}}
                                   </td>
-                                  <td ng-if="user.status!==10">
-                                    <button
-                                      type="button"
-                                      class="btn btn-outline-danger"
-                                    >
-                                      Deleted
-                                    </button>
+                                  <td class="audit-name">
+                                      {{audit.started_at| date:'MM/dd/yyyy'}}
                                   </td>
-                                  <td>
-                                    <button
-                                      type="button"
-                                      class="btn btn-outline-danger"
-                                      ng-click="deleteUser(user.id)"
-                                    >
-                                      Delete
-                                    </button>
-                                  </td>
+                                  <!--<td ng-if="user.status===10">-->
+                                    <!--<button-->
+                                      <!--type="button"-->
+                                      <!--class="btn btn-outline-success"-->
+                                    <!--&gt;-->
+                                      <!--Active-->
+                                    <!--</button>-->
+                                  <!--</td>-->
+                                  <!--<td ng-if="user.status!==10">-->
+                                    <!--<button-->
+                                      <!--type="button"-->
+                                      <!--class="btn btn-outline-danger"-->
+                                    <!--&gt;-->
+                                      <!--Deleted-->
+                                    <!--</button>-->
+                                  <!--</td>-->
+                                  <!--<td>-->
+                                    <!--<button-->
+                                      <!--type="button"-->
+                                      <!--class="btn btn-outline-danger"-->
+                                      <!--ng-click="deleteUser(user.id)"-->
+                                    <!--&gt;-->
+                                      <!--Delete-->
+                                    <!--</button>-->
+                                  <!--</td>-->
                               </tr>
                           </tbody>
                       </table>

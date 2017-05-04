@@ -8647,7 +8647,6 @@ base-chart.chart {
     opacity: 0; }
 
 .audit .audit-name:hover {
-  cursor: pointer;
   color: #000; }
   .audit .audit-name:hover i {
     opacity: 1; }
