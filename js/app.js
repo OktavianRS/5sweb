@@ -22,6 +22,7 @@ angular
   'color.picker',
   'frapontillo.bootstrap-duallistbox',
   'ngDialog',
+    'rzModule',
 
   //models
   'model.login',

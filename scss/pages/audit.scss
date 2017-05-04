@@ -1,0 +1,44 @@
+.audit {
+
+  .audit__select, .audit__selectLabel{
+    width:100%;
+  }
+  .audit__selectLabel2{
+    display:none;
+  }
+
+
+  .audit-name {
+    padding: 10px 10px;
+    color: #46565f;
+    i {
+      transition: .3s all;
+      opacity: 0;
+    }
+  }
+  .audit-name:hover {
+    cursor: pointer;
+    color: #000;
+    i {
+      opacity: 1;
+    }
+  }
+
+  @media screen and (max-width: 690px) {
+    .input-group-small{
+      display:block;
+    }
+    .audit__select{
+      margin-bottom: 1rem;
+    }
+
+    .audit__selectLabel{
+      display:none
+    }
+    .audit__selectLabel2{
+      display:inline-block;
+    }
+  }
+
+
+}

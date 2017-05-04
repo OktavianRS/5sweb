@@ -8633,6 +8633,35 @@ base-chart.chart {
   .workplaces .workplace-name:hover i {
     opacity: 1; }
 
+.audit .audit__select, .audit .audit__selectLabel {
+  width: 100%; }
+
+.audit .audit__selectLabel2 {
+  display: none; }
+
+.audit .audit-name {
+  padding: 10px 10px;
+  color: #46565f; }
+  .audit .audit-name i {
+    transition: .3s all;
+    opacity: 0; }
+
+.audit .audit-name:hover {
+  cursor: pointer;
+  color: #000; }
+  .audit .audit-name:hover i {
+    opacity: 1; }
+
+@media screen and (max-width: 690px) {
+  .audit .input-group-small {
+    display: block; }
+  .audit .audit__select {
+    margin-bottom: 1rem; }
+  .audit .audit__selectLabel {
+    display: none; }
+  .audit .audit__selectLabel2 {
+    display: inline-block; } }
+
 @media all and (-ms-high-contrast: none) {
   html {
     display: flex;

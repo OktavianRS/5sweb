@@ -1,21 +1,21 @@
-<div class="animated fadeIn departments">
+<div class="animated fadeIn audit">
 
 
-    <div class="card" ng-controller="usersCtrl">
+    <div class="card" ng-controller="auditCtrl">
       <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-plus-square-o"></i>User creation
+                    <i class="fa fa-plus-square-o"></i>Audit creation
                     <div class="card-actions">
-                        <a ng-if="departmentState" ng-click="handleMinimize()"><i class="icon-arrow-up"></i></a>
-                        <a ng-if="!departmentState" ng-click="handleMinimize()"><i class="icon-arrow-down"></i></a>
+                        <a ng-if="auditState" ng-click="handleMinimize()"><i class="icon-arrow-up"></i></a>
+                        <a ng-if="!auditState" ng-click="handleMinimize()"><i class="icon-arrow-down"></i></a>
                     </div>
                 </div>
-                <div class="card-block department-form" ng-if="usersState">
-                    <form class="form-2orizontal">
+                <div class="card-block audit-form" ng-if="auditState">
+                    <form ng-submit="submit()" class="form-2orizontal" >
                         <div class="form-group">
-                            <label class="form-control-label" for="prependedInput">Email</label>
+                            <label class="form-control-label" for="prependedInput">Name</label>
                             <div class="controls">
                                 <div class="input-prepend input-group">
                                     <input
@@ -23,69 +23,75 @@
                                       class="form-control"
                                       size="16"
                                       type="text"
-                                      ng-model="user.email"
-                                      placeholder="Email"
+                                      ng-model="audit.name"
+                                      placeholder="Audit name"
                                     >
                                 </div>
-                                <p class="help-block">Enter email here</p>
+                                <p class="help-block">Enter audit name here</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-control-label" for="prependedInput">Username</label>
+                            <label class="form-control-label" for="prependedInput">Description</label>
                             <div class="controls">
                                 <div class="input-prepend input-group">
-                                    <input
+                                    <textarea
                                       id="prependedInput"
                                       class="form-control"
                                       size="16"
                                       type="text"
-                                      ng-model="user.username"
-                                      placeholder="Username"
+                                      ng-model="audit.description"
+                                      placeholder="Description"
                                     >
+                                    </textarea>
                                 </div>
-                                <p class="help-block">Enter username here</p>
+                                <p class="help-block">Enter description here</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-control-label" for="prependedInput">Password</label>
                             <div class="controls">
-                                <div class="input-prepend input-group">
-                                    <input
-                                      id="prependedInput"
-                                      class="form-control"
-                                      size="16"
-                                      type="password"
-                                      ng-model="user.password"
-                                      placeholder="Password"
-                                    >
-                                    <input
-                                      id="prependedInput"
-                                      class="form-control"
-                                      size="16"
-                                      type="password"
-                                      ng-model="user.password_repeat"
-                                      placeholder="Repeat password"
-                                    >
+                                <div class="input-group">
+                                    <label class="form-control-label audit__selectLabel" for="prependedInput">User</label>
+                                    <label class="form-control-label audit__selectLabel" for="prependedInput">Department</label>
+                                    <label class="form-control-label audit__selectLabel" for="prependedInput">Workplace</label>
                                 </div>
-                                <p class="help-block">Enter password here</p>
+                                <div class="input-group input-group-small">
+                                    <label class="form-control-label audit__selectLabel2" for="prependedInput">User</label>
+                                    <select
+                                            class="audit__select form-control" name="workplaceSelect" id="workplaceSelect"
+                                            ng-options="place.name for place in withHeaderWorkPlaces track by place.id"
+                                            ng-model="search.place" ng-change="selectPlace(search.place)"
+                                    >
+                                    </select>
+                                    <label class="form-control-label audit__selectLabel2" for="prependedInput">Department</label>
+                                    <select
+                                            class="audit__select form-control" name="departmentSelect" id="departmentSelect"
+                                            ng-options="department.name for department in withHeaderDepartments track by department.id"
+                                            ng-model="search.department" ng-change="selectDepartment(search.department)"
+                                    >
+                                    </select>
+                                    <label class="form-control-label audit__selectLabel2" for="prependedInput">Workplace</label>
+                                    <select
+                                            class="audit__select form-control" name="workplaceSelect" id="workplaceSelect"
+                                            ng-options="place.name for place in withHeaderWorkPlaces track by place.id"
+                                            ng-model="search.place" ng-change="selectPlace(search.place)"
+                                    >
+                                    </select>
+                                </div>
+                                <p class="help-block">Choose user, department and workplace</p>
                             </div>
+                        </div>
+                        <div>
+                            <label class="form-control-label" for="prependedInput">Score for target</label>
+                            <rzslider rz-slider-model="scoreSlider.value"
+                                      rz-slider-options="scoreSlider.options"></rzslider>
+                            <p class="help-block">Choose score for target</p>
                         </div>
                         <div class="form-actions">
                             <button
                               type="submit"
                               class="btn btn-primary"
-                              ng-if="user.password === '' && user.password_repeat === '' || user.password !== user.password_repeat"
-                              disabled
                             >
-                              Create user
-                            </button>
-                            <button
-                              type="submit"
-                              class="btn btn-primary"
-                              ng-if="user.password === user.password_repeat && user.password !== ''"
-                              ng-click="submit()"
-                            >
-                              Create user
+                              Create Audit
                             </button>
                         </div>
                     </form>
@@ -99,7 +105,7 @@
           <div class="col-lg-12">
               <div class="card">
                   <div class="card-header">
-                      <i class="fa fa-align-justify"></i> User list
+                      <i class="fa fa-align-justify"></i> Audit list
                   </div>
                   <div class="card-block">
                       <table class="table table-bordered table-striped table-sm">
@@ -113,16 +119,16 @@
                           </thead>
                           <tbody>
                               <tr
-                                ng-repeat="user in usersList track by $index"
+                                ng-repeat="audit in auditList track by $index"
                               >
                                   <td
-                                    class="department-name"
+                                    class="audit-name"
                                     ng-click="editUser(user)">
                                     <i class="fa fa-pencil"></i>
-                                     {{user.username}}
+                                     {{audit.name}}
                                    </td>
                                   <td
-                                    class="department-name"
+                                    class="audit-name"
                                     ng-click="editUser(user)">
                                     <i class="fa fa-pencil"></i>
                                      {{user.email}}

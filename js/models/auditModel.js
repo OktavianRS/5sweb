@@ -26,7 +26,7 @@ angular.module('model.audit', [])
               );
           }
 
-        this.fetchAudits = function(req, callback) {
+        this.fetchAudits = function(callback) {
           api.get(
             url.fetchAudits,
             {},
