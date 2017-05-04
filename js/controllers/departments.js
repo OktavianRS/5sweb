@@ -56,17 +56,14 @@ function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, 
   }
 
   $scope.showWorkplaces = function(department_id) {
-    debugger
+
     // departmentsCtrl.$inject =
     ngDialog.open({
       template:'/views/components/workplacesDialog.html',
       className: 'ngdialog-theme-default',
       scope: $scope,
       controller: function  (popUpPlaceList) {
-        console.log($scope, popUpPlaceList);
-        console.log(popUpPlaceList);
-
-        // $scope.placesForDepartment = popUpPlaceList;
+         $scope.placesForDepartment = popUpPlaceList;
       },
       resolve: {
         popUpPlaceList: function popUpPlaceList() {
@@ -84,6 +81,8 @@ function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, 
           })
         }
       }
+
+
     });
   }
 

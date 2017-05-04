@@ -129,7 +129,6 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
 
 
     $scope.showCriterias = function() {
-
         ngDialog.open({
             scope:$scope,
             template:'/views/components/criteriasDialog.html',
@@ -141,7 +140,6 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
 
     function selectPlace (selectedItem) {
         $scope.selectedDepartment = selectedItem;
-        debugger
     }
 
 

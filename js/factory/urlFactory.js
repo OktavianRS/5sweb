@@ -15,6 +15,9 @@ angular.module('factory.url', [])
           // loginModel
           login: baseUrl + '/user/login',
 
+          // chartModel
+          fetchChartByPlace: baseUrl + '/chart/by-place',
+          fetchChartByDepartment: baseUrl + '/chart/by-department',
 
           //companiesModel
           createCompany: baseUrl + '/company/create',

@@ -25,6 +25,7 @@ angular.module('model.departments', [])
             })
         }
 
+
         this.deleteDepartment = function(req, callback) {
           api.delete(
             url.deleteDepartment,
@@ -51,6 +52,16 @@ angular.module('model.departments', [])
                   {},
                   function(res) {
                       callback(res);
+                  })
+          }
+
+          this.fetchPlacesList2 = function(callback) {
+              api.get(
+                  url.fetchPlacesList,
+                  {},
+                  function(res) {
+                      debugger
+                     return callback(res);
                   })
           }
 

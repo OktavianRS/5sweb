@@ -30,6 +30,7 @@ angular
   'model.workplaces',
   'model.departments',
   'model.criterias',
+  'model.charts',
 
   // factories
   'factory.url',
@@ -52,7 +53,6 @@ angular
   })
   $rootScope.$on('$stateChangeSuccess',function(){
     document.body.scrollTop = document.documentElement.scrollTop = 0;
-    alert('sus');
   });
   $rootScope.$state = $state;
   return $rootScope.$stateParams = $stateParams;

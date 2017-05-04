@@ -6,8 +6,8 @@ angular
     .controller('DashboardChart', DashboardChart);
 
 
-DashboardChart.$inject = ['$scope', 'departmentsModel', 'workplacesModel'];
-function DashboardChart($scope, departmentsModel, workplacesModel) {
+DashboardChart.$inject = ['$scope', '$timeout', 'departmentsModel', 'workplacesModel', 'chartsModel'];
+function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, chartsModel) {
     $scope.search = {};
     var HeaderDepartment = {
             name: 'Show all departments',
@@ -27,9 +27,13 @@ function DashboardChart($scope, departmentsModel, workplacesModel) {
 
     // generate color for last week
     function lastWeekColor(currentWeekColor) {
+        if (typeof currentWeekColor !== 'object' ) {
+            currentWeekColor = Array(currentWeekColor);
+        }
 
         return currentWeekColor.map(
             function (item, i, arr) {
+
                 return convertHex(arr[i], 50);
             }
         )
@@ -47,11 +51,18 @@ function DashboardChart($scope, departmentsModel, workplacesModel) {
         });
 
         departmentsModel.fetchPlacesList(function(result) {
-            $scope.departmentsList = result;
+            $scope.AllDepartmentsList = result;
+
+            $scope.departmentsList = $scope.AllDepartmentsList.slice();
             $scope.withHeaderDepartments = $scope.departmentsList.slice();
             $scope.withHeaderDepartments.splice(0,0, HeaderDepartment)
             $scope.search.department =  HeaderDepartment;
             console.log($scope.departmentsList);
+
+            $timeout(function () {
+                $scope.table = $scope.AllDepartmentsList.slice();
+            },0);
+
         });
 
     }
@@ -263,42 +274,186 @@ function DashboardChart($scope, departmentsModel, workplacesModel) {
     $scope.selectPlace = selectPlace;
 
    function selectDepartment (item) {
-       $scope.labels = ['Lagerbereich 1', 'Breitgang', 'Ladegeräte', 'SOS-Station', 'Feuerlöscher', 'Kontrolle 1'];
-       $scope.series = ["Current", "Target", "Last"];
-       data1 = [68, 85, 22, 33, 64, 85],
-       $scope.data = [data1, data2, data3, data4, data5];
-       $scope.colors = [
-           {
-               backgroundColor: color,
-               borderColor: color,
-               pointHoverBackgroundColor: '#fff'
-           },
-           {
-               backgroundColor: lastWeekColor(color),
-               borderColor: color,
-               pointHoverBackgroundColor: '#fff'
-           },
-       ];
+       chartsModel.fetchChartByDepartment({department_id:item.id}, function callback (result) {
+           console.log(result, 'result');
+
+           if (typeof result.placeName !== 'object' ) {
+               result.placeName = Array(result.placeName);
+           }
+           $scope.labels = result.placeName;
+
+           data1 = result.placeScore;
+           if (typeof data1 !== 'object' ) {
+               $scope.data[0] = [];
+               $scope.data[0].push(data1);
+           } else {
+               if (data1.length>1) {
+                   $scope.data[0] = data1;
+               } else {
+                   $scope.data[0] = [];
+                   $scope.data[0].push(data1);
+               }
+           }
+
+           // $scope.data = [data1, data2, data3, data4, data5];
+
+
+           $scope.colors = [
+               {
+                   backgroundColor: result.departmentColor,
+                   borderColor: result.departmentColor,
+                   pointHoverBackgroundColor: '#fff'
+               },
+               {
+                   backgroundColor: lastWeekColor(result.departmentColor),
+                   borderColor: result.departmentColor,
+                   pointHoverBackgroundColor: '#fff'
+               },
+           ];
+
+           // $scope.departmentsList = result;
+           debugger
+           $scope.departmentsList = $scope.AllDepartmentsList.filter(
+               function (value) {
+                    return value.id === item.id
+               }
+           );
+            // $scope.departmentsList = $scope.departmentsList;
+
+           $scope.workplacesList = $scope.departmentsList[0].places;
+           $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
+           $scope.withHeaderWorkPlaces.splice(0,0, HeaderWorkplaces);
+           $scope.search.place = HeaderWorkplaces;
+
+           $timeout(function () {
+               $scope.table = $scope.departmentsList;
+           },0);
+
+
+       });
+
+
+       // $scope.labels = ['Lagerbereich 1', 'Breitgang', 'Ladegeräte', 'SOS-Station', 'Feuerlöscher', 'Kontrolle 1'];
+       // $scope.series = ["Current", "Target", "Last"];
+       // data1 = [68, 85, 22, 33, 64, 85],
+       // $scope.data = [data1, data2, data3, data4, data5];
+       // $scope.colors = [
+       //     {
+       //         backgroundColor: color,
+       //         borderColor: color,
+       //         pointHoverBackgroundColor: '#fff'
+       //     },
+       //     {
+       //         backgroundColor: lastWeekColor(color),
+       //         borderColor: color,
+       //         pointHoverBackgroundColor: '#fff'
+       //     },
+       // ];
 
     }
 
     function selectPlace (item) {
-         $scope.labels = ['Lagerbereich 1', 'Breitgang', 'Ladegeräte', 'SOS-Station', 'Feuerlöscher', 'Kontrolle 1'];
-         $scope.series = ["Current", "Target", "Last"];
-         data1 = [68, 85, 22, 33, 64, 85],
-         $scope.data = [data1, data2, data3, data4, data5];
-         $scope.colors = [
-            {
-                backgroundColor: color,
-                borderColor: color,
-                pointHoverBackgroundColor: '#fff'
-            },
-            {
-                backgroundColor: lastWeekColor(color),
-                borderColor: color,
-                pointHoverBackgroundColor: '#fff'
-            },
-        ];
+
+        chartsModel.fetchChartByPlace({place_id:item.id}, function callback (result) {
+debugger
+            console.log(result, 'result');
+
+            if (typeof result.placeName !== 'object' ) {
+                result.placeName = Array(result.placeName);
+            }
+            $scope.labels = result.placeName;
+
+            data1 = result.placeScore;
+            if (typeof data1 !== 'object' ) {
+                $scope.data[0] = [];
+                $scope.data[0].push(data1);
+            } else {
+                if (data1.length>1) {
+                    $scope.data[0] = data1;
+                } else {
+                    $scope.data[0] = [];
+                    $scope.data[0].push(data1);
+                }
+            }
+
+
+            // if (data1.length>1) {
+            //     $scope.data[0] = data1;
+            // } else {
+
+            // }
+
+             // $scope.data = [data1, data2, data3, data4, data5];
+
+            $scope.colors = [
+                {
+                    backgroundColor: result.departmentColor,
+                    borderColor: result.departmentColor,
+                    pointHoverBackgroundColor: '#fff'
+                },
+                {
+                    backgroundColor: lastWeekColor(result.departmentColor),
+                    borderColor: result.departmentColor,
+                    pointHoverBackgroundColor: '#fff'
+                },
+            ];
+        });
+debugger
+        // $scope.table = $scope.departmentsList.filter(
+        //     function (value) {
+        //         // for (var i=0; i<$scope.departmentsList.length; i++){
+        //         //     return value.places[i].id === item.id
+        //         // }
+        //         value.places.forEach(function (name,i,arr) {
+        //             return name.id === item.id
+        //         })
+        //
+        //
+        //     }
+        // );
+
+        $scope.table.forEach(
+
+            function (value, i, arr) {
+                var a = true;
+                for (var j=0; j< value.places.length; j++){
+                    if (value.places[j].id === item.id) {
+                        a = false ;
+                        return a;
+                    }
+                }
+                if (a) {
+                    debugger
+                    console.log(value);
+                }
+
+            }
+        );
+
+       console.log($scope.table, 'table')
+       console.log($scope.workplacesList, 'workplacesList')
+       console.log($scope.departmentsList, '$scope.departmentsList')
+
+        // $timeout(function () {
+        //     $scope.table = $scope.departmentsList;
+        // },0);
+
+        //  $scope.labels = ['Lagerbereich 1', 'Breitgang', 'Ladegeräte', 'SOS-Station', 'Feuerlöscher', 'Kontrolle 1'];
+        //  $scope.series = ["Current", "Target", "Last"];
+        //  data1 = [68, 85, 22, 33, 64, 85],
+        //  $scope.data = [data1, data2, data3, data4, data5];
+        //  $scope.colors = [
+        //     {
+        //         backgroundColor: color,
+        //         borderColor: color,
+        //         pointHoverBackgroundColor: '#fff'
+        //     },
+        //     {
+        //         backgroundColor: lastWeekColor(color),
+        //         borderColor: color,
+        //         pointHoverBackgroundColor: '#fff'
+        //     },
+        // ];
     }
 
 

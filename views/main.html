@@ -81,7 +81,7 @@
                     <th style="width: 15%;">Current</th>
                 </tr>
                 </thead>
-                <tbody class="list" ng-repeat="department in departmentsList track by department.id">
+                <tbody class="list" ng-repeat="department in table track by department.id">
                 <tr ng-repeat="place in department.places track by place.id">
                     <td class="station" >{{place.name}}</td>
                     <td ng-style="{backgroundColor: department.color}" class="department">{{department.name}}</td>
