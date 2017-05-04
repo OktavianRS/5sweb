@@ -353,6 +353,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
     }
 
     function selectPlace (item) {
+        debugger
 
         chartsModel.fetchChartByPlace({place_id:item.id}, function callback (result) {
 
@@ -397,6 +398,31 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
                     pointHoverBackgroundColor: '#fff'
                 },
             ];
+
+
+            var newArr;
+            $scope.table.forEach(
+                function (value, i, arr) {
+                    for (var j=0; j< value.places.length; j++){
+                        if (value.places[j].id === item.id) {
+                            var newArr =  Object.assign({}, value);
+                            newArr.places =[];
+                            newArr.places.push(value.places[j]);
+                            // a.push(value.places[j]);
+                            return true;
+                        }
+                    }
+                    // if (a.length>0) {
+                    //     console.log(a);
+                    // }
+
+                }
+            );
+            $scope.table = newArr;
+            console.log($scope.table, 'table')
+            console.log($scope.workplacesList, 'workplacesList')
+            console.log($scope.departmentsList, '$scope.departmentsList')
+
         });
 
         // $scope.table = $scope.departmentsList.filter(
@@ -412,27 +438,9 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
         //     }
         // );
 
-        $scope.table.forEach(
+        // $scope.table = a;
+        // console.log(newArr, 'newArr')
 
-            function (value, i, arr) {
-                var a = true;
-                for (var j=0; j< value.places.length; j++){
-                    if (value.places[j].id === item.id) {
-                        a = false ;
-                        return a;
-                    }
-                }
-                if (a) {
-
-                    console.log(value);
-                }
-
-            }
-        );
-
-       console.log($scope.table, 'table')
-       console.log($scope.workplacesList, 'workplacesList')
-       console.log($scope.departmentsList, '$scope.departmentsList')
 
         // $timeout(function () {
         //     $scope.table = $scope.departmentsList;
