@@ -10,7 +10,10 @@ angular.module('model.audit', [])
               if (typeof res.created_at !== 'undefined') {
                 toast('success', 'Created successfully', '');
                 callback();
-              } else {
+              }
+               else if (res.errors['There are not criterias in the place']) {
+                    toast('error', 'Please, add criterias for workplace on workplace page', '');
+                }else {
                 toast('error', 'Some error occured', 'Audit not started');
               }
             })

@@ -24,4 +24,15 @@ angular.module('model.charts', [])
                     })
             }
 
+
+            this.fetchChartByCompany = function(req,callback) {
+                api.get(
+                    url.fetchChartByCompany,
+                    req,
+                    function(res) {
+                        callback(res);
+                    })
+            }
+
+
         }])

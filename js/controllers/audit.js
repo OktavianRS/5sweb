@@ -16,7 +16,7 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
       maxLimit: 100
     }
   }
-  debugger
+
   $scope.state = {
     isDisabled: true
   }
@@ -73,7 +73,6 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
   }
 
   $scope.submit = function() {
-    debugger
     $scope.audit.place_id = $scope.search.workplace.id;
     $scope.audit.user_id = $scope.search.user.id;
     auditModel.startAudit($scope.audit, constuctor);

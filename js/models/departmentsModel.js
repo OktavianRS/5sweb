@@ -55,14 +55,6 @@ angular.module('model.departments', [])
                   })
           }
 
-          this.fetchPlacesList2 = function(callback) {
-              api.get(
-                  url.fetchPlacesList,
-                  {},
-                  function(res) {
-                      debugger
-                     return callback(res);
-                  })
-          }
+
 
       }])

@@ -72,6 +72,39 @@
 
         </div>
         <div class="card-footer">
+            <!--<table id="auditTable" class="table table-bordered">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th>Workplace</th>-->
+                    <!--<th>Department</th>-->
+                    <!--<th style="width: 15%;">Last</th>-->
+                    <!--<th style="width: 15%;">Current</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody class="list" ng-repeat="department in table track by department.id">-->
+                <!--<tr ng-repeat="place in department.places track by place.id">-->
+                    <!--<td class="station" >{{place.name}}</td>-->
+                    <!--<td ng-style="{backgroundColor: department.color}" class="department">{{department.name}}</td>-->
+                    <!--<td style="width: 15%;" class="last-week">-->
+                        <!--<i class="fa fa-long-arrow-right"  aria-hidden="true" ng-class="-->
+                                                                    <!--{'up': (place.previeus - place.last) >0,-->
+                                                                    <!--'down': (place.previeus - place.last) <0,-->
+                                                                    <!--'equal': place.previeus === place.last}">-->
+                        <!--</i>-->
+                       <!--{{place.last}}</td>-->
+                    <!--<td style="width: 15%;" class="current-week">-->
+                        <!--<i class="fa fa-long-arrow-right" aria-hidden="true" ng-class="-->
+                                                                    <!--{'up': (place.current - place.previeus) >0,-->
+                                                                    <!--'down': (place.current - place.previeus) <0,-->
+                                                                    <!--'equal': place.current === place.previeus}">-->
+
+                        <!--</i>-->
+                        <!--{{place.current}}-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+            <!--</table>-->
+
             <table id="auditTable" class="table table-bordered">
                 <thead>
                 <tr>
@@ -81,25 +114,25 @@
                     <th style="width: 15%;">Current</th>
                 </tr>
                 </thead>
-                <tbody class="list" ng-repeat="department in table track by department.id">
-                <tr ng-repeat="place in department.places track by place.id">
-                    <td class="station" >{{place.name}}</td>
-                    <td ng-style="{backgroundColor: department.color}" class="department">{{department.name}}</td>
+                <tbody class="list">
+                <tr ng-repeat="(key, value) in table.placeName track by $index">
+                    <td>{{value}}</td>
+                    <td ng-style="{backgroundColor: table.departmentColor[$index]}" class="department">{{table.departmentName[$index]}}</td>
                     <td style="width: 15%;" class="last-week">
                         <i class="fa fa-long-arrow-right"  aria-hidden="true" ng-class="
-                                                                    {'up': (place.previeus - place.last) >0,
-                                                                    'down': (place.previeus - place.last) <0,
-                                                                    'equal': place.previeus === place.last}">
+                                                                    {'up': (table.placeLastScore[$index] - table.placePrevScore[$index]) >0,
+                                                                    'down': (table.placeLastScore[$index] - table.placePrevScore[$index]) <0,
+                                                                    'equal': table.placeLastScore[$index] === table.placePrevScore[$index]}">
                         </i>
-                       {{place.last}}</td>
+                        {{table.placeLastScore[$index]}}</td>
                     <td style="width: 15%;" class="current-week">
                         <i class="fa fa-long-arrow-right" aria-hidden="true" ng-class="
-                                                                    {'up': (place.current - place.previeus) >0,
-                                                                    'down': (place.current - place.previeus) <0,
-                                                                    'equal': place.current === place.previeus}">
+                                                                    {'up': (table.placeCurrentScore[$index] - table.placeLastScore[$index]) >0,
+                                                                    'down': (table.placeCurrentScore[$index] - table.placeLastScore[$index]) <0,
+                                                                    'equal': table.placeCurrentScore[$index] === table.placeLastScore[$index]}">
 
                         </i>
-                        {{place.current}}
+                        {{table.placeCurrentScore[$index]}}
                     </td>
                 </tr>
                 </tbody>

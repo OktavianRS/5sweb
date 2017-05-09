@@ -18,6 +18,7 @@ angular.module('factory.url', [])
           // chartModel
           fetchChartByPlace: baseUrl + '/chart/by-place',
           fetchChartByDepartment: baseUrl + '/chart/by-department',
+          fetchChartByCompany: baseUrl + '/chart/by-company',
 
           //companiesModel
           createCompany: baseUrl + '/company/create',
