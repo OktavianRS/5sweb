@@ -1,111 +1,17 @@
 <div class="animated fadeIn workplaces">
     <div class="card" ng-controller="workplacesCtrl">
-        <!--<div class="btn-group buttons">-->
-            <!--<button type="button" class="btn moveall btn-default" title="Move all teh elementz!!!">-->
-                <!--<i class="icon-arrow-right"></i>-->
-                <!--<i class="icon-arrow-right"></i>-->
-            <!--</button>-->
-            <!--<button type="button" class="btn move btn-default"  title="MOVE SELECTED">-->
-                <!--<i class="icon-arrow-right"></i>-->
-            <!--</button>-->
-        <!--</div>-->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <i class="fa fa-plus-square-o"></i>Workplace creation
-                        <div class="card-actions">
-                            <a ng-if="workPlaceState" ng-click="handleMinimize()"><i class="icon-arrow-up"></i></a>
-                            <a ng-if="!workPlaceState" ng-click="handleMinimize()"><i class="icon-arrow-down"></i></a>
-                        </div>
-                    </div>
-                    <div class="card-block workplace-form" ng-if="workPlaceState">
-                            <form class="form-2orizontal">
-                                <div class="form-group row">
-                                    <div class="col-sm-12 col-md-6">
-                                        <label class="form-control-label" for="prependedInputWorkplace">Name</label>
-                                        <div class="controls">
-                                            <div class="input-prepend input-group">
-                                                <input
-                                                        id="prependedInputWorkplace"
-                                                        class="form-control"
-                                                        size="16"
-                                                        type="text"
-                                                        ng-model="workplace.name"
-                                                >
-                                            </div>
-                                            <p class="help-block">Enter workplace name here</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6">
-                                        <label class="form-control-label" for="prependedInputDepartment">Name</label>
-                                        <div class="controls">
-                                            <div class="input-prepend input-group">
-                                                <select
-                                                        class="form-control" name="prependedInputDepartment" id="prependedInputDepartment"
-                                                        ng-options="department.name for department in departmentsList track by department.id"
-                                                        ng-model="workplace.department" ng-change="selectPlace(workplace.department)"
-
-                                                >
-                                                </select>
-                                            </div>
-                                            <p class="help-block">Choose department name here</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <label class="form-control-label" for="prependedInputCriteria">Available Criteria</label>
-                                <select
-                                        ng-model="workplace.criteria"
-                                        id="prependedInputCriteria"
-                                        name="prependedInputCriteria"
-                                        ng-options="obj as obj.name for obj in criteriasList track by obj.id"
-                                        multiple
-                                        bs-duallistbox
-                                        bootstrap2="{{ settings.bootstrap2 }}"
-
-                                        move-on-select="{{ settings.moveOnSelect }}"
-                                        preserve-selection="{{ settings.preserveSelection }}"
-
-                                        move-selected-label="{{ settings.moveSelectedLabel }}"
-                                        move-all-label="{{ settings.moveAllLabel }}"
-                                        remove-selected-label="{{ settings.removeSelectedLabel }}"
-                                        remove-all-label="{{ settings.removeAllLabel }}"
-
-                                        non-selected-list-label="{{ settings.nonSelectedListLabel }}"
-                                        selected-list-label="{{ settings.selectedListLabel }}"
-
-                                        postfix="{{ settings.postfix }}"
-                                        select-min-height="{{ settings.selectMinHeight }}"
-
-                                        filter="{{ settings.filter }}"
-                                        filter-values="{{ settings.filterValues }}"
-                                        filter-non-selected="settings.filterNonSelected"
-                                        filter-selected="settings.filterSelected"
-                                        filter-placeholder="{{ settings.filterPlaceholder }}"
-                                        filter-clear="{{ settings.filterClear }}"
-                                        info-all="{{ settings.infoAll }}"
-                                        info-filtered="{{ settings.infoFiltered }}"
-                                        info-empty="{{ settings.infoEmpty }}"
-
-                                >
-                                </select>
-                                <div style="padding: 15px 0 0 0;" class="form-actions">
-                                    <button type="submit"
-                                            class="btn btn-primary"
-                                            ng-click="createWorkPlace()"
-                                    >Save workplace</button>
-                                </div>
-                            </form>
-                      </div>
-                  </div>
-            </div>
-         </div>
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i> Workplace list
+                        <button
+                          type="button"
+                          class="btn btn-primary btn-sm action-button"
+                          ng-click="createWorkplaceModal()"
+                          >
+                            Add workplace
+                        </button>
                     </div>
                     <div class="card-block">
                         <table class="table table-bordered table-striped table-sm">
@@ -119,13 +25,13 @@
                             </thead>
                             <tbody ng-repeat="department in AllPlacesList track by $index">
                             <tr ng-repeat="place in department.places track by $index">
-                                <td class="workplace-name" ng-click="editWorkplace(place)"><i class="fa fa-pencil"></i> {{place.name}}</td>
+                                <td class="workplace-name">{{place.name}}</td>
                                 <td class="department-name"> {{department.name}}</td>
-
                                 <td>
                                     <button type="button" class="btn btn-outline-primary" ng-click="showCriterias()">Show Critetia</button>
                                 </td>
                                 <td>
+                                    <button type="button" class="btn btn-outline-warning"  ng-click="editWorkplace(place)">Edit</button>
                                     <button type="button" class="btn btn-outline-danger"  ng-click="deleteWorkPlace(place.id)">Delete</button>
                                 </td>
                             </tr>

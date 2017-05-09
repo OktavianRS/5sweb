@@ -8,7 +8,6 @@ angular
 workplacesCtrl.$inject = ['$scope', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
 function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
 
-    $scope.workplacesState = true;
     $scope.workplacesList = [];
     $scope.criteriasList = [];
     $scope.departmentsList = [];
@@ -48,10 +47,6 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
 
 
     $scope.workPlaceState = true;
-
-    $scope.handleMinimize = function() {
-        $scope.workPlaceState = !$scope.workPlaceState;
-    }
 
     $scope.createWorkPlace = function() {
         $scope.workplace.department_id = $scope.workplace.department.id;
@@ -127,6 +122,13 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
         filterValues: true
     };
 
+    $scope.createWorkplaceModal = function() {
+      ngDialog.open({
+        template:'/views/components/createWorkplaceDialog.html',
+        className: 'ngdialog-theme-default',
+        scope: $scope,
+      });
+    }
 
     $scope.showCriterias = function() {
         ngDialog.open({
