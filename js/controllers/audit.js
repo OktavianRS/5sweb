@@ -4,7 +4,6 @@ angular
 
 auditCtrl.$inject = ['$scope', 'toast', 'ngDialog', 'usersModel', 'auditModel', 'departmentsModel'];
 function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsModel) {
-  $scope.auditState = true;
   $scope.search = [];
   $scope.scoreSlider = {
     value: 50,
@@ -59,10 +58,6 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
   }
   constuctor();
 
-  $scope.handleMinimize = function() {
-    $scope.auditState = !$scope.auditState;
-  }
-
   $scope.selectDepartment = function (item) {
     if (item.places.length === 0) {
       item.places.push({name:'List is empty'});
@@ -84,6 +79,14 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
 
   $scope.stopAudit = function(id, email, username, password) {
     // usersModel.stopAudit({id, email, username, password}, constuctor);
+  }
+
+  $scope.createAuditModal = function() {
+    ngDialog.open({
+      template:'/views/components/createAuditDialog.html',
+      className: 'ngdialog-theme-default',
+      scope: $scope,
+    });
   }
 
 

@@ -40,13 +40,13 @@ function usersCtrl($scope, toast, ngDialog, usersModel) {
   }
 
 
-    $scope.createUserModal = function() {
-      ngDialog.open({
-        template:'/views/components/createUserDialog.html',
-        className: 'ngdialog-theme-default',
-        scope: $scope,
-      });
-    }
+  $scope.createUserModal = function() {
+    ngDialog.open({
+      template:'/views/components/createUserDialog.html',
+      className: 'ngdialog-theme-default',
+      scope: $scope,
+    });
+  }
 
   $scope.editUser = function(data) {
     $scope.editElement = Object.create(data);

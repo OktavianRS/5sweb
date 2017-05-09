@@ -8666,6 +8666,9 @@ base-chart.chart {
   .audit .audit__selectLabel2 {
     display: inline-block; } }
 
+.audit .card-header button {
+  float: right; }
+
 @media all and (-ms-high-contrast: none) {
   html {
     display: flex;
