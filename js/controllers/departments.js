@@ -4,7 +4,6 @@ angular
 
 departmentsCtrl.$inject = ['$scope', 'toast', 'loginModel', 'ngDialog', 'departmentsModel', 'companiesModel', 'workplacesModel'];
 function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, companiesModel, workplacesModel) {
-  $scope.departmentState = true;
   $scope.companiesList = [];
   $scope.departmentsList = [];
   $scope.workPlacesList = [];
@@ -33,13 +32,9 @@ function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, 
   }
   constuctor();
 
-  $scope.handleMinimize = function() {
-    $scope.departmentState = !$scope.departmentState;
-  }
-
   $scope.createDepartment = function() {
-    console.log($scope.department);
     departmentsModel.createDepartment($scope.department, constuctor);
+    ngDialog.closeAll();
   }
 
   $scope.deleteDepartment = function(id) {
@@ -55,6 +50,14 @@ function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, 
     $scope.department.company_id = id;
   }
 
+  $scope.createDepartmentModal = function() {
+    ngDialog.open({
+      template:'/views/components/createDepartmentDialog.html',
+      className: 'ngdialog-theme-default',
+      scope: $scope,
+    });
+  }
+
   $scope.showWorkplaces = function(department_id) {
 
     // departmentsCtrl.$inject =
@@ -64,13 +67,14 @@ function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, 
       scope: $scope,
       controller: function  (popUpPlaceList) {
          $scope.placesForDepartment = popUpPlaceList;
+         console.log(popUpPlaceList);
       },
       resolve: {
         popUpPlaceList: function popUpPlaceList() {
         return departmentsModel.fetchPlacesList(
               function (res) {
                 $scope.placesForDepartment = [];
-               for (var i=0; i<res.length; i++){
+                for (var i=0; i<res.length; i++){
                  if (res[i].id === department_id){
                     $scope.placesForDepartment = res[i];
                    console.log($scope.placesForDepartment);
