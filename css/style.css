@@ -8638,6 +8638,9 @@ base-chart.chart {
   .workplaces .workplace-name:hover i {
     opacity: 1; }
 
+.workplaces .card-header button {
+  float: right; }
+
 .audit .audit__select, .audit .audit__selectLabel {
   width: 100%; }
 
