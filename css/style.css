@@ -7280,8 +7280,7 @@ body {
 
 .dashboard__select {
   margin: 5px;
-  padding: 5px;
-  float: right; }
+  padding: 5px; }
 
 .chart-wrapper {
   margin-bottom: 20px; }
@@ -8604,6 +8603,9 @@ base-chart.chart {
 
 .workplaces-container th, .workplaces-container td {
   text-align: center; }
+
+.chart .select_group {
+  text-align: end; }
 
 .departments .department-name {
   padding: 10px 10px;

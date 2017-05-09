@@ -6,14 +6,30 @@ angular
     .controller('DashboardChart', DashboardChart);
 
 
-DashboardChart.$inject = ['$scope', '$timeout', 'departmentsModel', 'workplacesModel', 'chartsModel'];
-function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, chartsModel) {
+DashboardChart.$inject = ['$scope', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
+function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
     $scope.search = {};
-    var HeaderDepartment = {
+
+    var headerFilter={
+        company:{
+            name: 'Show all companies',
+            id: 'null',
+        },
+        department:{
             name: 'Show all departments',
             id: 'null',
         },
-        HeaderWorkplaces ={name:'Show all workplaces', id:'null'};
+        workplace:{
+            name: 'Show all workplaces',
+            id: 'null',
+        }
+    }
+
+    // var HeaderDepartment = {
+    //         name: 'Show all departments',
+    //         id: 'null',
+    //     },
+    //     HeaderWorkplaces ={name:'Show all workplaces', id:'null'};
 
     function convertHex(hex, opacity) {
         hex = hex.replace('#', '');
@@ -114,6 +130,8 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
         },
     }
 
+
+
         google.charts.load('current', {
             'packages': ['timeline']
         });
@@ -128,6 +146,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
                 type: 'string',
                 id: 'President'
             });
+
             dataTable.addColumn({
                 type: 'date',
                 id: 'Start'
@@ -137,9 +156,14 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
                 id: 'End'
             });
             dataTable.addRows([
-                ['Washington', new Date(1789, 3, 30), new Date(1797, 2, 4)],
-                ['Adams', new Date(1797, 2, 4), new Date(1801, 2, 4)],
-                ['Jefferson', new Date(1801, 2, 4), new Date(1809, 2, 4)]
+                ['department1', new Date(2016, 3, 30), new Date(2016, 6, 4)],
+                ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
+                ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
+                ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
+                ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
+                ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
+                ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
+                ['department3', new Date(2016, 8, 4), new Date(2016, 9, 4)],
             ]);
 
             chart.draw(dataTable);
@@ -154,7 +178,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
 
     // histiry score
     $scope.historyScore={
-        labels: ["12.08.2016", "15.08.2016", "16.08.2016", "09.09.2016", "12.09.2016", "15.10.2016", "25.10.2016"],
+        labels: ["Audit1", "Audit2", "Audit3", "Audit4", "Audit5", "Audit6", "Audit7"],
         data:[
             [17, 25, 22, 20, 8, 10, 7],
             [21, 28, 24, 25, 12, 13, 15],
@@ -251,12 +275,19 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
             changesChart(result);
         });
 
+        companiesModel.fetchCompanies(function(result) {
+            $scope.companiesList = result;
+            $scope.withHeaderCompaniesList = $scope.companiesList.slice();
+            $scope.withHeaderCompaniesList.splice(0,0, headerFilter.company);
+            $scope.search.company = headerFilter.company;
+            console.log($scope.companiesList);
+        });
 
         workplacesModel.fetchAllWorkPlaces(function(result) {
             $scope.workplacesList = result;
             $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
-            $scope.withHeaderWorkPlaces.splice(0,0, HeaderWorkplaces);
-            $scope.search.place = HeaderWorkplaces;
+            $scope.withHeaderWorkPlaces.splice(0,0, headerFilter.workplace);
+            $scope.search.place = headerFilter.workplace;
             console.log($scope.workplacesList);
         });
 
@@ -265,8 +296,8 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
 
             $scope.departmentsList = $scope.AllDepartmentsList.slice();
             $scope.withHeaderDepartments = $scope.departmentsList.slice();
-            $scope.withHeaderDepartments.splice(0,0, HeaderDepartment)
-            $scope.search.department =  HeaderDepartment;
+            $scope.withHeaderDepartments.splice(0,0, headerFilter.department)
+            $scope.search.department =  headerFilter.department;
             console.log($scope.departmentsList);
 
             // $timeout(function () {
@@ -360,8 +391,37 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
 
 
 
+    $scope.selectCompany = selectCompany;
     $scope.selectDepartment = selectDepartment;
     $scope.selectPlace = selectPlace;
+
+
+    function selectCompany (item) {
+        if (item.id === null){
+            chartsModel.fetchChartByCompany({company_id:1}, function callback (result) {
+                console.log(result);
+                changesChart(result);
+            });
+        } else {
+            chartsModel.fetchChartByDepartment({department_id:item.id}, function callback (result) {
+
+                changesChart (result);
+
+                $scope.departmentsList = $scope.AllDepartmentsList.filter(
+                    function (value) {
+                        return value.id === item.id
+                    }
+                );
+
+                $scope.workplacesList = $scope.departmentsList[0].places;
+                $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
+                $scope.withHeaderWorkPlaces.splice(0,0, HeaderWorkplaces);
+                $scope.search.place = HeaderWorkplaces;
+
+            });
+        }
+    }
+
 
    function selectDepartment (item) {
     if (item.id === null){

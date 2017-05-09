@@ -1,4 +1,4 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn chart" ng-cloak="">
 
 
     <div class="card" ng-controller="DashboardChart">
@@ -9,11 +9,11 @@
                     <div class="small text-muted">5s-Figures Performance</div>
                 </div>
                 <!--/.col-->
-                <div class="col-sm-7">
+                <div class="col-sm-7 select_group">
                     <select
-                            class="dashboard__select" name="workplaceSelect" id="workplaceSelect"
-                            ng-options="place.name for place in withHeaderWorkPlaces track by place.id"
-                            ng-model="search.place" ng-change="selectPlace(search.place)"
+                            class="dashboard__select" name="companySelect" id="companySelect"
+                            ng-options="company.name for company in withHeaderCompaniesList track by company.id"
+                            ng-model="search.company" ng-change="selectPlace(search.company)"
                     >
                     </select>
                     <select
@@ -22,13 +22,20 @@
                             ng-model="search.department" ng-change="selectDepartment(search.department)"
                     >
                     </select>
+                    <select
+                            class="dashboard__select" name="workplaceSelect" id="workplaceSelect"
+                            ng-options="place.name for place in withHeaderWorkPlaces track by place.id"
+                            ng-model="search.place" ng-change="selectPlace(search.place)"
+                    >
+                    </select>
+
                 </div>
                 <!--/.col-->
             </div>
             <!--/.row-->
             <div class="chart-wrapper" style="margin-top:40px;">
                 <!--<canvas class="chart chart-bar" chart-data="historyAudit.data" chart-labels="historyAudit.labels" chart-legend="false" chart-series="historyAudit.series" chart-click="historyAudit.onClick" chart-options="historyAudit.options" chart-colors="historyAudit.colors" chart-dataset-override="historyAudit.datasetOverride" height="300"></canvas>-->
-                <div id="timeline" style="height: 180px;"></div>
+                <div id="timeline" style="max-height: 300px;"></div>
             </div>
 
 
