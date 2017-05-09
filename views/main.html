@@ -5,73 +5,77 @@
         <div class="card-block">
             <div class="row">
                 <div class="col-sm-5">
-                    <h4 class="card-title mb-0">Score</h4>
+                    <h4 class="card-title mb-0">Audit history</h4>
                     <div class="small text-muted">5s-Figures Performance</div>
                 </div>
                 <!--/.col-->
                 <div class="col-sm-7">
-                    <!--<button type="button" class="btn btn-primary float-right"><i class="icon-cloud-download"></i>-->
-                    <!--</button>-->
-                    <!--<div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar with button groups">-->
-                        <!--<div class="btn-group mr-3" data-toggle="buttons" aria-label="First group">-->
-                            <!--<span>Departments</span>-->
-                            <select
-                                    class="dashboard__select" name="workplaceSelect" id="workplaceSelect"
-                                    ng-options="place.name for place in withHeaderWorkPlaces track by place.id"
-                                    ng-model="search.place" ng-change="selectPlace(search.place)"
-                            >
-                            </select>
+                    <select
+                            class="dashboard__select" name="workplaceSelect" id="workplaceSelect"
+                            ng-options="place.name for place in withHeaderWorkPlaces track by place.id"
+                            ng-model="search.place" ng-change="selectPlace(search.place)"
+                    >
+                    </select>
                     <select
                             class="dashboard__select" name="departmentSelect" id="departmentSelect"
                             ng-options="department.name for department in withHeaderDepartments track by department.id"
                             ng-model="search.department" ng-change="selectDepartment(search.department)"
                     >
                     </select>
-                            <!--<span>Workplaces</span>-->
-                          -
-                            <!--<label class="btn btn-outline-secondary">-->
-                                <!--<input type="radio" name="options" id="option1">Day-->
-                            <!--</label>-->
-                            <!--<label class="btn btn-outline-secondary active">-->
-                                <!--<input type="radio" name="options" id="option2" checked>Month-->
-                            <!--</label>-->
-                            <!--<label class="btn btn-outline-secondary">-->
-                                <!--<input type="radio" name="options" id="option3">Year-->
-                            <!--</label>-->
-                            <!--</div>-->
-                        <!--</div>-->
                 </div>
                 <!--/.col-->
             </div>
             <!--/.row-->
-            <div class="chart-wrapper" style="height:300px;margin-top:40px;">
-                <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" chart-legend="false" chart-series="series" chart-click="onClick" chart-options="options" chart-colors="colors" chart-dataset-override="datasetOverride" height="300"></canvas>
-            <div>
-                <div id="js-legend" class="chart-legend">
-                    <ul class="16-legend">
-                        <li><span style="" class="fa fa-square target"></span>Target</li>
-                        <li><span style="" class="fa fa-square last"></span>Last</li>
-                        <li><span style="" class="fa fa-square current"></span>Current</li></ul>
-                </div>
-            </div>
+            <div class="chart-wrapper" style="margin-top:40px;">
+                <!--<canvas class="chart chart-bar" chart-data="historyAudit.data" chart-labels="historyAudit.labels" chart-legend="false" chart-series="historyAudit.series" chart-click="historyAudit.onClick" chart-options="historyAudit.options" chart-colors="historyAudit.colors" chart-dataset-override="historyAudit.datasetOverride" height="300"></canvas>-->
+                <div id="timeline" style="height: 180px;"></div>
             </div>
 
-            <!--<div class="nav-item dropdown">-->
-                <!--<a class="nav-link dropdown-toggle start" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">-->
-                    <!--<span class="d-md-right-none">start</span>-->
-                <!--</a>-->
-                <!--<div class="dropdown-menu">-->
-
-                    <!--<div class="dropdown-header text-center">-->
-                        <!--<strong>Choose department</strong>-->
-                    <!--</div>-->
-
-                    <!--<a class="dropdown-item" href="#" ng-repeat="department in departmentsList track by department.id">{{department.name}}<span class="badge badge-info"></span></a>-->
-                <!--</div>-->
-            <!--</div>-->
 
         </div>
-        <div class="card-footer">
+        <div class="card-block">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h4 class="card-title mb-0">Score history</h4>
+                    <div class="small text-muted">5s-Figures Performance</div>
+                </div>
+            </div>
+            <!--/.row-->
+            <div class="chart-wrapper" style="height:300px;margin-top:40px;">
+                <canvas class="chart chart-line" chart-data="historyScore.data" chart-labels="historyScore.labels" chart-legend="false" chart-series="historyScore.series" chart-click="historyScore.onClick" chart-options="historyScore.options" chart-colors="historyScore.colors" chart-dataset-override="historyScore.datasetOverride" height="300"></canvas>
+                <div>
+                    <div id="js-legend" class="chart-legend">
+                        <ul class="16-legend">
+                            <li><span style="" class="fa fa-square target"></span>Target</li>
+                            <li><span style="" class="fa fa-square last"></span>Last</li>
+                            <li><span style="" class="fa fa-square current"></span>Current</li></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-block">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h4 class="card-title mb-0">Score</h4>
+                    <div class="small text-muted">5s-Figures Performance</div>
+                </div>
+            </div>
+            <!--/.row-->
+            <div class="chart-wrapper" style="height:300px;margin-top:40px;">
+                <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" chart-legend="false" chart-series="series" chart-click="onClick" chart-options="options" chart-colors="colors" chart-dataset-override="datasetOverride" height="300"></canvas>
+                <div>
+                    <div id="js-legend" class="chart-legend">
+                        <ul class="16-legend">
+                            <li><span style="" class="fa fa-square target"></span>Target</li>
+                            <li><span style="" class="fa fa-square last"></span>Last</li>
+                            <li><span style="" class="fa fa-square current"></span>Current</li></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="card-footer">-->
+        <!---->
+
             <!--<table id="auditTable" class="table table-bordered">-->
                 <!--<thead>-->
                 <!--<tr>-->
@@ -81,100 +85,30 @@
                     <!--<th style="width: 15%;">Current</th>-->
                 <!--</tr>-->
                 <!--</thead>-->
-                <!--<tbody class="list" ng-repeat="department in table track by department.id">-->
-                <!--<tr ng-repeat="place in department.places track by place.id">-->
-                    <!--<td class="station" >{{place.name}}</td>-->
-                    <!--<td ng-style="{backgroundColor: department.color}" class="department">{{department.name}}</td>-->
+                <!--<tbody class="list">-->
+                <!--<tr ng-repeat="(key, value) in table.placeName track by $index">-->
+                    <!--<td>{{value}}</td>-->
+                    <!--<td ng-style="{backgroundColor: table.departmentColor[$index]}" class="department">{{table.departmentName[$index]}}</td>-->
                     <!--<td style="width: 15%;" class="last-week">-->
                         <!--<i class="fa fa-long-arrow-right"  aria-hidden="true" ng-class="-->
-                                                                    <!--{'up': (place.previeus - place.last) >0,-->
-                                                                    <!--'down': (place.previeus - place.last) <0,-->
-                                                                    <!--'equal': place.previeus === place.last}">-->
+                                                                    <!--{'up': (table.placeLastScore[$index] - table.placePrevScore[$index]) >0,-->
+                                                                    <!--'down': (table.placeLastScore[$index] - table.placePrevScore[$index]) <0,-->
+                                                                    <!--'equal': table.placeLastScore[$index] === table.placePrevScore[$index]}">-->
                         <!--</i>-->
-                       <!--{{place.last}}</td>-->
+                        <!--{{table.placeLastScore[$index]}}</td>-->
                     <!--<td style="width: 15%;" class="current-week">-->
                         <!--<i class="fa fa-long-arrow-right" aria-hidden="true" ng-class="-->
-                                                                    <!--{'up': (place.current - place.previeus) >0,-->
-                                                                    <!--'down': (place.current - place.previeus) <0,-->
-                                                                    <!--'equal': place.current === place.previeus}">-->
+                                                                    <!--{'up': (table.placeCurrentScore[$index] - table.placeLastScore[$index]) >0,-->
+                                                                    <!--'down': (table.placeCurrentScore[$index] - table.placeLastScore[$index]) <0,-->
+                                                                    <!--'equal': table.placeCurrentScore[$index] === table.placeLastScore[$index]}">-->
 
                         <!--</i>-->
-                        <!--{{place.current}}-->
+                        <!--{{table.placeCurrentScore[$index]}}-->
                     <!--</td>-->
                 <!--</tr>-->
                 <!--</tbody>-->
             <!--</table>-->
-
-            <table id="auditTable" class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Workplace</th>
-                    <th>Department</th>
-                    <th style="width: 15%;">Last</th>
-                    <th style="width: 15%;">Current</th>
-                </tr>
-                </thead>
-                <tbody class="list">
-                <tr ng-repeat="(key, value) in table.placeName track by $index">
-                    <td>{{value}}</td>
-                    <td ng-style="{backgroundColor: table.departmentColor[$index]}" class="department">{{table.departmentName[$index]}}</td>
-                    <td style="width: 15%;" class="last-week">
-                        <i class="fa fa-long-arrow-right"  aria-hidden="true" ng-class="
-                                                                    {'up': (table.placeLastScore[$index] - table.placePrevScore[$index]) >0,
-                                                                    'down': (table.placeLastScore[$index] - table.placePrevScore[$index]) <0,
-                                                                    'equal': table.placeLastScore[$index] === table.placePrevScore[$index]}">
-                        </i>
-                        {{table.placeLastScore[$index]}}</td>
-                    <td style="width: 15%;" class="current-week">
-                        <i class="fa fa-long-arrow-right" aria-hidden="true" ng-class="
-                                                                    {'up': (table.placeCurrentScore[$index] - table.placeLastScore[$index]) >0,
-                                                                    'down': (table.placeCurrentScore[$index] - table.placeLastScore[$index]) <0,
-                                                                    'equal': table.placeCurrentScore[$index] === table.placeLastScore[$index]}">
-
-                        </i>
-                        {{table.placeCurrentScore[$index]}}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--<ul>-->
-                <!--<li>-->
-                    <!--<div class="text-muted">Visits</div>-->
-                    <!--<strong>29.703 Users (40%)</strong>-->
-                    <!--<div class="progress progress-xs mt-2">-->
-                        <!--<div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>-->
-                    <!--</div>-->
-                <!--</li>-->
-                <!--<li class="hidden-sm-down">-->
-                    <!--<div class="text-muted">Unique</div>-->
-                    <!--<strong>24.093 Users (20%)</strong>-->
-                    <!--<div class="progress progress-xs mt-2">-->
-                        <!--<div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>-->
-                    <!--</div>-->
-                <!--</li>-->
-                <!--<li>-->
-                    <!--<div class="text-muted">Pageviews</div>-->
-                    <!--<strong>78.706 Views (60%)</strong>-->
-                    <!--<div class="progress progress-xs mt-2">-->
-                        <!--<div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>-->
-                    <!--</div>-->
-                <!--</li>-->
-                <!--<li class="hidden-sm-down">-->
-                    <!--<div class="text-muted">New Users</div>-->
-                    <!--<strong>22.123 Users (80%)</strong>-->
-                    <!--<div class="progress progress-xs mt-2">-->
-                        <!--<div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>-->
-                    <!--</div>-->
-                <!--</li>-->
-                <!--<li class="hidden-sm-down">-->
-                    <!--<div class="text-muted">Bounce Rate</div>-->
-                    <!--<strong>40.15%</strong>-->
-                    <!--<div class="progress progress-xs mt-2">-->
-                        <!--<div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>-->
-                    <!--</div>-->
-                <!--</li>-->
-            <!--</ul>-->
-        </div>
+        <!--</div>-->
     </div>
     <!--/.card-->
 

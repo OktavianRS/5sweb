@@ -38,6 +38,201 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
         )
     }
 
+    // histiry audit
+    $scope.historyAudit={
+        // labels:['qwert', 'tyui'],
+        data:[[10,100], [20,50], [30]],
+        colors:[],
+    };
+
+    $scope.historyAudit.datasetOverride = [
+        {
+            label: "target",
+            borderWidth: 3,
+            type: 'line',
+            pointRadius: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#a32428',
+            pointHoverBackgroundColor: '#a32428',
+            pointHoverBorderColor: '#a32428'
+        },
+        {
+
+            label: "last",
+            borderWidth: 3,
+            type: 'line',
+            pointRadius: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#339163',
+            pointHoverBackgroundColor: '#339163',
+            pointHoverBorderColor: '#339163'
+        },
+        {
+            label: "current",
+            borderWidth: 3,
+            type: 'line',
+            pointRadius: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#e8f170',
+            pointHoverBackgroundColor: '#e8f170',
+            pointHoverBorderColor: '#e8f170'
+        },
+
+    ];
+
+    $scope.historyAudit.options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scaleShowLabels: false,
+        tooltips: {
+            enabled: true,
+            mode: 'single',
+            callbacks: {
+                label: function (tooltipItems, data) {
+                    return tooltipItems.yLabel + '% ' + (week(tooltipItems));
+                }
+            }
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    max: 100,
+                    min: 0,
+                    stepSize: 10,
+                    callback: function (value, index, values) {
+                        return value + '%';
+                    }
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    max: 100,
+                    min: 0,
+                    stepSize: 10,
+                }
+            }]
+        },
+    }
+
+        google.charts.load('current', {
+            'packages': ['timeline']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var container = document.getElementById('timeline');
+            var chart = new google.visualization.Timeline(container);
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({
+                type: 'string',
+                id: 'President'
+            });
+            dataTable.addColumn({
+                type: 'date',
+                id: 'Start'
+            });
+            dataTable.addColumn({
+                type: 'date',
+                id: 'End'
+            });
+            dataTable.addRows([
+                ['Washington', new Date(1789, 3, 30), new Date(1797, 2, 4)],
+                ['Adams', new Date(1797, 2, 4), new Date(1801, 2, 4)],
+                ['Jefferson', new Date(1801, 2, 4), new Date(1809, 2, 4)]
+            ]);
+
+            chart.draw(dataTable);
+        }
+
+
+
+
+
+
+
+
+    // histiry score
+    $scope.historyScore={
+        labels: ["12.08.2016", "15.08.2016", "16.08.2016", "09.09.2016", "12.09.2016", "15.10.2016", "25.10.2016"],
+        data:[
+            [17, 25, 22, 20, 8, 10, 7],
+            [21, 28, 24, 25, 12, 13, 15],
+            [25, 32, 31, 26, 18, 19, 16],
+        ],
+        colors:[],
+    };
+
+    $scope.historyScore.datasetOverride = [
+        {
+            label: "target",
+            borderWidth: 3,
+            type: 'line',
+            pointRadius: 3,
+            backgroundColor: '#a32428',
+            borderColor: '#a32428',
+            pointHoverBackgroundColor: '#a32428',
+            pointHoverBorderColor: '#a32428'
+        },
+        {
+
+            label: "last",
+            borderWidth: 3,
+            type: 'line',
+            pointRadius: 3,
+            backgroundColor: '#339163',
+            borderColor: '#339163',
+            pointHoverBackgroundColor: '#339163',
+            pointHoverBorderColor: '#339163'
+        },
+        {
+            label: "current",
+            borderWidth: 3,
+            type: 'line',
+            pointRadius: 3,
+            backgroundColor: '#e8f170',
+            borderColor: '#e8f170',
+            pointHoverBackgroundColor: '#e8f170',
+            pointHoverBorderColor: '#e8f170'
+        },
+
+    ];
+
+    $scope.historyScore.options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scaleShowLabels: false,
+        tooltips: {
+            enabled: true,
+            mode: 'single',
+            callbacks: {
+                label: function (tooltipItems, data) {
+                    return tooltipItems.yLabel + '% ' + (week(tooltipItems));
+                }
+            }
+        },
+        scales: {
+            // yAxes: [{
+            //     ticks: {
+            //         max: 100,
+            //         min: 0,
+            //         stepSize: 10,
+            //         callback: function (value, index, values) {
+            //             return value;
+            //         }
+            //     }
+            // }],
+        },
+    }
+
+
+
+
+
+
+
+
+
     // TODO carrent, last, target
    var  data3 = [90, 90, 90, 90, 90, 90],
         data4 = [100, 100, 100, 100, 100, 100],
@@ -46,7 +241,6 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
     $scope.labels = [];
     $scope.data = [];
     $scope.colors = [];
-    $scope.data = [];
     $scope.series = ["Current", "Target", "Last"];
 
     // fetch all initial data
@@ -54,7 +248,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
 
         chartsModel.fetchChartByCompany({company_id:1}, function callback (result) {
             console.log(result);
-             changesChartAndTable(result);
+            changesChart(result);
         });
 
 
@@ -173,12 +367,12 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
     if (item.id === null){
         chartsModel.fetchChartByCompany({company_id:1}, function callback (result) {
             console.log(result);
-            changesChartAndTable(result);
+            changesChart(result);
         });
     } else {
         chartsModel.fetchChartByDepartment({department_id:item.id}, function callback (result) {
 
-            changesChartAndTable (result);
+            changesChart (result);
 
             $scope.departmentsList = $scope.AllDepartmentsList.filter(
                 function (value) {
@@ -197,12 +391,12 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, cha
 
     function selectPlace (item) {
         chartsModel.fetchChartByPlace({place_id:item.id}, function callback (result) {
-            changesChartAndTable (result);
+            changesChart (result);
         } );
 }
 
 
-function changesChartAndTable (result) {
+function changesChart (result) {
     // if we have string then push it in array
     for (var i in result) {
         if (typeof result[i] !== 'object') {
@@ -241,12 +435,12 @@ function changesChartAndTable (result) {
     ];
 
     //// functional for table//////
-    $scope.table = result;
-    if ($scope.table.placeName.length<2) {
-        for (var i=2;i< Object.keys($scope.table).length;i++) {
-            $scope.data[i] = [];
-        }
-    }
+    // $scope.table = result;
+    // if ($scope.table.placeName.length<2) {
+    //     for (var i=2;i< Object.keys($scope.table).length;i++) {
+    //         $scope.data[i] = [];
+    //     }
+    // }
 }
 
 
