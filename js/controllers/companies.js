@@ -4,7 +4,6 @@ angular
 
 companiesCtrl.$inject = ['$scope', 'toast', 'ngDialog', 'companiesModel'];
 function companiesCtrl($scope, toast, ngDialog, companiesModel) {
-  $scope.companiesState = true;
   $scope.companiesList = [];
   $scope.editElement = {};
 
@@ -20,12 +19,9 @@ function companiesCtrl($scope, toast, ngDialog, companiesModel) {
   }
   constuctor();
 
-  $scope.handleMinimize = function() {
-    $scope.companiesState = !$scope.companiesState;
-  }
-
   $scope.createCompany = function() {
     companiesModel.createCompany($scope.company, constuctor);
+    ngDialog.closeAll();
   }
 
   $scope.deleteCompany = function(id) {
@@ -35,6 +31,14 @@ function companiesCtrl($scope, toast, ngDialog, companiesModel) {
   $scope.updateCompany = function(id, name) {
     companiesModel.updateCompany({ id, name }, constuctor);
     ngDialog.closeAll();
+  }
+
+  $scope.createCompanyModal = function() {
+    ngDialog.open({
+      template:'/views/components/createCompanyDialog.html',
+      className: 'ngdialog-theme-default',
+      scope: $scope,
+    });
   }
 
   $scope.editCompany = function(data) {

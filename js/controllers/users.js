@@ -39,7 +39,6 @@ function usersCtrl($scope, toast, ngDialog, usersModel) {
     ngDialog.closeAll();
   }
 
-
   $scope.createUserModal = function() {
     ngDialog.open({
       template:'/views/components/createUserDialog.html',
