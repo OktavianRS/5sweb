@@ -6094,11 +6094,13 @@ body {
   margin-bottom: 1.5rem;
   border-bottom: 1px solid #cfd8dc; }
 
-.btn .badge {
-  position: absolute;
-  top: 2px;
-  right: 6px;
-  font-size: 9px; }
+.btn {
+  cursor: pointer; }
+  .btn .badge {
+    position: absolute;
+    top: 2px;
+    right: 6px;
+    font-size: 9px; }
 
 .btn-transparent {
   color: #fff;
@@ -8616,6 +8618,9 @@ base-chart.chart {
   .departments .department-name:hover i {
     opacity: 1; }
 
+.departments .card-header button {
+  float: right; }
+
 .workplaces .workplace-name {
   padding: 10px 10px;
   color: #46565f; }
@@ -8660,6 +8665,9 @@ base-chart.chart {
     display: none; }
   .audit .audit__selectLabel2 {
     display: inline-block; } }
+
+.audit .card-header button {
+  float: right; }
 
 @media all and (-ms-high-contrast: none) {
   html {

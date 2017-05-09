@@ -4,7 +4,6 @@ angular
 
 criteriaCtrl.$inject = ['$scope', 'toast', 'ngDialog', 'criteriasModel'];
 function criteriaCtrl($scope, toast, ngDialog, criteriasModel) {
-  $scope.criteriaState = true;
   $scope.criteriasList = [];
   $scope.editElement = {};
 
@@ -20,12 +19,9 @@ function criteriaCtrl($scope, toast, ngDialog, criteriasModel) {
   }
   constuctor();
 
-  $scope.handleMinimize = function() {
-    $scope.criteriaState = !$scope.criteriaState;
-  }
-
   $scope.createCriteria = function() {
     criteriasModel.createCriteria($scope.criteria, constuctor);
+    ngDialog.closeAll();
   }
 
   $scope.deleteCriteria = function(id) {
@@ -35,6 +31,14 @@ function criteriaCtrl($scope, toast, ngDialog, criteriasModel) {
   $scope.updateCriteria = function(id, name) {
     criteriasModel.updateCriteria({ id, name }, constuctor);
     ngDialog.closeAll();
+  }
+
+  $scope.createCriteriaModal = function() {
+    ngDialog.open({
+      template:'/views/components/createCriteriaDialog.html',
+      className: 'ngdialog-theme-default',
+      scope: $scope,
+    });
   }
 
   $scope.editCriteria = function(data) {

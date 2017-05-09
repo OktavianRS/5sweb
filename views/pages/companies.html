@@ -3,53 +3,17 @@
 
     <div class="card" ng-controller="companiesCtrl">
       <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa fa-plus-square-o"></i>Company creation
-                    <div class="card-actions">
-                        <a ng-if="companiesState" ng-click="handleMinimize()"><i class="icon-arrow-up"></i></a>
-                        <a ng-if="!companiesState" ng-click="handleMinimize()"><i class="icon-arrow-down"></i></a>
-                    </div>
-                </div>
-                <div class="card-block department-form" ng-if="companiesState">
-                    <form class="form-2orizontal">
-                        <div class="form-group">
-                            <label class="form-control-label" for="prependedInput">Name</label>
-                            <div class="controls">
-                                <div class="input-prepend input-group">
-                                    <input
-                                      id="prependedInput"
-                                      class="form-control"
-                                      size="16"
-                                      type="text"
-                                      ng-model="company.name"
-                                    >
-                                </div>
-                                <p class="help-block">Enter company name here</p>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button
-                              type="submit"
-                              class="btn btn-primary"
-                              ng-click="createCompany()"
-                            >
-                              Save company
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!--/.col-->
-      </div>
-
-      <div class="row">
           <div class="col-lg-12">
               <div class="card">
                   <div class="card-header">
                       <i class="fa fa-align-justify"></i> Company list
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm action-button"
+                        ng-click="createCompanyModal()"
+                        >
+                          Add company
+                      </button>
                   </div>
                   <div class="card-block">
                       <table class="table table-bordered table-striped table-sm">
@@ -61,10 +25,17 @@
                           </thead>
                           <tbody>
                               <tr ng-repeat="company in companiesList track by $index">
-                                  <td class="department-name" ng-click="editCompany(company)">
-                                    <i class="fa fa-pencil"></i> {{company.name}}
+                                  <td class="department-name">
+                                    {{company.name}}
                                   </td>
                                   <td>
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-warning"
+                                      ng-click="editCompany(company)"
+                                    >
+                                      Edit
+                                    </button>
                                     <button
                                       type="button"
                                       class="btn btn-outline-danger"

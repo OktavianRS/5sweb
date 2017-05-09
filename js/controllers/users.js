@@ -4,17 +4,17 @@ angular
 
 usersCtrl.$inject = ['$scope', 'toast', 'ngDialog', 'usersModel'];
 function usersCtrl($scope, toast, ngDialog, usersModel) {
-  $scope.usersState = true;
   $scope.state = {
     isDisabled: true
   }
   $scope.usersList = [];
 
+//TODO: change list to display first_name and last_name instead of username
   $scope.user = {
-    username: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
-    password_repeat: '',
   }
 
   // fetch all initial data
@@ -25,12 +25,9 @@ function usersCtrl($scope, toast, ngDialog, usersModel) {
   }
   constuctor();
 
-  $scope.handleMinimize = function() {
-    $scope.usersState = !$scope.usersState;
-  }
-
   $scope.submit = function() {
     usersModel.createUser($scope.user, constuctor);
+    ngDialog.closeAll();
   }
 
   $scope.deleteUser = function(id) {
@@ -40,6 +37,14 @@ function usersCtrl($scope, toast, ngDialog, usersModel) {
   $scope.updateUser = function(id, email, username, password) {
     usersModel.updateUser({id, email, username, password}, constuctor);
     ngDialog.closeAll();
+  }
+
+  $scope.createUserModal = function() {
+    ngDialog.open({
+      template:'/views/components/createUserDialog.html',
+      className: 'ngdialog-theme-default',
+      scope: $scope,
+    });
   }
 
   $scope.editUser = function(data) {

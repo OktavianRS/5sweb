@@ -2,7 +2,7 @@
   <div class="col-lg-12">
       <div class="card">
           <div class="card-header">
-              <i class="fa fa-pencil-square-o"></i>Edit department
+              <i class="fa fa-plus-square-o"></i>Department creation
           </div>
           <div class="card-block department-form">
               <form class="form-2orizontal">
@@ -15,19 +15,8 @@
                                 class="form-control"
                                 size="16"
                                 type="text"
-                                ng-model="editElement.name"
+                                ng-model="criteria.name"
                               >
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label class="form-control-label" for="prependedInput">Color</label>
-                      <div class="controls">
-                          <div class="input-prepend input-group">
-                              <color-picker
-                                options="options"
-                                ng-model="editElement.color"
-                              ></color-picker>
                           </div>
                       </div>
                   </div>
@@ -35,9 +24,9 @@
                       <button
                         type="submit"
                         class="btn btn-primary"
-                        ng-click="updateDepartment(editElement.id, editElement.name, editElement.color)"
+                        ng-click="createCriteria()"
                       >
-                        Update department
+                        Update criteria
                       </button>
                   </div>
               </form>
