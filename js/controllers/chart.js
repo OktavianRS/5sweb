@@ -6,8 +6,9 @@ angular
     .controller('DashboardChart', DashboardChart);
 
 
-DashboardChart.$inject = ['$rootScope','$scope', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
-function DashboardChart($rootScope, $scope, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
+
+DashboardChart.$inject = ['$rootScope','$scope', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
+function DashboardChart($rootScope, $scope, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
     $scope.search = {
     };
 
@@ -108,6 +109,17 @@ var addRows = [
             }
     }
 
+
+   angular.element($window).on('resize', function(){
+     google.charts.setOnLoadCallback(drawChart);
+     // manuall $digest required as resize event
+     // is outside of angular
+     //  $scope.$digest();
+   });
+
+    $rootScope.$on('changeWidthChart',function (event, data) {
+        google.charts.setOnLoadCallback(drawChart);
+    });
 
 
 
@@ -480,53 +492,6 @@ function changesChart (result) {
 
     }
 
-    // $scope.$watch(
-    //     function () {
-    //     return angular.element(document.getElementsByClassName('main')).innerWidth();
-    // }, function (prev, current) {
-    //    console.log('eeee');
-    //     changesAuditHistory();
-    // })
-
-    // $(document.getElementsByClassName('main')).innerWidth().resize(function(){
-    //     alert(window.innerWidth);
-    //
-    //     $scope.$apply(function(){
-    //         //do something to update current scope based on the new innerWidth and let angular update the view.
-    //     });
-    // });
-
-    // element = angular.element(document.getElementsByClassName('main'))[0];
-    //
-    // $scope.getElementDimensions = function () {
-    //     return angular.element(document.getElementsByClassName('main')).innerWidth();
-    // };
-    //
-    // $scope.$watch($scope.getElementDimensions, function (newValue, oldValue) {
-    //     console.log('effef');
-    //     //<<perform your logic here using newValue.w and set your variables on the scope>>
-    // }, true);
-    //
-    // element.bind('resize', function () {
-    //     $scope.$apply();
-    // });
-
-    // var w = angular.element($window);
-    // $scope.$watch(
-    //     function () {
-    //         return $window.innerWidth;
-    //     },
-    //     function (value) {
-    //         $scope.windowWidth = value;
-    //     },
-    //     true
-    // );
-    //
-    // w.bind('resize', function(){
-    //     $scope.$apply();
-    // });
-
-
 
 
     function changesScoreHistory (result){
@@ -541,9 +506,7 @@ function changesChart (result) {
     }
 
 
-    $rootScope.$on('changeWidthChart',function (event, data) {
-        changesAuditHistory();
-    });
+
 
 
 }
