@@ -32,10 +32,6 @@ function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ng
             $scope.selectedDepartment = $scope.workplace.department;
         });
 
-        departmentsModel.fetchPlacesList(function(result) {
-            $scope.AllPlacesList = result;
-        });
-
     }
     constuctor();
 

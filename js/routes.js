@@ -143,6 +143,7 @@ angular
   .state('app.workplaces', {
     url: '/workplaces',
     templateUrl: 'views/pages/workplaces.html',
+    controller: 'workplacesCtrl',
     ncyBreadcrumb: {
       label: 'Workplaces'
     },
@@ -151,6 +152,26 @@ angular
         // you can lazy load controllers
         return $ocLazyLoad.load({
           files: ['js/controllers/workplaces.js']
+        });
+      }]
+    }
+  })
+    .state('app.workplaces-criteria', {
+    url: '/workplaces-criteria/{place_id}/{place_name}',
+    templateUrl: 'views/pages/criteriaByWorkplaces.html',
+    onEnter: function($rootScope, $stateParams) {
+      $rootScope.place_name = $stateParams.place_name;
+      $rootScope.place_id = $stateParams.place_id;
+    },
+    ncyBreadcrumb: {
+      label: '{{place_name}}',
+      parent: 'app.workplaces'
+    },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/criteriaByWorkplaces.js']
         });
       }]
     }
@@ -191,24 +212,24 @@ angular
       }]
     }
   })
-      .state('app.audit', {
-        url: '/audit',
-        templateUrl: 'views/pages/audit.html',
-        //page title goes here
-        ncyBreadcrumb: {
-          label: 'Audit',
-        },
-        //page subtitle goes here
-        params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
-        resolve: {
-          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-            // you can lazy load controllers
-            return $ocLazyLoad.load({
-              files: ['js/controllers/audit.js']
-            });
-          }]
-        }
-      })
+  .state('app.audit', {
+    url: '/audit',
+    templateUrl: 'views/pages/audit.html',
+    //page title goes here
+    ncyBreadcrumb: {
+      label: 'Audit',
+    },
+    //page subtitle goes here
+    params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/audit.js']
+        });
+      }]
+    }
+  })
   .state('appSimple', {
     abstract: true,
     templateUrl: 'views/common/layouts/simple.html',

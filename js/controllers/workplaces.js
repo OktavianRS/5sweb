@@ -23,23 +23,19 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
 
         workplacesModel.fetchWorkPlaces(function(result) {
             $scope.workplacesList = result;
-            console.log($scope.workplacesList);
         });
         criteriasModel.fetchCriterias(function(result) {
             $scope.criteriasList = result;
-            console.log($scope.criteriasList);
         });
         departmentsModel.fetchDepartments(function(result) {
             $scope.departmentsList = result;
             $scope.workplace.department =   $scope.departmentsList[0];
             $scope.selectedDepartment = $scope.workplace.department;
-            console.log($scope.departmentsList);
         });
 
         departmentsModel.fetchPlacesList(function(result) {
             $scope.AllPlacesList = result;
             // $scope.workplace.department =   $scope.departmentsList[0];
-            console.log($scope.AllPlacesList);
         });
 
     }
@@ -100,9 +96,8 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         updateList();
     };
 
-    $scope.showCriteria = function(criteria_id, criteria_name) {
-      $rootScope.criteria_name = criteria_name;
-      $state.go('app.criteria-by-workplaces', {criteria_id, criteria_name});
+    $scope.showCriteria = function(place_id, place_name) {
+      $state.go('app.workplaces-criteria', {place_id, place_name});
     }
 
     $scope.settings = {

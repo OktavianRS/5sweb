@@ -34,13 +34,10 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
     usersModel.fetchUsers(function(result) {
       $scope.usersList = result;
       $scope.search.user =  $scope.usersList[0];
-
-      console.log(result);
     });
 
     auditModel.fetchAudits(function(result) {
       $scope.auditList = result;
-      console.log(result);
     });
 
     departmentsModel.fetchPlacesList(function(result) {
@@ -52,7 +49,6 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
       }
       $scope.workPlacesList = $scope.search.department.places;
       $scope.search.workplace = $scope.workPlacesList[0];
-      console.log(result);
 
     });
   }
@@ -73,10 +69,6 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
     auditModel.startAudit($scope.audit, constuctor);
   }
 
-  // $scope.deleteUser = function(id) {
-  //   usersModel.deleteUser({ id }, constuctor);
-  // }
-
   $scope.stopAudit = function(id, email, username, password) {
     // usersModel.stopAudit({id, email, username, password}, constuctor);
   }
@@ -88,19 +80,4 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
       scope: $scope,
     });
   }
-
-
-  // $scope.stopAudit = function(id, email, username, password) {
-  //   usersModel.updateUser({id, email, username, password}, constuctor);
-  //   ngDialog.closeAll();
-  // }
-
-  // $scope.editUser = function(data) {
-  //   $scope.editElement = Object.create(data);
-  //   ngDialog.open({
-  //     template:'/views/components/editUserDialog.html',
-  //     className: 'ngdialog-theme-default',
-  //     scope: $scope,
-  //   });
-  // }
 }

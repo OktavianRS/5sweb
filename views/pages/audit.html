@@ -16,7 +16,10 @@
                       </button>
                   </div>
                   <div class="card-block">
-                      <table class="table table-bordered table-striped table-sm">
+                    <table
+                      class="table table-bordered table-striped table-sm"
+                      ng-if="auditList.length"
+                    >
                           <thead>
                               <tr>
                                   <th>Name</th>
@@ -41,34 +44,18 @@
                                   <td class="audit-name">
                                       {{audit.started_at * 1000 | date:'yyyy-MM-dd HH:mm'}}
                                   </td>
-                                  <!--<td ng-if="user.status===10">-->
-                                    <!--<button-->
-                                      <!--type="button"-->
-                                      <!--class="btn btn-outline-success"-->
-                                    <!--&gt;-->
-                                      <!--Active-->
-                                    <!--</button>-->
-                                  <!--</td>-->
-                                  <!--<td ng-if="user.status!==10">-->
-                                    <!--<button-->
-                                      <!--type="button"-->
-                                      <!--class="btn btn-outline-danger"-->
-                                    <!--&gt;-->
-                                      <!--Deleted-->
-                                    <!--</button>-->
-                                  <!--</td>-->
-                                  <!--<td>-->
-                                    <!--<button-->
-                                      <!--type="button"-->
-                                      <!--class="btn btn-outline-danger"-->
-                                      <!--ng-click="deleteUser(user.id)"-->
-                                    <!--&gt;-->
-                                      <!--Delete-->
-                                    <!--</button>-->
-                                  <!--</td>-->
                               </tr>
                           </tbody>
                       </table>
+                      <div class="empty-list" ng-if="!auditList.length">
+                        Audit List is Empty
+                        <a
+                          href="#"
+                          ng-click="createAuditModal()"
+                        >
+                          Add new audit
+                        </a>
+                      </div>
                   </div>
               </div>
           </div>
