@@ -241,9 +241,9 @@ function widthChart() {
   function link(scope, elem, attrs) {
 
     scope.$watch(function () {
-          scope.apply(function () {
+          // scope.apply(function () {
             return  {w:elem.clientWidth};
-          })
+          // })
         },
         function (newValue, oldValue) {
 
