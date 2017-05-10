@@ -58,7 +58,6 @@ angular
       label: 'Dashboard',
     },
     //page subtitle goes here
-    params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
     resolve: {
       loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
         // you can lazy load files for an existing module
@@ -89,7 +88,6 @@ angular
       label: 'Departments',
     },
     //page subtitle goes here
-    params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
     resolve: {
       loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
         // you can lazy load controllers
@@ -99,20 +97,81 @@ angular
       }]
     }
   })
+  .state('app.workplaces-by-department', {
+    url: '/workplaces-by-department/{department_id}/{department_name}',
+    templateUrl: 'views/pages/workplacesByDepartment.html',
+    controller: 'workplacesByDepartmentCtrl',
+    onEnter: function($rootScope, $stateParams) {
+      $rootScope.department_name = $stateParams.department_name;
+      $rootScope.department_id = $stateParams.department_id;
+    },
+    ncyBreadcrumb: {
+      label: '{{department_name}}',
+      parent: 'app.departments'
+    },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/workplacesByDepartment.js']
+        });
+      }]
+    }
+  })
+  .state('app.criteria-by-workplaces', {
+    url: '/criteria-by-workplaces/{place_id}/{place_name}/{department_id}/{department_name}',
+    templateUrl: 'views/pages/criteriaByWorkplaces.html',
+    onEnter: function($rootScope, $stateParams) {
+      $rootScope.department_name = $stateParams.department_name;
+      $rootScope.department_id = $stateParams.department_id;
+      $rootScope.place_name = $stateParams.place_name;
+      $rootScope.place_id = $stateParams.place_id;
+    },
+    ncyBreadcrumb: {
+      label: '{{place_name}}',
+      parent: 'app.workplaces-by-department'
+    },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/criteriaByWorkplaces.js']
+        });
+      }]
+    }
+  })
   .state('app.workplaces', {
     url: '/workplaces',
     templateUrl: 'views/pages/workplaces.html',
-    //page title goes here
+    controller: 'workplacesCtrl',
     ncyBreadcrumb: {
-      label: 'Workplaces',
+      label: 'Workplaces'
     },
-    //page subtitle goes here
-    params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
     resolve: {
       loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
         // you can lazy load controllers
         return $ocLazyLoad.load({
           files: ['js/controllers/workplaces.js']
+        });
+      }]
+    }
+  })
+    .state('app.workplaces-criteria', {
+    url: '/workplaces-criteria/{place_id}/{place_name}',
+    templateUrl: 'views/pages/criteriaByWorkplaces.html',
+    onEnter: function($rootScope, $stateParams) {
+      $rootScope.place_name = $stateParams.place_name;
+      $rootScope.place_id = $stateParams.place_id;
+    },
+    ncyBreadcrumb: {
+      label: '{{place_name}}',
+      parent: 'app.workplaces'
+    },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/criteriaByWorkplaces.js']
         });
       }]
     }
@@ -153,24 +212,24 @@ angular
       }]
     }
   })
-      .state('app.audit', {
-        url: '/audit',
-        templateUrl: 'views/pages/audit.html',
-        //page title goes here
-        ncyBreadcrumb: {
-          label: 'Audit',
-        },
-        //page subtitle goes here
-        params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
-        resolve: {
-          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-            // you can lazy load controllers
-            return $ocLazyLoad.load({
-              files: ['js/controllers/audit.js']
-            });
-          }]
-        }
-      })
+  .state('app.audit', {
+    url: '/audit',
+    templateUrl: 'views/pages/audit.html',
+    //page title goes here
+    ncyBreadcrumb: {
+      label: 'Audit',
+    },
+    //page subtitle goes here
+    params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/audit.js']
+        });
+      }]
+    }
+  })
   .state('appSimple', {
     abstract: true,
     templateUrl: 'views/common/layouts/simple.html',

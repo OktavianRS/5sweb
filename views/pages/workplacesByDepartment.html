@@ -1,9 +1,9 @@
 <div class="animated fadeIn workplaces">
-    <div class="card" ng-controller="workplacesCtrl">
+    <div class="card" ng-controller="workplacesByDepartmentCtrl">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header" sticky offset="55">
+                    <div class="card-header">
                         <i class="fa fa-align-justify"></i> Workplace list
                         <button
                           type="button"
@@ -14,33 +14,31 @@
                         </button>
                     </div>
                     <div class="card-block">
-                        <table
-                          class="table table-bordered table-striped table-sm"
-                          ng-if="AllPlacesList.length"
-                        >
+                      <table
+                        class="table table-bordered table-striped table-sm"
+                        ng-if="workplacesList.length"
+                      >
                             <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Department</th>
-                                <th>Critetia</th>
+                                <th>Criteria</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
-                            <tbody ng-repeat="department in AllPlacesList track by $index">
-                            <tr ng-repeat="place in department.places track by $index">
-                                <td class="workplace-name">{{place.name}}</td>
-                                <td class="department-name"> {{department.name}}</td>
+                            <tbody>
+                            <tr ng-repeat="workplace in workplacesList track by $index">
+                                <td class="workplace-name">{{workplace.name}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-outline-primary" ng-click="showCriteria(place.id, place.name)">Show Critetia</button>
+                                    <button type="button" class="btn btn-outline-primary" ng-click="showCriteria(workplace.id, workplace.name)">Show Critetia</button>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-outline-success"  ng-click="editWorkplace(place)">Edit</button>
-                                    <button type="button" class="btn btn-outline-danger"  ng-click="deleteWorkPlace(place.id)">Delete</button>
+                                    <button type="button" class="btn btn-outline-success"  ng-click="editWorkplace(workplace)">Edit</button>
+                                    <button type="button" class="btn btn-outline-danger"  ng-click="deleteWorkPlace(workplace.id)">Delete</button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
-                        <div class="empty-list" ng-if="!AllPlacesList.length">
+                        <div class="empty-list" ng-if="!workplacesList.length">
                           Workplaces List is Empty
                           <a
                             href="#"

@@ -396,7 +396,6 @@ var addRows = [
 
 ///// functional for chart - Score//////
 function changesChart (result) {
-    debugger
     // if we have string then push it in array
     for (var i in result) {
         if (typeof result[i] !== 'object') {

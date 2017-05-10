@@ -25,6 +25,15 @@ angular.module('model.criterias', [])
                     })
             }
 
+            this.fetchAllCriteriaByWorkplaces = function(req, callback) {
+                api.get(
+                    url.fetchAllCriteriaByWorkplaces,
+                    req,
+                    function(res) {
+                        callback(res);
+                    })
+            }
+
             this.deleteCriteria = function(req, callback) {
                 api.delete(
                     url.deleteCriteria,

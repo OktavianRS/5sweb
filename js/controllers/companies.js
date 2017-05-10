@@ -14,7 +14,7 @@ function companiesCtrl($scope, toast, ngDialog, companiesModel) {
   // fetch all initial data
   function constuctor() {
     companiesModel.fetchCompanies(function(result) {
-      $scope.companiesList = result;
+      $scope.companiesList = [];
     });
   }
   constuctor();

@@ -3,10 +3,10 @@
  */
 angular
     .module('app')
-    .controller('workplacesCtrl', workplacesCtrl)
+    .controller('workplacesByDepartmentCtrl', workplacesByDepartmentCtrl)
 
-workplacesCtrl.$inject = ['$scope', '$rootScope', '$state', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
-function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
+workplacesByDepartmentCtrl.$inject = ['$scope', '$rootScope', '$state', '$stateParams', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
+function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
 
     $scope.workplacesList = [];
     $scope.criteriasList = [];
@@ -17,17 +17,11 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         name: ''
     }
 
-
     // fetch all initial data
     function constuctor() {
 
-        workplacesModel.fetchWorkPlaces(function(result) {
+        workplacesModel.fetchAllWorkPlacesByDepartment({department_id: $stateParams.department_id},(result) => {
             $scope.workplacesList = result;
-        });
-        criteriasModel.fetchCriterias(function(result) {
-            $scope.criteriasList = result;
-
-
         });
         criteriasModel.fetchCriterias(function(result) {
             $scope.criteriasList = result;
@@ -38,17 +32,8 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
             $scope.selectedDepartment = $scope.workplace.department;
         });
 
-        departmentsModel.fetchPlacesList(function(result) {
-            $scope.AllPlacesList = result;
-            // $scope.workplace.department =   $scope.departmentsList[0];
-
-        });
-
     }
     constuctor();
-
-
-    $scope.workPlaceState = true;
 
     $scope.createWorkPlace = function() {
         $scope.workplace.department_id = $scope.workplace.department.id;
@@ -78,6 +63,14 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         }
     }
 
+    $scope.showCriteria = function(place_id, place_name) {
+      $state.go('app.criteria-by-workplaces', {
+        place_id,
+        place_name,
+        department_id: $stateParams.department_id,
+        department_name: $stateParams.department_name
+      });
+    }
 
     $scope.editWorkplace = function(data) {
         $scope.editElement = Object.create(data);
@@ -89,46 +82,6 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         });
     }
 
-
-    var lastIndex = 1;
-
-    $scope.reset = function() {
-        $scope.model = [];
-    };
-
-    $scope.add = function() {
-        // console.log('ass')
-        lastIndex++;
-        updateList();
-    };
-
-    $scope.showCriteria = function(place_id, place_name) {
-      $state.go('app.workplaces-criteria', {place_id, place_name});
-    }
-
-    $scope.settings = {
-        bootstrap2: false,
-        filterClear: 'Show all!',
-        filterPlaceHolder: 'Filter!',
-        moveSelectedLabel: 'Move selected only',
-        moveAllLabel: 'Move all!',
-        removeSelectedLabel: 'Remove selected only',
-        removeAllLabel: 'Remove all!',
-        moveOnSelect: false,
-        preserveSelection: 'moved',
-        selectedListLabel: 'The selected',
-        nonSelectedListLabel: 'The unselected',
-        postfix: '_helperz',
-        selectMinHeight: 130,
-        filter: true,
-        filterNonSelected: '',
-        filterSelected: '',
-        infoAll: 'Showing all {0}!',
-        infoFiltered: '<span class="label label-warning">Filtered</span> {0} from {1}!',
-        infoEmpty: 'Empty list!',
-        filterValues: true
-    };
-
     $scope.createWorkplaceModal = function() {
       ngDialog.open({
         template:'/views/components/createWorkplaceDialog.html',
@@ -136,20 +89,5 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         scope: $scope,
       });
     }
-
-    $scope.showCriterias = function() {
-        ngDialog.open({
-            scope:$scope,
-            template:'/views/components/criteriasDialog.html',
-            className: 'ngdialog-theme-default'
-        });
-    }
-
-    $scope.selectPlace = selectPlace;
-
-    function selectPlace (selectedItem) {
-        $scope.selectedDepartment = selectedItem;
-    }
-
 
 }
