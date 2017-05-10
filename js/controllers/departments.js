@@ -11,7 +11,6 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
 
   $scope.department = {
     name: '',
-    color: '#20a8d8',
     company_id: '',
   }
 
@@ -41,8 +40,8 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
     departmentsModel.deleteDepartment({ id }, constuctor);
   }
 
-  $scope.updateDepartment = function(id, name, color) {
-    departmentsModel.updateDepartment({ id, name, color }, constuctor);
+  $scope.updateDepartment = function(id, name) {
+    departmentsModel.updateDepartment({ id, name }, constuctor);
     ngDialog.closeAll();
   }
 
