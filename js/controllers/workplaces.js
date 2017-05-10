@@ -23,23 +23,23 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
 
         workplacesModel.fetchWorkPlaces(function(result) {
             $scope.workplacesList = result;
-            console.log($scope.workplacesList);
+
         });
         criteriasModel.fetchCriterias(function(result) {
             $scope.criteriasList = result;
-            console.log($scope.criteriasList);
+
         });
         departmentsModel.fetchDepartments(function(result) {
             $scope.departmentsList = result;
             $scope.workplace.department =   $scope.departmentsList[0];
             $scope.selectedDepartment = $scope.workplace.department;
-            console.log($scope.departmentsList);
+
         });
 
         departmentsModel.fetchPlacesList(function(result) {
             $scope.AllPlacesList = result;
             // $scope.workplace.department =   $scope.departmentsList[0];
-            console.log($scope.AllPlacesList);
+
         });
 
     }

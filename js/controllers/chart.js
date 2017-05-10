@@ -32,10 +32,10 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
         }
     }
 
-
     $scope.headerFilter = headerFilter;
 
 
+    // configuration of color of colomns
     function convertHex(hex, opacity) {
         hex = hex.replace('#', '');
         r = parseInt(hex.substring(0, 2), 16);
@@ -59,122 +59,54 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
         )
     }
 
-    // histiry audit
-    $scope.historyAudit={
-        // labels:['qwert', 'tyui'],
-        data:[[10,100], [20,50], [30]],
-        colors:[],
+    // show in tooltips which week
+    function week(tooltipItems) {
+        if (tooltipItems.datasetIndex === 0) weekTitle = 'current week';
+        if (tooltipItems.datasetIndex === 1) weekTitle = 'previous week';
+        return weekTitle;
     };
 
-    $scope.historyAudit.datasetOverride = [
-        {
-            label: "target",
-            borderWidth: 3,
-            type: 'line',
-            pointRadius: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#a32428',
-            pointHoverBackgroundColor: '#a32428',
-            pointHoverBorderColor: '#a32428'
-        },
-        {
 
-            label: "last",
-            borderWidth: 3,
-            type: 'line',
-            pointRadius: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#339163',
-            pointHoverBackgroundColor: '#339163',
-            pointHoverBorderColor: '#339163'
-        },
-        {
-            label: "current",
-            borderWidth: 3,
-            type: 'line',
-            pointRadius: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#e8f170',
-            pointHoverBackgroundColor: '#e8f170',
-            pointHoverBorderColor: '#e8f170'
-        },
+    // google chart time-line
+    // histiry audit
 
-    ];
+var addRows = [
+    ['department1', new Date(2016, 5, 4), new Date(2016, 6, 4)],
+    ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
+    ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
+    ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
+    ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
+    ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
+    ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
+    ['department3', new Date(2016, 8, 4), new Date(2016, 9, 4)],
+];
+    google.charts.load('current', {
+        'packages': ['timeline']
+    });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var container = document.getElementById('timeline');
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
 
-    $scope.historyAudit.options = {
-        responsive: true,
-        maintainAspectRatio: false,
-        scaleShowLabels: false,
-        tooltips: {
-            enabled: true,
-            mode: 'single',
-            callbacks: {
-                label: function (tooltipItems, data) {
-                    return tooltipItems.yLabel + '% ' + (week(tooltipItems));
-                }
+        dataTable.addColumn({ type: 'string', id: 'Name' });
+        dataTable.addColumn({ type: 'date', id: 'Start' });
+        dataTable.addColumn({ type: 'date', id: 'End' });
+        dataTable.addRows(addRows);
+        var rowHeight = 30;
+        var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
+        var options = {
+            avoidOverlappingGridLines: true,
+            height: chartHeight,
+            width: '100%',
+        };
+        chart.draw(dataTable, options);
+        if (chartHeight < 400){
+            $scope.timelineHeight = {height :chartHeight*0.6};
+        } else {
+            $scope.timelineHeight = 300
             }
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    max: 100,
-                    min: 0,
-                    stepSize: 10,
-                    callback: function (value, index, values) {
-                        return value + '%';
-                    }
-                }
-            }],
-            xAxes: [{
-                ticks: {
-                    max: 100,
-                    min: 0,
-                    stepSize: 10,
-                }
-            }]
-        },
     }
-
-
-
-        google.charts.load('current', {
-            'packages': ['timeline']
-        });
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            var container = document.getElementById('timeline');
-            var chart = new google.visualization.Timeline(container);
-            var dataTable = new google.visualization.DataTable();
-
-            dataTable.addColumn({
-                type: 'string',
-                id: 'President'
-            });
-
-            dataTable.addColumn({
-                type: 'date',
-                id: 'Start'
-            });
-            dataTable.addColumn({
-                type: 'date',
-                id: 'End'
-            });
-            dataTable.addRows([
-                ['department1', new Date(2016, 5, 4), new Date(2016, 6, 4)],
-                ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
-                ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
-                ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
-                ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
-                ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
-                ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
-                ['department3', new Date(2016, 8, 4), new Date(2016, 9, 4)],
-            ]);
-
-            chart.draw(dataTable);
-        }
-
-
 
 
 
@@ -189,23 +121,11 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
             [21, 28, 24, 25, 12, 13, 15],
             [25, 32, 31, 26, 18, 19, 16],
         ],
-        colors:[],
     };
 
     $scope.historyScore.datasetOverride = [
         {
             label: "target",
-            borderWidth: 3,
-            type: 'line',
-            pointRadius: 3,
-            backgroundColor: '#a32428',
-            borderColor: '#a32428',
-            pointHoverBackgroundColor: '#a32428',
-            pointHoverBorderColor: '#a32428'
-        },
-        {
-
-            label: "last",
             borderWidth: 3,
             type: 'line',
             pointRadius: 3,
@@ -215,7 +135,8 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
             pointHoverBorderColor: '#339163'
         },
         {
-            label: "current",
+
+            label: "last",
             borderWidth: 3,
             type: 'line',
             pointRadius: 3,
@@ -223,6 +144,16 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
             borderColor: '#e8f170',
             pointHoverBackgroundColor: '#e8f170',
             pointHoverBorderColor: '#e8f170'
+        },
+        {
+            label: "current",
+            borderWidth: 3,
+            type: 'line',
+            pointRadius: 3,
+            backgroundColor: '#a32428',
+            borderColor: '#a32428',
+            pointHoverBackgroundColor: '#a32428',
+            pointHoverBorderColor: '#a32428'
         },
 
     ];
@@ -236,7 +167,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
             mode: 'single',
             callbacks: {
                 label: function (tooltipItems, data) {
-                    return tooltipItems.yLabel + '% ' + (week(tooltipItems));
+                    return tooltipItems.yLabel + ' score ';
                 }
             }
         },
@@ -266,7 +197,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
     function constuctor() {
 
         chartsModel.fetchChartByCompany({company_id:1}, function callback (result) {
-            console.log(result);
+
             changesChart(result);
         });
 
@@ -275,7 +206,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
             $scope.withHeaderCompaniesList = $scope.companiesList.slice();
             $scope.withHeaderCompaniesList.splice(0,0, headerFilter.company);
             $scope.search.company = headerFilter.company;
-            console.log($scope.companiesList);
+
         });
 
         workplacesModel.fetchAllWorkPlaces(function(result) {
@@ -283,7 +214,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
             $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
             $scope.withHeaderWorkPlaces.splice(0,0, headerFilter.workplace);
             $scope.search.place = headerFilter.workplace;
-            console.log($scope.workplacesList);
+
         });
 
         departmentsModel.fetchPlacesList(function(result) {
@@ -293,11 +224,8 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
             $scope.withHeaderDepartments = $scope.departmentsList.slice();
             $scope.withHeaderDepartments.splice(0,0, headerFilter.department)
             $scope.search.department =  headerFilter.department;
-            console.log($scope.departmentsList);
 
-            // $timeout(function () {
-            //     // $scope.table = $scope.AllDepartmentsList.slice();
-            // },0);
+
 
         });
 
@@ -372,12 +300,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
         },
     }
 
-// show in tooltips which week
-    function week(tooltipItems) {
-        if (tooltipItems.datasetIndex === 0) weekTitle = 'current week';
-        if (tooltipItems.datasetIndex === 1) weekTitle = 'previous week';
-        return weekTitle;
-    };
+
 
 
 
@@ -401,7 +324,9 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
             $scope.search.place = headerFilter.workplace;
             companiesModel.fetchCompanies(function(result) {
 
-                //TODO...
+                changesAuditHistory(result);
+                changesScoreHistory (result)
+                changesChart (result);
             });
 
         } else {
@@ -411,8 +336,11 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
                 //TODO...
                 headerFilter.department.isDisabled = false;
 
-                console.log(result);
-                // changesChart(result);
+
+                changesAuditHistory(result);
+                changesScoreHistory (result)
+                changesChart (result);
+
             });
         }
     }
@@ -434,7 +362,8 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
     } else {
         chartsModel.fetchChartByDepartment({department_id:item.id}, function callback (result) {
 
-
+            changesAuditHistory(result);
+            changesScoreHistory (result)
             changesChart (result);
 
             $scope.departmentsList = $scope.AllDepartmentsList.filter(
@@ -457,13 +386,17 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
 
     function selectPlace (item) {
         chartsModel.fetchChartByPlace({place_id:item.id}, function callback (result) {
+
+            changesAuditHistory(result);
+            changesScoreHistory (result)
             changesChart (result);
         } );
 }
 
 
-///// functional for chart//////
+///// functional for chart - Score//////
 function changesChart (result) {
+    debugger
     // if we have string then push it in array
     for (var i in result) {
         if (typeof result[i] !== 'object') {
@@ -485,29 +418,128 @@ function changesChart (result) {
             $scope.data[i].push(dataScore);
         }
     }
+    // console.log($scope.colors   ,'$scope.colors[1].backgroundColor')
+
+    // var colors =  [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'];
+
+    // $scope.colors = [
+    //     {
+    //         backgroundColor: result.departmentColor,
+    //         borderColor: result.departmentColor,
+    //         pointHoverBackgroundColor: '#fff'
+    //     },
+    //     {
+    //         backgroundColor: lastWeekColor(result.departmentColor),
+    //         borderColor: result.departmentColor,
+    //         pointHoverBackgroundColor: '#fff'
+    //     },
+    // ];
 
 
-    $scope.colors = [
-        {
-            backgroundColor: result.departmentColor,
-            borderColor: result.departmentColor,
-            pointHoverBackgroundColor: '#fff'
-        },
-        {
-            backgroundColor: lastWeekColor(result.departmentColor),
-            borderColor: result.departmentColor,
-            pointHoverBackgroundColor: '#fff'
-        },
-    ];
-
-    //// functional for table//////
-    // $scope.table = result;
-    // if ($scope.table.placeName.length<2) {
-    //     for (var i=2;i< Object.keys($scope.table).length;i++) {
-    //         $scope.data[i] = [];
-    //     }
-    // }
 }
+
+    function changesAuditHistory (result) {
+
+        var addRows = [
+            ['department1', new Date(2016, 5, 4), new Date(2016, 6, 4)],
+            ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
+            ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
+            ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
+            ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
+            ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
+            ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
+            ['department3', new Date(2016, 8, 4), new Date(2016, 9, 4)],
+        ];
+        google.charts.load('current', {
+            'packages': ['timeline']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var container = document.getElementById('timeline');
+            var chart = new google.visualization.Timeline(container);
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({ type: 'string', id: 'Name' });
+            dataTable.addColumn({ type: 'date', id: 'Start' });
+            dataTable.addColumn({ type: 'date', id: 'End' });
+            dataTable.addRows(addRows);
+            var rowHeight = 30;
+            var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
+
+            var options = {
+                avoidOverlappingGridLines: true,
+                height: chartHeight,
+                width: '100%',
+            };
+            chart.draw(dataTable, options);
+            if (chartHeight < 400){
+                $scope.timelineHeight = {height :chartHeight*0.6};
+            } else {
+                $scope.timelineHeight = 300
+            }
+        }
+
+    }
+
+    // $scope.$watch(
+    //     function () {
+    //     return angular.element(document.getElementsByClassName('main')).innerWidth();
+    // }, function (prev, current) {
+    //    console.log('eeee');
+    //     changesAuditHistory();
+    // })
+
+    // $(document.getElementsByClassName('main')).innerWidth().resize(function(){
+    //     alert(window.innerWidth);
+    //
+    //     $scope.$apply(function(){
+    //         //do something to update current scope based on the new innerWidth and let angular update the view.
+    //     });
+    // });
+
+    // element = angular.element(document.getElementsByClassName('main'))[0];
+    //
+    // $scope.getElementDimensions = function () {
+    //     return angular.element(document.getElementsByClassName('main')).innerWidth();
+    // };
+    //
+    // $scope.$watch($scope.getElementDimensions, function (newValue, oldValue) {
+    //     console.log('effef');
+    //     //<<perform your logic here using newValue.w and set your variables on the scope>>
+    // }, true);
+    //
+    // element.bind('resize', function () {
+    //     $scope.$apply();
+    // });
+
+    // var w = angular.element($window);
+    // $scope.$watch(
+    //     function () {
+    //         return $window.innerWidth;
+    //     },
+    //     function (value) {
+    //         $scope.windowWidth = value;
+    //     },
+    //     true
+    // );
+    //
+    // w.bind('resize', function(){
+    //     $scope.$apply();
+    // });
+
+
+
+
+    function changesScoreHistory (result){
+        $scope.historyScore={
+            labels: ["Audit1", "Audit2", "Audit3", "Audit4", "Audit5", "Audit6", "Audit7"],
+            data:[
+                [17, 25, 22, 40, 8, 10, 7],
+                [21, 96, 24, 20, 12, 13, 15],
+                [25, 32, 31, 26, 18, 19, 16],
+            ],
+        };
+    }
 
 
 

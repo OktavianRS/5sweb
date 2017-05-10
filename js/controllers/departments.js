@@ -67,7 +67,7 @@ function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, 
       scope: $scope,
       controller: function  (popUpPlaceList) {
          $scope.placesForDepartment = popUpPlaceList;
-         console.log(popUpPlaceList);
+
       },
       resolve: {
         popUpPlaceList: function popUpPlaceList() {
@@ -77,8 +77,7 @@ function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, 
                 for (var i=0; i<res.length; i++){
                  if (res[i].id === department_id){
                     $scope.placesForDepartment = res[i];
-                   console.log($scope.placesForDepartment);
-                 // return  $scope.placesForDepartment
+
                    return res[i];
                  }
                }

@@ -10,6 +10,7 @@ angular
 .directive('toggle', bootstrapTooltipsPopoversDirective)
 .directive('tab', bootstrapTabsDirective)
 .directive('button', cardCollapseDirective)
+.directive('widthChart', widthChart)
 
 //Prevent click if href="#"
 function preventClickDirective() {
@@ -141,6 +142,10 @@ function collapseMenuTogglerDirective() {
 
   function link(scope, element, attrs) {
     element.on('click', function(){
+      if (document.querySelector('.chart')){
+
+      }
+
       if (element.hasClass('navbar-toggler') && !element.hasClass('layout-toggler')) {
         angular.element('body').toggleClass('sidebar-mobile-show')
       }
@@ -224,3 +229,77 @@ function cardCollapseDirective() {
     }
   }
 }
+
+//Card Collapse
+function widthChart() {
+  var directive = {
+    restrict: 'AE',
+    link: link
+  }
+  return directive;
+
+  function link(scope, elem, attrs) {
+
+    scope.$watch(function () {
+          scope.apply(function () {
+            return  {w:elem.clientWidth};
+          })
+        },
+        function (newValue, oldValue) {
+
+          if (newValue !== oldValue)
+          {
+
+
+            // do some thing
+          }
+        }, true);
+    elem.bind('widthChart', function () {
+      scope.$apply();
+    });
+
+    // elem.on('resize', function () {
+    //   console.log(elem[0].clientWidth)
+    //   scope.$apply();
+    // });
+
+
+    // $scope.getElementDimensions = function () {
+    //   return { 'h': $element.height(), 'w': $element.width() };
+    // };
+    // $scope.$watch($scope.getElementDimensions, function (newValue, oldValue) {
+    //   //<<perform your logic here using newValue.w and set your variables on the scope>>
+    // }, true);
+    //
+    // window.bind('resize', function () {
+    //   console.log('dfsf')
+    //   $scope.$apply();
+    // });
+
+
+
+    // console.log(element[0].clientWidth, '5555555555555555555555555');
+    // console.log(element.height(), '333333333333333333');
+    //
+    // element.on('resize',function (){
+    //   console.log('aaa');
+    //   scope.$apply();
+    // });
+    //
+    // scope.$watch
+    // (element[0].clientWidth,
+    //     function (newValue, oldValue) {
+    //       console.log('rgrdg');
+    //       if (newValue != oldValue) {
+    //         // Do something ...
+    //         console.log(newValue);
+    //       }
+    //     }
+    // );
+  }
+}
+
+
+
+
+

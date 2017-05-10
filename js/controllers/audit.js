@@ -35,12 +35,11 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
       $scope.usersList = result;
       $scope.search.user =  $scope.usersList[0];
 
-      console.log(result);
     });
 
     auditModel.fetchAudits(function(result) {
       $scope.auditList = result;
-      console.log(result);
+
     });
 
     departmentsModel.fetchPlacesList(function(result) {
@@ -52,7 +51,6 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
       }
       $scope.workPlacesList = $scope.search.department.places;
       $scope.search.workplace = $scope.workPlacesList[0];
-      console.log(result);
 
     });
   }
