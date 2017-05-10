@@ -6,8 +6,8 @@ angular
     .controller('DashboardChart', DashboardChart);
 
 
-DashboardChart.$inject = ['$scope', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
-function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
+DashboardChart.$inject = ['$scope', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
+function DashboardChart($scope, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
     $scope.search = {
     };
 
@@ -107,6 +107,17 @@ var addRows = [
             $scope.timelineHeight = 300
             }
     }
+
+    $scope.width = $window.innerWidth;
+
+   angular.element($window).bind('resize', function(){
+     google.charts.setOnLoadCallback(drawChart);
+     $scope.width = $window.innerWidth;
+
+     // manuall $digest required as resize event
+     // is outside of angular
+     $scope.$digest();
+   });
 
 
 
