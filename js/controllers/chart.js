@@ -112,6 +112,7 @@ var addRows = [
 
    angular.element($window).on('resize', function(){
      google.charts.setOnLoadCallback(drawChart);
+
      // manuall $digest required as resize event
      // is outside of angular
      //  $scope.$digest();
@@ -459,7 +460,7 @@ function changesChart (result) {
             ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
             ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
             ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
-            ['department3', new Date(2016, 8, 4), new Date(2016, 9, 4)],
+            ['department3', new Date(2016, 8, 4), new Date(2018, 9, 4)],
         ];
         google.charts.load('current', {
             'packages': ['timeline']
