@@ -8,28 +8,33 @@ angular
 
 DashboardChart.$inject = ['$scope', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
 function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
-    $scope.search = {};
+    $scope.search = {
+    };
 
+
+    // headers and configuration of visible company filter and disabled of department+workplaces
+    var isSuperAdmin = true;
     var headerFilter={
         company:{
             name: 'Show all companies',
-            id: 'null',
+            id: null,
+            isDisabled: false,
         },
         department:{
             name: 'Show all departments',
-            id: 'null',
+            id: null,
+            isDisabled: isSuperAdmin || false,
         },
         workplace:{
             name: 'Show all workplaces',
-            id: 'null',
+            id: null,
+            isDisabled:true,
         }
     }
 
-    // var HeaderDepartment = {
-    //         name: 'Show all departments',
-    //         id: 'null',
-    //     },
-    //     HeaderWorkplaces ={name:'Show all workplaces', id:'null'};
+
+    $scope.headerFilter = headerFilter;
+
 
     function convertHex(hex, opacity) {
         hex = hex.replace('#', '');
@@ -156,7 +161,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
                 id: 'End'
             });
             dataTable.addRows([
-                ['department1', new Date(2016, 3, 30), new Date(2016, 6, 4)],
+                ['department1', new Date(2016, 5, 4), new Date(2016, 6, 4)],
                 ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
                 ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
                 ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
@@ -236,16 +241,6 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
             }
         },
         scales: {
-            // yAxes: [{
-            //     ticks: {
-            //         max: 100,
-            //         min: 0,
-            //         stepSize: 10,
-            //         callback: function (value, index, values) {
-            //             return value;
-            //         }
-            //     }
-            // }],
         },
     }
 
@@ -389,7 +384,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
 
 
 
-
+// selected inputs (filters)
 
     $scope.selectCompany = selectCompany;
     $scope.selectDepartment = selectDepartment;
@@ -397,40 +392,48 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
 
 
     function selectCompany (item) {
+        headerFilter.department.isDisabled = true;
+        headerFilter.workplace.isDisabled = true;
         if (item.id === null){
-            chartsModel.fetchChartByCompany({company_id:1}, function callback (result) {
-                console.log(result);
-                changesChart(result);
+            headerFilter.department.isDisabled = true;
+            headerFilter.workplace.isDisabled = true;
+            $scope.search.department = headerFilter.department;
+            $scope.search.place = headerFilter.workplace;
+            companiesModel.fetchCompanies(function(result) {
+
+                //TODO...
             });
+
         } else {
-            chartsModel.fetchChartByDepartment({department_id:item.id}, function callback (result) {
 
-                changesChart (result);
+            chartsModel.fetchChartByCompany({company_id:item.id}, function callback (result) {
 
-                $scope.departmentsList = $scope.AllDepartmentsList.filter(
-                    function (value) {
-                        return value.id === item.id
-                    }
-                );
+                //TODO...
+                headerFilter.department.isDisabled = false;
 
-                $scope.workplacesList = $scope.departmentsList[0].places;
-                $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
-                $scope.withHeaderWorkPlaces.splice(0,0, HeaderWorkplaces);
-                $scope.search.place = HeaderWorkplaces;
-
+                console.log(result);
+                // changesChart(result);
             });
         }
     }
 
 
    function selectDepartment (item) {
+       headerFilter.workplace.isDisabled = true;
     if (item.id === null){
-        chartsModel.fetchChartByCompany({company_id:1}, function callback (result) {
-            console.log(result);
-            changesChart(result);
+        $scope.search.place = headerFilter.workplace;
+
+        departmentsModel.fetchPlacesList(function(result) {
+
+            $scope.departmentsList = result;
+            $scope.withHeaderDepartments = $scope.departmentsList.slice();
+            $scope.withHeaderDepartments.splice(0,0, headerFilter.department)
+            $scope.search.department =  headerFilter.department;
+
         });
     } else {
         chartsModel.fetchChartByDepartment({department_id:item.id}, function callback (result) {
+
 
             changesChart (result);
 
@@ -442,8 +445,11 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
 
             $scope.workplacesList = $scope.departmentsList[0].places;
             $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
-            $scope.withHeaderWorkPlaces.splice(0,0, HeaderWorkplaces);
-            $scope.search.place = HeaderWorkplaces;
+            $scope.withHeaderWorkPlaces.splice(0,0, headerFilter.workplace);
+            $scope.search.place = headerFilter.workplace;
+
+
+            headerFilter.workplace.isDisabled = false;
 
         });
         }
@@ -456,6 +462,7 @@ function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, com
 }
 
 
+///// functional for chart//////
 function changesChart (result) {
     // if we have string then push it in array
     for (var i in result) {
@@ -464,7 +471,6 @@ function changesChart (result) {
         }
     }
 
-///// functional for chart//////
     $scope.labels = result.placeName;
 
     data1 = result.placeCurrentScore;  // current week

@@ -10,19 +10,19 @@
                 </div>
                 <!--/.col-->
                 <div class="col-sm-7 select_group">
-                    <select
+                    <select ng-disabled="headerFilter.company.isDisabled"
                             class="dashboard__select" name="companySelect" id="companySelect"
                             ng-options="company.name for company in withHeaderCompaniesList track by company.id"
-                            ng-model="search.company" ng-change="selectPlace(search.company)"
+                            ng-model="search.company" ng-change="selectCompany(search.company)"
                     >
                     </select>
-                    <select
+                    <select ng-disabled="headerFilter.department.isDisabled"
                             class="dashboard__select" name="departmentSelect" id="departmentSelect"
                             ng-options="department.name for department in withHeaderDepartments track by department.id"
                             ng-model="search.department" ng-change="selectDepartment(search.department)"
                     >
                     </select>
-                    <select
+                    <select ng-disabled="headerFilter.workplace.isDisabled"
                             class="dashboard__select" name="workplaceSelect" id="workplaceSelect"
                             ng-options="place.name for place in withHeaderWorkPlaces track by place.id"
                             ng-model="search.place" ng-change="selectPlace(search.place)"
