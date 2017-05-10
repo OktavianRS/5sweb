@@ -6,8 +6,8 @@ angular
     .controller('DashboardChart', DashboardChart);
 
 
-DashboardChart.$inject = ['$scope', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
-function DashboardChart($scope, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
+DashboardChart.$inject = ['$rootScope','$scope', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
+function DashboardChart($rootScope, $scope, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
     $scope.search = {
     };
 
@@ -540,6 +540,10 @@ function changesChart (result) {
         };
     }
 
+
+    $rootScope.$on('changeWidthChart',function (event, data) {
+        changesAuditHistory();
+    });
 
 
 }
