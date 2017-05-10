@@ -2,8 +2,8 @@ angular
 .module('app')
 .controller('departmentsCtrl', departmentsCtrl)
 
-departmentsCtrl.$inject = ['$scope', 'toast', 'loginModel', 'ngDialog', 'departmentsModel', 'companiesModel', 'workplacesModel'];
-function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, companiesModel, workplacesModel) {
+departmentsCtrl.$inject = ['$scope', '$rootScope', '$state', 'toast', 'loginModel', 'ngDialog', 'departmentsModel', 'companiesModel', 'workplacesModel'];
+function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog, departmentsModel, companiesModel, workplacesModel) {
   $scope.companiesList = [];
   $scope.departmentsList = [];
   $scope.workPlacesList = [];
@@ -56,6 +56,11 @@ function departmentsCtrl($scope, toast, loginModel, ngDialog, departmentsModel, 
       className: 'ngdialog-theme-default',
       scope: $scope,
     });
+  }
+
+  $scope.showWorkplace = function(department_id, department_name) {
+    $rootScope.department_name = department_name;
+    $state.go('app.workplaces-by-department', {department_id, department_name});
   }
 
   $scope.showWorkplaces = function(department_id) {

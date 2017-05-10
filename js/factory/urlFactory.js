@@ -35,6 +35,7 @@ angular.module('factory.url', [])
           updateWorkPlace: baseUrl + '/place/update',
           addCriteriaToWorkPlace: baseUrl + '/place/add-criteria',
           removeCriteriaFromWorkPlace: baseUrl + '/place/remove-criteria',
+          fetchAllWorkPlacesByDepartment: baseUrl + '/place/by-department',
 
           //departmentsModel
           createDepartment: baseUrl + '/department/create',

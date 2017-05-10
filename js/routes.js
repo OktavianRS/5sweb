@@ -99,15 +99,28 @@ angular
       }]
     }
   })
+  .state('app.workplaces-by-department', {
+    url: '/workplaces-by-department/:department_id/:department_name',
+    templateUrl: 'views/pages/workplacesByDepartment.html',
+    ncyBreadcrumb: {
+      label: '{{department_name}}',
+      parent: 'app.departments'
+    },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/workplacesByDepartment.js']
+        });
+      }]
+    }
+  })
   .state('app.workplaces', {
     url: '/workplaces',
     templateUrl: 'views/pages/workplaces.html',
-    //page title goes here
     ncyBreadcrumb: {
-      label: 'Workplaces',
+      label: 'Workplaces'
     },
-    //page subtitle goes here
-    params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
     resolve: {
       loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
         // you can lazy load controllers

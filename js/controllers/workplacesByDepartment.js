@@ -3,10 +3,10 @@
  */
 angular
     .module('app')
-    .controller('workplacesCtrl', workplacesCtrl)
+    .controller('workplacesByDepartmentCtrl', workplacesByDepartmentCtrl)
 
-workplacesCtrl.$inject = ['$scope', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
-function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
+workplacesByDepartmentCtrl.$inject = ['$scope', '$stateParams', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
+function workplacesByDepartmentCtrl($scope, $stateParams, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
 
     $scope.workplacesList = [];
     $scope.criteriasList = [];
@@ -16,37 +16,28 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
     $scope.workplace = {
         name: ''
     }
-    // $scope.search = {};
 
     // fetch all initial data
     function constuctor() {
 
-        workplacesModel.fetchWorkPlaces(function(result) {
+        workplacesModel.fetchAllWorkPlacesByDepartment({department_id: $stateParams.department_id},(result) => {
             $scope.workplacesList = result;
-            console.log($scope.workplacesList);
         });
         criteriasModel.fetchCriterias(function(result) {
             $scope.criteriasList = result;
-            console.log($scope.criteriasList);
         });
         departmentsModel.fetchDepartments(function(result) {
             $scope.departmentsList = result;
             $scope.workplace.department =   $scope.departmentsList[0];
             $scope.selectedDepartment = $scope.workplace.department;
-            console.log($scope.departmentsList);
         });
 
         departmentsModel.fetchPlacesList(function(result) {
             $scope.AllPlacesList = result;
-            // $scope.workplace.department =   $scope.departmentsList[0];
-            console.log($scope.AllPlacesList);
         });
 
     }
     constuctor();
-
-
-    $scope.workPlaceState = true;
 
     $scope.createWorkPlace = function() {
         $scope.workplace.department_id = $scope.workplace.department.id;
@@ -76,7 +67,6 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
         }
     }
 
-
     $scope.editWorkplace = function(data) {
         $scope.editElement = Object.create(data);
 
@@ -87,42 +77,6 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
         });
     }
 
-
-    var lastIndex = 1;
-
-    $scope.reset = function() {
-        $scope.model = [];
-    };
-
-    $scope.add = function() {
-        // console.log('ass')
-        lastIndex++;
-        updateList();
-    };
-
-    $scope.settings = {
-        bootstrap2: false,
-        filterClear: 'Show all!',
-        filterPlaceHolder: 'Filter!',
-        moveSelectedLabel: 'Move selected only',
-        moveAllLabel: 'Move all!',
-        removeSelectedLabel: 'Remove selected only',
-        removeAllLabel: 'Remove all!',
-        moveOnSelect: false,
-        preserveSelection: 'moved',
-        selectedListLabel: 'The selected',
-        nonSelectedListLabel: 'The unselected',
-        postfix: '_helperz',
-        selectMinHeight: 130,
-        filter: true,
-        filterNonSelected: '',
-        filterSelected: '',
-        infoAll: 'Showing all {0}!',
-        infoFiltered: '<span class="label label-warning">Filtered</span> {0} from {1}!',
-        infoEmpty: 'Empty list!',
-        filterValues: true
-    };
-
     $scope.createWorkplaceModal = function() {
       ngDialog.open({
         template:'/views/components/createWorkplaceDialog.html',
@@ -130,20 +84,5 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
         scope: $scope,
       });
     }
-
-    $scope.showCriterias = function() {
-        ngDialog.open({
-            scope:$scope,
-            template:'/views/components/criteriasDialog.html',
-            className: 'ngdialog-theme-default'
-        });
-    }
-
-    $scope.selectPlace = selectPlace;
-
-    function selectPlace (selectedItem) {
-        $scope.selectedDepartment = selectedItem;
-    }
-
 
 }

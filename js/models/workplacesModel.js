@@ -33,6 +33,14 @@ angular.module('model.workplaces', [])
                       callback(res);
                   })
           }
+          this.fetchAllWorkPlacesByDepartment = function(req, callback) {
+              api.post(
+                  url.fetchAllWorkPlacesByDepartment,
+                  req,
+                  function(res) {
+                      callback(res);
+                  })
+          }
 
           this.fetchWorkPlace = function(req, callback) {
               api.get(

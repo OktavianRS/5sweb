@@ -1,0 +1,44 @@
+<div class="animated fadeIn workplaces">
+    <div class="card" ng-controller="workplacesByDepartmentCtrl">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> Workplace list
+                        <button
+                          type="button"
+                          class="btn btn-primary btn-sm action-button"
+                          ng-click="createWorkplaceModal()"
+                          >
+                            Add workplace
+                        </button>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Criteria</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="workplace in workplacesList track by $index">
+                                <td class="workplace-name">{{workplace.name}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-primary" ng-click="showCriterias()">Show Critetia</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-success"  ng-click="editWorkplace(workplace)">Edit</button>
+                                    <button type="button" class="btn btn-outline-danger"  ng-click="deleteWorkPlace(workplace.id)">Delete</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
