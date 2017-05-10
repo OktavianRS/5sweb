@@ -5,8 +5,8 @@ angular
     .module('app')
     .controller('workplacesCtrl', workplacesCtrl)
 
-workplacesCtrl.$inject = ['$scope', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
-function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
+workplacesCtrl.$inject = ['$scope', '$rootScope', '$state', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
+function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
 
     $scope.workplacesList = [];
     $scope.criteriasList = [];
@@ -99,6 +99,11 @@ function workplacesCtrl($scope, ngDialog, workplacesModel, criteriasModel, depar
         lastIndex++;
         updateList();
     };
+
+    $scope.showCriteria = function(criteria_id, criteria_name) {
+      $rootScope.criteria_name = criteria_name;
+      $state.go('app.criteria-by-workplaces', {criteria_id, criteria_name});
+    }
 
     $scope.settings = {
         bootstrap2: false,

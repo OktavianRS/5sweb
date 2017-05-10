@@ -5,8 +5,8 @@ angular
     .module('app')
     .controller('workplacesByDepartmentCtrl', workplacesByDepartmentCtrl)
 
-workplacesByDepartmentCtrl.$inject = ['$scope', '$stateParams', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
-function workplacesByDepartmentCtrl($scope, $stateParams, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
+workplacesByDepartmentCtrl.$inject = ['$scope', '$rootScope', '$state', '$stateParams', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
+function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
 
     $scope.workplacesList = [];
     $scope.criteriasList = [];
@@ -65,6 +65,15 @@ function workplacesByDepartmentCtrl($scope, $stateParams, ngDialog, workplacesMo
         } else {
             constuctor();
         }
+    }
+
+    $scope.showCriteria = function(place_id, place_name) {
+      $state.go('app.criteria-by-workplaces', {
+        place_id,
+        place_name,
+        department_id: $stateParams.department_id,
+        department_name: $stateParams.department_name
+      });
     }
 
     $scope.editWorkplace = function(data) {

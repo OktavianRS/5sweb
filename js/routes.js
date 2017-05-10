@@ -58,7 +58,6 @@ angular
       label: 'Dashboard',
     },
     //page subtitle goes here
-    params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
     resolve: {
       loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
         // you can lazy load files for an existing module
@@ -89,7 +88,6 @@ angular
       label: 'Departments',
     },
     //page subtitle goes here
-    params: { subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit' },
     resolve: {
       loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
         // you can lazy load controllers
@@ -100,8 +98,13 @@ angular
     }
   })
   .state('app.workplaces-by-department', {
-    url: '/workplaces-by-department/:department_id/:department_name',
+    url: '/workplaces-by-department/{department_id}/{department_name}',
     templateUrl: 'views/pages/workplacesByDepartment.html',
+    controller: 'workplacesByDepartmentCtrl',
+    onEnter: function($rootScope, $stateParams) {
+      $rootScope.department_name = $stateParams.department_name;
+      $rootScope.department_id = $stateParams.department_id;
+    },
     ncyBreadcrumb: {
       label: '{{department_name}}',
       parent: 'app.departments'
@@ -111,6 +114,28 @@ angular
         // you can lazy load controllers
         return $ocLazyLoad.load({
           files: ['js/controllers/workplacesByDepartment.js']
+        });
+      }]
+    }
+  })
+  .state('app.criteria-by-workplaces', {
+    url: '/criteria-by-workplaces/{place_id}/{place_name}/{department_id}/{department_name}',
+    templateUrl: 'views/pages/criteriaByWorkplaces.html',
+    onEnter: function($rootScope, $stateParams) {
+      $rootScope.department_name = $stateParams.department_name;
+      $rootScope.department_id = $stateParams.department_id;
+      $rootScope.place_name = $stateParams.place_name;
+      $rootScope.place_id = $stateParams.place_id;
+    },
+    ncyBreadcrumb: {
+      label: '{{place_name}}',
+      parent: 'app.workplaces-by-department'
+    },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/criteriaByWorkplaces.js']
         });
       }]
     }
