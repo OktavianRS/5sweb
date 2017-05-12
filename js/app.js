@@ -35,6 +35,7 @@ angular
   'model.charts',
   'model.users',
   'model.audit',
+  'model.check',
 
 
   // factories

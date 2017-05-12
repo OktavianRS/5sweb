@@ -62,6 +62,12 @@ angular.module('factory.url', [])
           stopAudit: baseUrl + '/audit/stop',
           fetchAudits: baseUrl + '/audit/all',
 
+          //checkListModel
+          createCheck: baseUrl + '/checklist/create',
+          fetchChecks: baseUrl + '/checklist/index',
+          deleteCheck: baseUrl + '/checklist/delete',
+          updateCheck: baseUrl + '/checklist/update',
+
         }
       }
     ]);

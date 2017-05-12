@@ -5,14 +5,16 @@ angular
     .module('app')
     .controller('workplacesCtrl', workplacesCtrl)
 
-workplacesCtrl.$inject = ['$scope', '$rootScope', '$state', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
-function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
+workplacesCtrl.$inject = ['$scope', '$rootScope', '$state', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel', 'checkListModel'];
+function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, criteriasModel, departmentsModel, checkListModel) {
 
     $scope.workplacesList = [];
     $scope.criteriasList = [];
     $scope.departmentsList = [];
     $scope.AllPlacesList = [];
+    $scope.checkList = [];
     $scope.editElement = {};
+    $scope.selectedCheckList = '';
     $scope.workplace = {
         name: ''
     }
@@ -29,9 +31,14 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
 
 
         });
+        checkListModel.fetchChecks(function(result) {
+            $scope.checkList = result;
+        });
+
         criteriasModel.fetchCriterias(function(result) {
             $scope.criteriasList = result;
         });
+
         departmentsModel.fetchDepartments(function(result) {
             $scope.departmentsList = result;
             $scope.workplace.department =   $scope.departmentsList[0];
@@ -108,8 +115,6 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
 
     $scope.settings = {
         bootstrap2: false,
-        filterClear: 'Show all!',
-        filterPlaceHolder: 'Filter!',
         moveSelectedLabel: 'Move selected only',
         moveAllLabel: 'Move all!',
         removeSelectedLabel: 'Remove selected only',
@@ -120,13 +125,9 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         nonSelectedListLabel: 'The unselected',
         postfix: '_helperz',
         selectMinHeight: 130,
-        filter: true,
-        filterNonSelected: '',
-        filterSelected: '',
         infoAll: 'Showing all {0}!',
         infoFiltered: '<span class="label label-warning">Filtered</span> {0} from {1}!',
         infoEmpty: 'Empty list!',
-        filterValues: true
     };
 
     $scope.createWorkplaceModal = function() {
@@ -150,6 +151,12 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
     function selectPlace (selectedItem) {
         $scope.selectedDepartment = selectedItem;
     }
+
+    // $scope.selectCheck = selectCheck;
+    //
+    // function selectCheck (selectedItem) {
+    //     $scope.selectedCheckList = selectedItem;
+    // }
 
 
 }

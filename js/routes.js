@@ -194,6 +194,22 @@ angular
       }]
     }
   })
+  .state('app.check', {
+    url: '/check',
+    templateUrl: 'views/pages/checkList.html',
+    //page title goes here
+    ncyBreadcrumb: {
+      label: 'Check List',
+    },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/checkList.js']
+        });
+      }]
+    }
+  })
   .state('app.users', {
     url: '/users',
     templateUrl: 'views/pages/users.html',
