@@ -121,11 +121,13 @@ function layoutToggleDirective($interval, $rootScope, $timeout) {
   function link(scope, element, attrs) {
     element.on('click', function(){
 
-      if (document.querySelector('.chart')){
+
         $timeout(function () {
-          $rootScope.$broadcast ('changeWidthChart')
+          if (document.querySelector('.chart')) {
+            $rootScope.$broadcast('changeWidthChart');
+          }
         },200);
-      }
+
 
       if (element.hasClass('sidebar-toggler')) {
         angular.element('body').toggleClass('sidebar-hidden');

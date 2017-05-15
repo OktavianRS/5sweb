@@ -9,27 +9,26 @@ angular
 
 DashboardChart.$inject = ['$rootScope','$scope', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
 function DashboardChart($rootScope, $scope, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
-    $scope.search = {
-    };
+    $scope.search = {};
 
 
     // headers and configuration of visible company filter and disabled of department+workplaces
     var isSuperAdmin = true;
-    var headerFilter={
-        company:{
+    var headerFilter = {
+        company: {
             name: 'Show all companies',
             id: null,
             isDisabled: false,
         },
-        department:{
+        department: {
             name: 'Show all departments',
             id: null,
             isDisabled: isSuperAdmin || false,
         },
-        workplace:{
+        workplace: {
             name: 'Show all workplaces',
             id: null,
-            isDisabled:true,
+            isDisabled: true,
         }
     }
 
@@ -49,7 +48,7 @@ function DashboardChart($rootScope, $scope, $window, $timeout, departmentsModel,
 
     // generate color for last week
     function lastWeekColor(currentWeekColor) {
-        if (typeof currentWeekColor !== 'object' ) {
+        if (typeof currentWeekColor !== 'object') {
             currentWeekColor = Array(currentWeekColor);
         }
 
@@ -71,16 +70,16 @@ function DashboardChart($rootScope, $scope, $window, $timeout, departmentsModel,
     // google chart time-line
     // histiry audit
 
-var addRows = [
-    ['department1', new Date(2016, 5, 4), new Date(2016, 6, 4)],
-    ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
-    ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
-    ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
-    ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
-    ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
-    ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
-    ['department3', new Date(2016, 8, 4), new Date(2016, 9, 4)],
-];
+    var addRows = [
+        ['department1', new Date(2016, 5, 4), new Date(2016, 6, 4)],
+        ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
+        ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
+        ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
+        ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
+        ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
+        ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
+        ['department3', new Date(2016, 8, 4), new Date(2016, 9, 4)],
+    ];
     google.charts.load('current', {
         'packages': ['timeline']
     });
@@ -90,9 +89,9 @@ var addRows = [
         var chart = new google.visualization.Timeline(container);
         var dataTable = new google.visualization.DataTable();
 
-        dataTable.addColumn({ type: 'string', id: 'Name' });
-        dataTable.addColumn({ type: 'date', id: 'Start' });
-        dataTable.addColumn({ type: 'date', id: 'End' });
+        dataTable.addColumn({type: 'string', id: 'Name'});
+        dataTable.addColumn({type: 'date', id: 'Start'});
+        dataTable.addColumn({type: 'date', id: 'End'});
         dataTable.addRows(addRows);
         var rowHeight = 30;
         var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
@@ -102,34 +101,31 @@ var addRows = [
             width: '100%',
         };
         chart.draw(dataTable, options);
-        if (chartHeight < 400){
-            $scope.timelineHeight = {height :chartHeight*0.6};
+        if (chartHeight < 400) {
+            $scope.timelineHeight = {height: chartHeight * 0.6};
         } else {
             $scope.timelineHeight = 300
-            }
+        }
     }
 
 
-   angular.element($window).on('resize', function(){
-     google.charts.setOnLoadCallback(drawChart);
+    angular.element($window).on('resize', function () {
+        google.charts.setOnLoadCallback(drawChart);
 
-     // manuall $digest required as resize event
-     // is outside of angular
-     //  $scope.$digest();
-   });
-
-    $rootScope.$on('changeWidthChart',function (event, data) {
+        // manuall $digest required as resize event
+        // is outside of angular
+        //  $scope.$digest();
+    });
+    //
+    $rootScope.$on('changeWidthChart', function (event, data) {
         google.charts.setOnLoadCallback(drawChart);
     });
 
 
-
-
-
     // histiry score
-    $scope.historyScore={
+    $scope.historyScore = {
         labels: ["Audit1", "Audit2", "Audit3", "Audit4", "Audit5", "Audit6", "Audit7"],
-        data:[
+        data: [
             [17, 25, 22, 20, 8, 10, 7],
             [21, 28, 24, 25, 12, 13, 15],
             [25, 32, 31, 26, 18, 19, 16],
@@ -184,20 +180,12 @@ var addRows = [
                 }
             }
         },
-        scales: {
-        },
+        scales: {},
     }
 
 
-
-
-
-
-
-
-
     // TODO carrent, last, target
-   var  data3 = [90, 90, 90, 90, 90, 90],
+    var data3 = [90, 90, 90, 90, 90, 90],
         data4 = [100, 100, 100, 100, 100, 100],
         data5 = [80, 80, 80, 80, 80, 80];
 
@@ -209,46 +197,41 @@ var addRows = [
     // fetch all initial data
     function constuctor() {
 
-        chartsModel.fetchChartByCompany({company_id:1}, function callback (result) {
+        chartsModel.fetchScoreByCompany({company_id: 1}, function callback(result) {
 
             changesChart(result);
         });
 
-        companiesModel.fetchCompanies(function(result) {
+        companiesModel.fetchCompanies(function (result) {
             $scope.companiesList = result;
             $scope.withHeaderCompaniesList = $scope.companiesList.slice();
-            $scope.withHeaderCompaniesList.splice(0,0, headerFilter.company);
+            $scope.withHeaderCompaniesList.splice(0, 0, headerFilter.company);
             $scope.search.company = headerFilter.company;
 
         });
 
-        workplacesModel.fetchAllWorkPlaces(function(result) {
+        workplacesModel.fetchAllWorkPlaces(function (result) {
             $scope.workplacesList = result;
             $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
-            $scope.withHeaderWorkPlaces.splice(0,0, headerFilter.workplace);
+            $scope.withHeaderWorkPlaces.splice(0, 0, headerFilter.workplace);
             $scope.search.place = headerFilter.workplace;
 
         });
 
-        departmentsModel.fetchPlacesList(function(result) {
+        departmentsModel.fetchPlacesList(function (result) {
             $scope.AllDepartmentsList = result;
 
             $scope.departmentsList = $scope.AllDepartmentsList.slice();
             $scope.withHeaderDepartments = $scope.departmentsList.slice();
-            $scope.withHeaderDepartments.splice(0,0, headerFilter.department)
-            $scope.search.department =  headerFilter.department;
-
+            $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
+            $scope.search.department = headerFilter.department;
 
 
         });
 
     }
+
     constuctor();
-
-
-
-
-
 
 
     $scope.datasetOverride = [
@@ -286,6 +269,7 @@ var addRows = [
         },
 
     ];
+
     $scope.options = {
         responsive: true,
         maintainAspectRatio: false,
@@ -295,7 +279,14 @@ var addRows = [
             mode: 'single',
             callbacks: {
                 label: function (tooltipItems, data) {
-                    return tooltipItems.yLabel + '% ' + (week(tooltipItems));
+                    return function () {
+                        if ($scope.data.length == 1) {
+                            return tooltipItems.yLabel + ' score'
+                        } else {
+                            return tooltipItems.yLabel + '% ' + (week(tooltipItems));
+                        }
+                    }();
+
                 }
             }
         },
@@ -306,18 +297,18 @@ var addRows = [
                     min: 0,
                     stepSize: 10,
                     callback: function (value, index, values) {
-                        return value + '%';
+                        return function () {
+                            if ($scope.data.length == 1) {
+                                return value + ' score'
+                            } else {
+                                return value + '%';
+                            }
+                        }();
                     }
                 }
             }]
         },
     }
-
-
-
-
-
-
 
 
 // selected inputs (filters)
@@ -327,141 +318,239 @@ var addRows = [
     $scope.selectPlace = selectPlace;
 
 
-    function selectCompany (item) {
+    function selectCompany(item) {
         headerFilter.department.isDisabled = true;
         headerFilter.workplace.isDisabled = true;
-        if (item.id === null){
+        if (item.id === null) {
             headerFilter.department.isDisabled = true;
             headerFilter.workplace.isDisabled = true;
             $scope.search.department = headerFilter.department;
             $scope.search.place = headerFilter.workplace;
-            companiesModel.fetchCompanies(function(result) {
+            companiesModel.fetchCompanies(function (result) {
 
-                changesAuditHistory(result);
-                changesScoreHistory (result)
-                changesChart (result);
+                // changesAuditHistory(result);
+                changesScoreHistory(result)
+                changesChart(result);
             });
 
         } else {
 
-            chartsModel.fetchChartByCompany({company_id:item.id}, function callback (result) {
-
+            chartsModel.fetchChartByCompany({company_id: item.id}, function callback(result) {
                 //TODO...
                 headerFilter.department.isDisabled = false;
+                // changesAuditHistory(result);
+                changesScoreHistory(result)
 
-
-                changesAuditHistory(result);
-                changesScoreHistory (result)
-                changesChart (result);
-
+            });
+            chartsModel.fetchScoreByCompany({company_id: item.id}, function callback(result) {
+                changesChart(result);
             });
         }
     }
 
 
-   function selectDepartment (item) {
-       headerFilter.workplace.isDisabled = true;
-    if (item.id === null){
-        $scope.search.place = headerFilter.workplace;
-
-        departmentsModel.fetchPlacesList(function(result) {
-
-            $scope.departmentsList = result;
-            $scope.withHeaderDepartments = $scope.departmentsList.slice();
-            $scope.withHeaderDepartments.splice(0,0, headerFilter.department)
-            $scope.search.department =  headerFilter.department;
-
-        });
-    } else {
-        chartsModel.fetchChartByDepartment({department_id:item.id}, function callback (result) {
-
-            changesAuditHistory(result);
-            changesScoreHistory (result)
-            changesChart (result);
-
-            $scope.departmentsList = $scope.AllDepartmentsList.filter(
-                function (value) {
-                    return value.id === item.id
-                }
-            );
-
-            $scope.workplacesList = $scope.departmentsList[0].places;
-            $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
-            $scope.withHeaderWorkPlaces.splice(0,0, headerFilter.workplace);
+    function selectDepartment(item) {
+        headerFilter.workplace.isDisabled = true;
+        if (item.id === null) {
             $scope.search.place = headerFilter.workplace;
 
+            departmentsModel.fetchPlacesList(function (result) {
 
-            headerFilter.workplace.isDisabled = false;
+                $scope.departmentsList = result;
+                $scope.withHeaderDepartments = $scope.departmentsList.slice();
+                $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
+                $scope.search.department = headerFilter.department;
 
-        });
+            });
+
+            chartsModel.fetchScoreByCompany({company_id: $scope.search.company.id}, function callback(result) {
+                changesChart(result);
+            });
+
+
+        } else {
+            chartsModel.fetchChartByDepartment({department_id: item.id}, function callback(result) {
+
+
+                changesScoreHistory(result)
+                changesChart(result);
+
+                $scope.departmentsList = $scope.AllDepartmentsList.filter(
+                    function (value) {
+                        return value.id === item.id
+                    }
+                );
+
+                $scope.workplacesList = $scope.departmentsList[0].places;
+                $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
+                $scope.withHeaderWorkPlaces.splice(0, 0, headerFilter.workplace);
+                $scope.search.place = headerFilter.workplace;
+
+
+                headerFilter.workplace.isDisabled = false;
+
+            });
+
+            chartsModel.fetchAuditHistoryByDepartment({department_id: item.id}, function callback(result) {
+                changesAuditHistory(result);
+            });
+
+            chartsModel.fetchScoreByDepartment({department_id: item.id}, function callback(result) {
+                changesChart(result);
+            });
+
         }
+        ;
+
+
     }
 
-    function selectPlace (item) {
-        chartsModel.fetchChartByPlace({place_id:item.id}, function callback (result) {
+    function selectPlace(item) {
+        if (item.id === null) {
 
-            changesAuditHistory(result);
-            changesScoreHistory (result)
-            changesChart (result);
-        } );
-}
+
+            chartsModel.fetchScoreByDepartment({department_id: $scope.search.department.id}, function callback(result) {
+                changesChart(result);
+            });
+
+        } else {
+
+            chartsModel.fetchChartByPlace({place_id: item.id}, function callback(result) {
+            });
+
+            chartsModel.fetchAuditHistoryByPlace({place_id: item.id}, function callback(result) {
+                changesAuditHistory(result);
+            });
+
+            chartsModel.fetchScoreByPlace({place_id: item.id}, function callback(result) {
+                changesChart(result);
+            });
+
+
+        }
+    };
+
+    // chartsModel.fetchAuditHistoryByPlace({place_id:item.id},function callback (result) {
+    //     changesAuditHistory(result)
+    // });
 
 
 ///// functional for chart - Score//////
-function changesChart (result) {
-    // if we have string then push it in array
-    for (var i in result) {
-        if (typeof result[i] !== 'object') {
-            result[i] = [result[i]];
-        }
-    }
+    function changesChart(result) {
 
-    $scope.labels = result.placeName;
-
-    data1 = result.placeCurrentScore;  // current week
-    countScore(data1, 0);
-    data2 = result.placeLastScore;  // previous week
-    countScore(data2, 1);
-    function countScore(dataScore, i) {
-        if (dataScore.length > 1) {
-            $scope.data[i] = dataScore;
+        if (result.errors === 'The requested place has not any started audit') {
+            $scope.scoreByError = true;
         } else {
-            $scope.data[i] = [];
-            $scope.data[i].push(dataScore);
+            $scope.scoreByError = false;
         }
+
+        // if we have string then push it in array
+        for (var i in result) {
+            if (typeof result[i] !== 'object') {
+                result[i] = [result[i]];
+            }
+        }
+
+        if (result.departmentName && !result.placeName) {
+            $scope.labels = result.departmentName;
+            data1 = result.departmentCurrentScore;  // current week
+            data2 = result.departmentLastScore;  // previous week
+            $scope.options.scales.yAxes[0].ticks.max = 100;
+            $scope.options.scales.yAxes[0].ticks.stepSize = 10;
+            countScore(data1, 0);
+            countScore(data2, 1);
+        }
+        else if (result.placeName && result.departmentName) {
+            $scope.labels = result.placeName;
+            data1 = result.placeCurrentScore;  // current week
+            data2 = result.placeLastScore;  // previous week
+            $scope.options.scales.yAxes[0].ticks.max = 100;
+            $scope.options.scales.yAxes[0].ticks.stepSize = 10;
+            countScore(data1, 0);
+            countScore(data2, 1);
+        }
+        else if (result.criteriaName) {
+            $scope.labels = result.criteriaName;
+            var data1 = result.criteriaStatus;
+            $scope.data = [];
+            $scope.options.scales.yAxes[0].ticks.max = 3;
+            $scope.options.scales.yAxes[0].ticks.stepSize = 1;
+            countScore(data1, 0);
+        }
+
+
+        function countScore(dataScore, i) {
+
+            if (dataScore.length > 1) {
+                $scope.data[i] = dataScore;
+            } else {
+                $scope.data[i] = [];
+                $scope.data[i].push(dataScore);
+            }
+        }
+
+
+        // console.log($scope.colors   ,'$scope.colors[1].backgroundColor')
+
+        // var colors =  [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'];
+
+        // $scope.colors = [
+        //     {
+        //         backgroundColor: result.departmentColor,
+        //         borderColor: result.departmentColor,
+        //         pointHoverBackgroundColor: '#fff'
+        //     },
+        //     {
+        //         backgroundColor: lastWeekColor(result.departmentColor),
+        //         borderColor: result.departmentColor,
+        //         pointHoverBackgroundColor: '#fff'
+        //     },
+        // ];
+
+
     }
-    // console.log($scope.colors   ,'$scope.colors[1].backgroundColor')
 
-    // var colors =  [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'];
-
-    // $scope.colors = [
-    //     {
-    //         backgroundColor: result.departmentColor,
-    //         borderColor: result.departmentColor,
-    //         pointHoverBackgroundColor: '#fff'
-    //     },
-    //     {
-    //         backgroundColor: lastWeekColor(result.departmentColor),
-    //         borderColor: result.departmentColor,
-    //         pointHoverBackgroundColor: '#fff'
-    //     },
-    // ];
+    function changesAuditHistory(result) {
+        debugger
 
 
-}
+        var NumberToDate = result.map(function (item) {
+            item.length = 3;
+            var newItem = item.map(function (innerItem, i, arr) {
+                if (i > 0) {
+                    if ((i === 2) && (innerItem === null || innerItem === 0)) {
+                        innerItem = new Date();
+                    }
+                    else if ((i === 1) && (innerItem === null || innerItem === 0)) {
+                        innerItem = new Date();
+                    }
+                    else {
+                        innerItem = new Date(innerItem * 1000);
+                    }
+                }
+                return innerItem;
+            });
+            return newItem;
+        });
+        var addRows = NumberToDate;
 
-    function changesAuditHistory (result) {
-
-        var addRows = [
-            ['department1', new Date(2016, 5, 4), new Date(2016, 6, 4)],
-            ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
-            ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
-            ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
-            ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
-            ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
-            ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
-            ['department3', new Date(2016, 8, 4), new Date(2018, 9, 4)],
-        ];
+        // var addRows=[
+        //         ['department1', new Date(now), new Date()],
+        //         ['department1', new Date(), new Date()]
+        // ];
+        // var addRows = [
+        //     ['department1', new Date(1493996348), new Date()],
+        //     ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
+        //     ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
+        //     ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
+        //     ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
+        //     ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
+        //     ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
+        //     ['department3', new Date(2016, 8, 4), new Date(2018, 9, 4)],
+        //     ['department4', new Date(2016, 8, 4), new Date(2018, 9, 4)],
+        //     ['department5', new Date(2016, 8, 4), new Date(2018, 9, 4)],
+        //
+        // ];
         google.charts.load('current', {
             'packages': ['timeline']
         });
@@ -471,12 +560,16 @@ function changesChart (result) {
             var chart = new google.visualization.Timeline(container);
             var dataTable = new google.visualization.DataTable();
 
-            dataTable.addColumn({ type: 'string', id: 'Name' });
-            dataTable.addColumn({ type: 'date', id: 'Start' });
-            dataTable.addColumn({ type: 'date', id: 'End' });
+            dataTable.addColumn({type: 'string', id: 'Name'});
+            dataTable.addColumn({type: 'date', id: 'Start'});
+            dataTable.addColumn({type: 'date', id: 'End'});
             dataTable.addRows(addRows);
             var rowHeight = 30;
+            if (addRows.length == 1) var rowHeight = 60;
+            // if (addRows.length > 4) var rowHeight = 30;
+            //  if (addRows.length > 8) var rowHeight = 20;
             var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
+            if (addRows.length > 10) var chartHeight = 300;
 
             var options = {
                 avoidOverlappingGridLines: true,
@@ -484,29 +577,29 @@ function changesChart (result) {
                 width: '100%',
             };
             chart.draw(dataTable, options);
-            if (chartHeight < 400){
-                $scope.timelineHeight = {height :chartHeight*0.6};
+
+            if (addRows.length == 1) {
+                $scope.timelineHeight = {height: chartHeight * 2};
+            } else if (addRows.length < 8) {
+                $scope.timelineHeight = {height: chartHeight * 0.8};
             } else {
-                $scope.timelineHeight = 300
+                $scope.timelineHeight = {height: chartHeight * 0.9};
             }
         }
 
     }
 
 
-
-    function changesScoreHistory (result){
-        $scope.historyScore={
+    function changesScoreHistory(result) {
+        $scope.historyScore = {
             labels: ["Audit1", "Audit2", "Audit3", "Audit4", "Audit5", "Audit6", "Audit7"],
-            data:[
+            data: [
                 [17, 25, 22, 40, 8, 10, 7],
                 [21, 96, 24, 20, 12, 13, 15],
                 [25, 32, 31, 26, 18, 19, 16],
             ],
         };
     }
-
-
 
 
 

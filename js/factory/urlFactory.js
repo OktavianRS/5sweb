@@ -16,6 +16,13 @@ angular.module('factory.url', [])
           login: baseUrl + '/user/login',
 
           // chartModel
+          fetchAuditHistoryByDepartment: baseUrl + '/chart/audit-history-by-department',
+          fetchAuditHistoryByPlace: baseUrl + '/chart/audit-history-by-place',
+
+          fetchScoreByCompany: baseUrl + '/chart/score-by-company',
+          fetchScoreByDepartment: baseUrl + '/chart/score-by-department',
+          fetchScoreByPlace: baseUrl + '/chart/score-by-place',
+
           fetchChartByPlace: baseUrl + '/chart/by-place',
           fetchChartByDepartment: baseUrl + '/chart/by-department',
           fetchChartByCompany: baseUrl + '/chart/by-company',

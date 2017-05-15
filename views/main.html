@@ -5,7 +5,7 @@
         <div class="card-block">
             <div class="row">
                 <div class="col-sm-5">
-                    <h4 class="card-title mb-0">Audit history</h4>
+                    <h4 class="card-title mb-0">Audit history for departments</h4>
                     <div class="small text-muted">5s-Figures Performance</div>
                 </div>
                 <!--/.col-->
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <!--/.row-->
-            <div class="chart-wrapper" style="height:300px;margin-top:40px;">
+            <div class="chart-wrapper" style="height:300px;margin-top:40px;" ng-if="!scoreByError">
                 <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" chart-legend="false" chart-series="series" chart-click="onClick" chart-options="options" chart-colors="colors" chart-dataset-override="datasetOverride" height="300"></canvas>
                 <div>
                     <div id="js-legend" class="chart-legend">
@@ -78,6 +78,9 @@
                             <li><span style="" class="fa fa-square current"></span>Current</li></ul>
                     </div>
                 </div>
+            </div>
+            <div ng-if="scoreByError">
+                <h4>The requested place has not any started audit</h4>
             </div>
         </div>
         <!--<div class="card-footer">-->
