@@ -36,6 +36,21 @@
                           </div>
                       </div>
                   </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="prependedInputDepartment">Check list</label>
+                        <div class="controls">
+                            <div class="input-prepend input-group">
+                                <select
+                                        class="form-control" name="prependedInputChecklist"
+                                        id="prependedInputChecklist"
+                                        ng-options="check.name for check in checkList track by check.id"
+                                        ng-model="selectedCheckList" ng-change="selectCheck(selectedCheckList)"
+
+                                >
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                   <label class="form-control-label" for="prependedInputCriteria">Available Criteria</label>
                   <select
                           ng-model="workplace.criteria"

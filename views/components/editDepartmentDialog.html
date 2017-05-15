@@ -20,11 +20,32 @@
                           </div>
                       </div>
                   </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="prependedInputDepartment">Company</label>
+                    <div class="controls">
+                        <div class="input-prepend input-group">
+                            <select
+                                    class="form-control"
+                                    name="prependedInputDepartment"
+                                    id="prependedInputDepartment"
+                                    ng-model="editElement.company_id"
+
+                            >
+                              <option
+                                ng-value="company.id"
+                                ng-repeat="company in companiesList track by $index"
+                              >
+                                {{company.name}}
+                              </option>
+                            </select>
+                        </div>
+                    </div>
+                  </div>
                   <div class="form-actions">
                       <button
                         type="submit"
                         class="btn btn-primary"
-                        ng-click="updateDepartment(editElement.id, editElement.name)"
+                        ng-click="updateDepartment(editElement.id, editElement.name, editElement.company_id)"
                       >
                         Update department
                       </button>

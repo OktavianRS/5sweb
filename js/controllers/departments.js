@@ -40,8 +40,8 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
     departmentsModel.deleteDepartment({ id }, constuctor);
   }
 
-  $scope.updateDepartment = function(id, name) {
-    departmentsModel.updateDepartment({ id, name }, constuctor);
+  $scope.updateDepartment = function(id, name, company_id) {
+    departmentsModel.updateDepartment({ id, name, company_id }, constuctor);
     ngDialog.closeAll();
   }
 
