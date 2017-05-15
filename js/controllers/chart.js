@@ -466,6 +466,7 @@ function DashboardChart($rootScope, $scope, $window, $timeout, departmentsModel,
             $scope.options.scales.yAxes[0].ticks.max = 100;
             $scope.options.scales.yAxes[0].ticks.stepSize = 10;
             countScore(data1, 0);
+            countScore(data1, 0);
             countScore(data2, 1);
         }
         else if (result.criteriaName) {
@@ -510,7 +511,7 @@ function DashboardChart($rootScope, $scope, $window, $timeout, departmentsModel,
     }
 
     function changesAuditHistory(result) {
-        debugger
+
 
 
         var NumberToDate = result.map(function (item) {
