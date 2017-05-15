@@ -110,8 +110,8 @@ function sidebarNavDynamicResizeDirective($window, $timeout) {
 }
 
 //LayoutToggle
-layoutToggleDirective.$inject = ['$interval'];
-function layoutToggleDirective($interval) {
+layoutToggleDirective.$inject = ['$interval', '$rootScope', '$timeout'];
+function layoutToggleDirective($interval, $rootScope, $timeout) {
   var directive = {
     restrict: 'E',
     link: link
@@ -120,6 +120,12 @@ function layoutToggleDirective($interval) {
 
   function link(scope, element, attrs) {
     element.on('click', function(){
+
+      if (document.querySelector('.chart')){
+        $timeout(function () {
+          $rootScope.$broadcast ('changeWidthChart')
+        },200);
+      }
 
       if (element.hasClass('sidebar-toggler')) {
         angular.element('body').toggleClass('sidebar-hidden');
@@ -142,9 +148,6 @@ function collapseMenuTogglerDirective() {
 
   function link(scope, element, attrs) {
     element.on('click', function(){
-      if (document.querySelector('.chart')){
-
-      }
 
       if (element.hasClass('navbar-toggler') && !element.hasClass('layout-toggler')) {
         angular.element('body').toggleClass('sidebar-mobile-show')
@@ -240,9 +243,16 @@ function widthChart() {
 
   function link(scope, elem, attrs) {
 
+    scope.w = elem.clientWidth;
     scope.$watch(function () {
           // scope.apply(function () {
-            return  {w:elem.clientWidth};
+            var a =  (function () {
+              // scope.$apply(
+                  scope.w=elem.clientWidth
+              // );
+              return scope.w;
+            })();
+      return a;
           // })
         },
         function (newValue, oldValue) {
@@ -254,8 +264,10 @@ function widthChart() {
             // do some thing
           }
         }, true);
-    elem.bind('widthChart', function () {
-      scope.$apply();
+
+    elem.on('resize', function () {
+      console.log('dfsf', angular.element(document.querySelector('main'))[0].clientWidth)
+      // $scope.$apply();
     });
 
     // elem.on('resize', function () {

@@ -41,9 +41,10 @@
                             <div class="controls">
                                 <div class="input-prepend input-group">
                                     <select
-                                            class="form-control" name="prependedInputDepartment"
-                                            ng-options="check.name for check in checkList track by $index"
-                                            ng-model="selectedCheckList" ng-change="selectCheck(check.id)"
+                                            class="form-control" name="prependedInputChecklist"
+                                            id="prependedInputChecklist"
+                                            ng-options="check.name for check in checkList track by check.id"
+                                            ng-model="selectedCheckList" ng-change="selectCheck(selectedCheckList)"
 
                                     >
                                     </select>

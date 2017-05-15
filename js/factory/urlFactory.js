@@ -67,6 +67,9 @@ angular.module('factory.url', [])
           fetchChecks: baseUrl + '/checklist/index',
           deleteCheck: baseUrl + '/checklist/delete',
           updateCheck: baseUrl + '/checklist/update',
+          addCriteriaToCheckList: baseUrl + '/checklist/add-criteria',
+          fetchCriteriasByCheckList: baseUrl + '/checklist/criteria-list',
+
 
         }
       }

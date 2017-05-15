@@ -1,24 +1,17 @@
 <div class="animated fadeIn departments">
 
 
-    <div class="card" ng-controller="checkListCtrl">
+    <div class="card" ng-controller="criteriaByChecklistCtrl">
       <div class="row">
           <div class="col-lg-12">
               <div class="card">
                   <div class="card-header" sticky offset="55">
-                      <i class="fa fa-align-justify"></i> Check list
-                      <button
-                        type="button"
-                        class="btn btn-primary btn-sm action-button"
-                        ng-click="createCheckModal()"
-                        >
-                          Add check
-                      </button>
+                      <i class="fa fa-align-justify"></i> Criteria list
                   </div>
                   <div class="card-block">
                     <table
                       class="table table-bordered table-striped table-sm"
-                      ng-if="checkList.length"
+                      ng-if="criteriasList.length"
                     >
                           <thead>
                               <tr>
@@ -27,36 +20,26 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <tr ng-repeat="check in checkList track by $index">
-                                  <td class="department-name">
-                                    {{check.name}}
+                              <tr
+                                ng-repeat="criteria in criteriasList track by $index"
+                              >
+                                  <td
+                                    class="department-name"
+                                  >
+                                    {{criteria.name}}
                                   </td>
                                   <td>
                                     <button
                                       type="button"
-                                      class="btn btn-outline-primary"
-                                      ng-click="showCriteriaByChecklist(check.id, check.name)"
-                                    >
-                                      Show criteria
-                                    </button>
-                                    <button
-                                      type="button"
                                       class="btn btn-outline-success"
-                                      ng-click="addCriteriaModal(check.id)"
-                                    >
-                                      Add Criteria
-                                    </button>
-                                    <button
-                                      type="button"
-                                      class="btn btn-outline-success"
-                                      ng-click="editCheck(check)"
+                                      ng-click="editCriteria(criteria)"
                                     >
                                       Edit
                                     </button>
                                     <button
                                       type="button"
                                       class="btn btn-outline-danger"
-                                      ng-click="deleteCheck(check.id)"
+                                      ng-click="deleteCriteria(criteria.id)"
                                     >
                                       Delete
                                     </button>
@@ -64,13 +47,13 @@
                               </tr>
                           </tbody>
                       </table>
-                      <div class="empty-list" ng-if="!checkList.length">
+                      <div class="empty-list" ng-if="!criteriasList.length">
                         Check List is Empty
                         <a
                           href="#"
-                          ng-click="createCheckModal()"
+                          ng-click="goToAllCriterias()"
                         >
-                          Add new check
+                          Go to all criterias
                         </a>
                       </div>
                   </div>

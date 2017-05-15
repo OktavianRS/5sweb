@@ -45,4 +45,27 @@ angular.module('model.check', [])
           );
         }
 
+      	this.addCriteriaToCheckList = function(req, callback) {
+          api.post(
+            url.addCriteriaToCheckList,
+            req,
+            function(res) {
+              if (res) {
+                toast('success', 'Added successfully', '');
+                callback();
+              } else {
+                toast('error', 'Some error occured', 'Criteria not added');
+              }
+            })
+        }
+
+      	this.fetchCriteriasByCheckList = function(req, callback) {
+          api.get(
+            url.fetchCriteriasByCheckList,
+            req,
+            function(res) {
+              callback(res);
+            })
+        }
+
       }])

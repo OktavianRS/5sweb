@@ -146,17 +146,16 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         });
     }
 
-    $scope.selectPlace = selectPlace;
-
-    function selectPlace (selectedItem) {
+    $scope.selectPlace = function(selectedItem) {
         $scope.selectedDepartment = selectedItem;
     }
 
-    // $scope.selectCheck = selectCheck;
-    //
-    // function selectCheck (selectedItem) {
-    //     $scope.selectedCheckList = selectedItem;
-    // }
+    $scope.selectCheck = function (selectedItem) {
+        $scope.selectedCheckList = selectedItem;
+        checkListModel.fetchCriteriasByCheckList({ checklist_id: selectedItem.id }, function(result) {
+            $scope.criteriasList = result;
+        });
+    }
 
 
 }
