@@ -156,7 +156,7 @@ angular
       }]
     }
   })
-    .state('app.workplaces-criteria', {
+  .state('app.workplaces-criteria', {
     url: '/workplaces-criteria/{place_id}/{place_name}',
     templateUrl: 'views/pages/criteriaByWorkplaces.html',
     onEnter: function($rootScope, $stateParams) {
@@ -190,6 +190,42 @@ angular
         // you can lazy load controllers
         return $ocLazyLoad.load({
           files: ['js/controllers/criteria.js']
+        });
+      }]
+    }
+  })
+  .state('app.check', {
+    url: '/check',
+    templateUrl: 'views/pages/checkList.html',
+    //page title goes here
+    ncyBreadcrumb: {
+      label: 'Check List',
+    },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/checkList.js']
+        });
+      }]
+    }
+  })
+  .state('app.checklist-criteria', {
+    url: '/checklist-criteria/{check_id}/{check_name}',
+    templateUrl: 'views/pages/criteriaByChecklist.html',
+    onEnter: function($rootScope, $stateParams) {
+      $rootScope.check_name = $stateParams.check_name;
+      $rootScope.check_id = $stateParams.check_id;
+    },
+    ncyBreadcrumb: {
+      label: '{{check_name}}',
+      parent: 'app.check'
+    },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/criteriaByChecklist.js']
         });
       }]
     }

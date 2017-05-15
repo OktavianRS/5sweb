@@ -9,7 +9,6 @@ function usersCtrl($scope, toast, ngDialog, usersModel) {
   }
   $scope.usersList = [];
 
-//TODO: change list to display first_name and last_name instead of username
   $scope.user = {
     first_name: '',
     last_name: '',
@@ -34,8 +33,8 @@ function usersCtrl($scope, toast, ngDialog, usersModel) {
     usersModel.deleteUser({ id }, constuctor);
   }
 
-  $scope.updateUser = function(id, email, username, password) {
-    usersModel.updateUser({id, email, username, password}, constuctor);
+  $scope.updateUser = function(id, email, first_name, last_name, password) {
+    usersModel.updateUser({id, email, first_name, last_name, password}, constuctor);
     ngDialog.closeAll();
   }
 

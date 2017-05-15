@@ -5,16 +5,20 @@ angular
     .module('app')
     .controller('workplacesCtrl', workplacesCtrl)
 
-workplacesCtrl.$inject = ['$scope', '$rootScope', '$state', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
-function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
+workplacesCtrl.$inject = ['$scope', '$rootScope', '$state', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel', 'checkListModel'];
+function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, criteriasModel, departmentsModel, checkListModel) {
 
     $scope.workplacesList = [];
     $scope.criteriasList = [];
     $scope.departmentsList = [];
     $scope.AllPlacesList = [];
+    $scope.checkList = [];
     $scope.editElement = {};
+    $scope.selectedCheckList = '';
     $scope.workplace = {
-        name: ''
+        name: '',
+        criteria_id: [],
+        department: '',
     }
 
 
@@ -29,9 +33,14 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
 
 
         });
+        checkListModel.fetchChecks(function(result) {
+            $scope.checkList = result;
+        });
+
         criteriasModel.fetchCriterias(function(result) {
             $scope.criteriasList = result;
         });
+
         departmentsModel.fetchDepartments(function(result) {
             $scope.departmentsList = result;
             $scope.workplace.department =   $scope.departmentsList[0];
@@ -60,8 +69,13 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         workplacesModel.deleteWorkPlace({ id }, constuctor);
     }
 
-    $scope.updateWorkPlace = function(id, name, department_id) {
-        workplacesModel.updateWorkPlace({ id, name, department_id }, constuctor);
+    $scope.updateWorkPlace = function(id, name, department_id, criteria_id) {
+        if (criteria_id) {
+            criteria_id = criteria_id.map((v) => {
+                return Number(v.id);
+            });
+        }
+        workplacesModel.updateWorkPlace({ id, name, department_id, criteria_id }, constuctor);
         ngDialog.closeAll();
     }
 
@@ -108,8 +122,6 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
 
     $scope.settings = {
         bootstrap2: false,
-        filterClear: 'Show all!',
-        filterPlaceHolder: 'Filter!',
         moveSelectedLabel: 'Move selected only',
         moveAllLabel: 'Move all!',
         removeSelectedLabel: 'Remove selected only',
@@ -120,13 +132,9 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         nonSelectedListLabel: 'The unselected',
         postfix: '_helperz',
         selectMinHeight: 130,
-        filter: true,
-        filterNonSelected: '',
-        filterSelected: '',
         infoAll: 'Showing all {0}!',
         infoFiltered: '<span class="label label-warning">Filtered</span> {0} from {1}!',
         infoEmpty: 'Empty list!',
-        filterValues: true
     };
 
     $scope.createWorkplaceModal = function() {
@@ -145,10 +153,15 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         });
     }
 
-    $scope.selectPlace = selectPlace;
-
-    function selectPlace (selectedItem) {
+    $scope.selectPlace = function(selectedItem) {
         $scope.selectedDepartment = selectedItem;
+    }
+
+    $scope.selectCheck = function (selectedItem) {
+        $scope.selectedCheckList = selectedItem;
+        checkListModel.fetchCriteriasByCheckList({ checklist_id: selectedItem.id }, function(result) {
+            $scope.criteriasList = result;
+        });
     }
 
 

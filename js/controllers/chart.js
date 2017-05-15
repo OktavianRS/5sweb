@@ -6,7 +6,6 @@ angular
     .controller('DashboardChart', DashboardChart);
 
 
-
 DashboardChart.$inject = ['$rootScope','$scope', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
 function DashboardChart($rootScope, $scope, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
     $scope.search = {};

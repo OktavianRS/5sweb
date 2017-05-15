@@ -22,16 +22,29 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="prependedInput">Username</label>
+                    <label class="form-control-label" for="prependedInput">First name</label>
                     <div class="controls">
                         <div class="input-prepend input-group">
                             <input
-                              id="prependedInput"
-                              class="form-control"
-                              size="16"
-                              type="text"
-                              ng-model="editElement.username"
-                              placeholder="Username"
+                            id="prependedInput"
+                            class="form-control"
+                            size="16"
+                            type="text"
+                            ng-model="editElement.first_name"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="prependedInput">Last name</label>
+                    <div class="controls">
+                        <div class="input-prepend input-group">
+                            <input
+                            id="prependedInput"
+                            class="form-control"
+                            size="16"
+                            type="text"
+                            ng-model="editElement.last_name"
                             >
                         </div>
                     </div>
@@ -41,20 +54,11 @@
                     <div class="controls">
                         <div class="input-prepend input-group">
                             <input
-                              id="prependedInput"
-                              class="form-control"
-                              size="16"
-                              type="password"
-                              ng-model="editElement.password"
-                              placeholder="Password"
-                            >
-                            <input
-                              id="prependedInput"
-                              class="form-control"
-                              size="16"
-                              type="password"
-                              ng-model="editElement.password_repeat"
-                              placeholder="Repeat password"
+                            id="prependedInput"
+                            class="form-control"
+                            size="16"
+                            type="password"
+                            ng-model="editElement.password"
                             >
                         </div>
                     </div>
@@ -63,16 +67,7 @@
                   <button
                     type="submit"
                     class="btn btn-primary"
-                    ng-if="editElement.password !== editElement.password_repeat"
-                    disabled
-                  >
-                    Update user
-                  </button>
-                  <button
-                    type="submit"
-                    class="btn btn-primary"
-                    ng-if="editElement.password === editElement.password_repeat"
-                    ng-click="updateUser(editElement.id, editElement.email, editElement.username, editElement.password)"
+                    ng-click="updateUser(editElement.id, editElement.email, editElement.first_name, editElement.last_name, editElement.password)"
                   >
                     Update user
                   </button>

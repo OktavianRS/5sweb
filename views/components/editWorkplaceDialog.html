@@ -22,13 +22,13 @@
                           </div>
                       </div>
                       <div class="col-sm-12 col-md-6">
-                          <label class="form-control-label" for="prependedInputDepartment">Name</label>
+                          <label class="form-control-label" for="prependedInputDepartment">Department</label>
                           <div class="controls">
                               <div class="input-prepend input-group">
                                   <select
                                           class="form-control" name="prependedInputDepartment" id="prependedInputDepartment"
                                           ng-options="department.name for department in departmentsList track by department.id"
-                                          ng-model="workplace.department" ng-change="selectPlace(workplace.department)"
+                                          ng-model="selectedDepartment" ng-change="selectPlace(workplace.department)"
 
                                   >
                                   </select>
@@ -36,6 +36,21 @@
                           </div>
                       </div>
                   </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="prependedInputDepartment">Check list</label>
+                        <div class="controls">
+                            <div class="input-prepend input-group">
+                                <select
+                                        class="form-control" name="prependedInputChecklist"
+                                        id="prependedInputChecklist"
+                                        ng-options="check.name for check in checkList track by check.id"
+                                        ng-model="selectedCheckList" ng-change="selectCheck(selectedCheckList)"
+
+                                >
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                   <label class="form-control-label" for="prependedInputCriteria">Available Criteria</label>
                   <select
                           ng-model="workplace.criteria"
@@ -75,7 +90,7 @@
                   <div style="padding: 15px 0 0 0;" class="form-actions">
                       <button type="submit"
                               class="btn btn-primary"
-                              ng-click="updateWorkPlace(editElement.id, editElement.name, selectedDepartment.id)"
+                              ng-click="updateWorkPlace(editElement.id, editElement.name, selectedDepartment.id, workplace.criteria)"
                       >Save workplace</button>
                   </div>
               </form>
