@@ -16,7 +16,9 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
     $scope.editElement = {};
     $scope.selectedCheckList = '';
     $scope.workplace = {
-        name: ''
+        name: '',
+        criteria_id: [],
+        department: '',
     }
 
 
@@ -67,8 +69,13 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         workplacesModel.deleteWorkPlace({ id }, constuctor);
     }
 
-    $scope.updateWorkPlace = function(id, name, department_id) {
-        workplacesModel.updateWorkPlace({ id, name, department_id }, constuctor);
+    $scope.updateWorkPlace = function(id, name, department_id, criteria_id) {
+        if (criteria_id) {
+            criteria_id = criteria_id.map((v) => {
+                return Number(v.id);
+            });
+        }
+        workplacesModel.updateWorkPlace({ id, name, department_id, criteria_id }, constuctor);
         ngDialog.closeAll();
     }
 

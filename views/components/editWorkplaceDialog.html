@@ -22,13 +22,13 @@
                           </div>
                       </div>
                       <div class="col-sm-12 col-md-6">
-                          <label class="form-control-label" for="prependedInputDepartment">Name</label>
+                          <label class="form-control-label" for="prependedInputDepartment">Department</label>
                           <div class="controls">
                               <div class="input-prepend input-group">
                                   <select
                                           class="form-control" name="prependedInputDepartment" id="prependedInputDepartment"
                                           ng-options="department.name for department in departmentsList track by department.id"
-                                          ng-model="workplace.department" ng-change="selectPlace(workplace.department)"
+                                          ng-model="selectedDepartment" ng-change="selectPlace(workplace.department)"
 
                                   >
                                   </select>
@@ -90,7 +90,7 @@
                   <div style="padding: 15px 0 0 0;" class="form-actions">
                       <button type="submit"
                               class="btn btn-primary"
-                              ng-click="updateWorkPlace(editElement.id, editElement.name, selectedDepartment.id)"
+                              ng-click="updateWorkPlace(editElement.id, editElement.name, selectedDepartment.id, workplace.criteria)"
                       >Save workplace</button>
                   </div>
               </form>
