@@ -20,7 +20,6 @@ function criteriaByChecklistCtrl($scope, $state, $rootScope, toast, ngDialog, cr
     });
   }
   constuctor();
-
   $scope.deleteCriteria = function(id) {
     criteriasModel.deleteCriteria({ id }, constuctor);
   }

@@ -6,13 +6,17 @@ angular
     .controller('DashboardChart', DashboardChart);
 
 
-DashboardChart.$inject = ['$rootScope','$scope', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
-function DashboardChart($rootScope, $scope, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
+DashboardChart.$inject = ['$rootScope','$scope', '$sessionStorage', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
+function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
+
+
+    var USER_ROLE = $sessionStorage.role;
+    if (USER_ROLE == 'site admin') var isSuperAdmin = true;
+
     $scope.search = {};
 
-
     // headers and configuration of visible company filter and disabled of department+workplaces
-    var isSuperAdmin = true;
+
     var headerFilter = {
         company: {
             name: 'Show all companies',
@@ -113,7 +117,7 @@ function DashboardChart($rootScope, $scope, $window, $timeout, departmentsModel,
 
         // manuall $digest required as resize event
         // is outside of angular
-        //  $scope.$digest();
+         $scope.$digest();
     });
     //
     $rootScope.$on('changeWidthChart', function (event, data) {
@@ -202,6 +206,7 @@ function DashboardChart($rootScope, $scope, $window, $timeout, departmentsModel,
         });
 
         companiesModel.fetchCompanies(function (result) {
+
             $scope.companiesList = result;
             $scope.withHeaderCompaniesList = $scope.companiesList.slice();
             $scope.withHeaderCompaniesList.splice(0, 0, headerFilter.company);

@@ -15,6 +15,7 @@ function criteriaCtrl($scope, toast, ngDialog, criteriasModel) {
   function constuctor() {
     criteriasModel.fetchCriterias(function(result) {
       $scope.criteriasList = result;
+
     });
   }
   constuctor();

@@ -28,15 +28,18 @@ function checkListCtrl($scope, $state, toast, ngDialog, checkListModel, criteria
     infoAll: 'Showing all {0}!',
     infoFiltered: '<span class="label label-warning">Filtered</span> {0} from {1}!',
     infoEmpty: 'Empty list!',
+
 };
 
   // fetch all initial data
   function constuctor() {
     checkListModel.fetchChecks(function(result) {
       $scope.checkList = result;
+
     });
     criteriasModel.fetchCriterias(function(result) {
       $scope.criteriasList = result;
+
     });
   }
   constuctor();
