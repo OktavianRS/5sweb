@@ -16,6 +16,7 @@ angular.module('factory.url', [])
           login: baseUrl + '/user/login',
 
           // chartModel
+          fetchAuditHistoryByCompany: baseUrl + '/chart/audit-history-by-company',
           fetchAuditHistoryByDepartment: baseUrl + '/chart/audit-history-by-department',
           fetchAuditHistoryByPlace: baseUrl + '/chart/audit-history-by-place',
 
@@ -32,6 +33,7 @@ angular.module('factory.url', [])
           fetchCompanies: baseUrl + '/company/index',
           deleteCompany: baseUrl + '/company/delete',
           updateCompany: baseUrl + '/company/update',
+          fetchOneDepartmentList: baseUrl + '/company/one-department-list',
 
           //workplacesModel
           createWorkPlace: baseUrl + '/place/create',
@@ -51,6 +53,9 @@ angular.module('factory.url', [])
           updateDepartment: baseUrl + '/department/update',
           fetchPlacesList: baseUrl + '/department/places-list',
           fetchAllCriteriaByWorkplaces: baseUrl + '/criteria/by-place',
+          fetchOnePlaceList: baseUrl + '/department/one-place-list',
+
+
 
           //criteriaModel
           createCriteria: baseUrl + '/criteria/create',

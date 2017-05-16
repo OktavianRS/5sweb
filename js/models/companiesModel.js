@@ -45,4 +45,14 @@ angular.module('model.companies', [])
           );
         }
 
+          this.fetchOneDepartmentList = function(req, callback) {
+              api.get(
+                  url.fetchOneDepartmentList,
+                  req,
+                  function(res) {
+                      callback(res);
+                  })
+          }
+
+
       }])

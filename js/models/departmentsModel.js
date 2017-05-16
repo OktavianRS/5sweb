@@ -55,6 +55,15 @@ angular.module('model.departments', [])
                   })
           }
 
+          this.fetchOnePlaceList = function(req, callback) {
+              api.get(
+                  url.fetchOnePlaceList,
+                  req,
+                  function(res) {
+                      callback(res);
+                  })
+          }
+
 
 
       }])
