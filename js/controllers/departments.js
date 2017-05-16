@@ -9,6 +9,8 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
   $scope.workPlacesList = [];
   $scope.placesForDepartment = [];
 
+  $scope.sortSettings = 'name';
+
   $scope.department = {
     name: '',
     company_id: '',
@@ -30,6 +32,10 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
 
   }
   constuctor();
+
+  $scope.changeSort = function() {
+    $scope.sortSettings === 'name' ? $scope.sortSettings = '-name' : $scope.sortSettings = 'name';
+  }
 
   $scope.createDepartment = function() {
     departmentsModel.createDepartment($scope.department, constuctor);

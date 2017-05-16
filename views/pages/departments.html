@@ -19,13 +19,28 @@
                       <table class="table table-bordered table-striped table-sm" ng-if="departmentsList.length">
                           <thead>
                               <tr>
-                                  <th>Name</th>
+                                  <th
+                                    class="active-sort-item"
+                                    ng-click="changeSort()"
+                                  >
+                                    <i
+                                      class="fa fa-chevron-down"
+                                      aria-hidden="true"
+                                      ng-if="sortSettings === 'name'"
+                                    ></i>
+                                    <i
+                                      class="fa fa-chevron-up" 
+                                      aria-hidden="true"
+                                      ng-if="sortSettings === '-name'"
+                                    ></i>
+                                    Name
+                                  </th>
                                   <th>Workplaces</th>
                                   <th>Actions</th>
                               </tr>
                           </thead>
                           <tbody>
-                              <tr ng-repeat="department in departmentsList track by $index">
+                              <tr ng-repeat="department in departmentsList | orderBy: sortSettings track by $index">
                                   <td class="department-name">
                                     {{department.name}}
                                   </td>
