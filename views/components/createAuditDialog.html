@@ -44,7 +44,7 @@
                             <div class="input-group input-group-small">
                                 <select
                                         class="audit__select form-control" name="UserSelect" id="UserSelect"
-                                        ng-options="user.username for user in usersList track by user.id"
+                                        ng-options="user.email for user in usersList track by user.id"
                                         ng-model="search.user" ng-change="selectUser(search.user)"
                                 >
                                 </select>
@@ -61,21 +61,6 @@
                                       class="audit__select form-control" name="departmentSelect" id="departmentSelect"
                                       ng-options="department.name for department in departmentsList track by department.id"
                                       ng-model="search.department" ng-change="selectDepartment(search.department)"
-                              >
-                              </select>
-                            </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label class="form-control-label audit__selectLabel2" for="prependedInput">Workplace</label>
-                      <div class="controls">
-                          <div class="input-prepend input-group">
-                            <div class="input-group input-group-small">
-                              <select
-                                      class="audit__select form-control" name="workplaceSelect" id="workplaceSelect"
-                                      ng-options="place.name for place in workPlacesList track by place.id"
-                                      ng-model="search.workplace" ng-change="selectPlace(search.workplace)"
                               >
                               </select>
                             </div>

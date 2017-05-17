@@ -64,9 +64,10 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
   }
 
   $scope.submit = function() {
-    $scope.audit.place_id = $scope.search.workplace.id;
     $scope.audit.user_id = $scope.search.user.id;
+    $scope.audit.department_id = $scope.search.department.id;
     auditModel.startAudit($scope.audit, constuctor);
+    ngDialog.closeAll();
   }
 
   $scope.stopAudit = function(id, email, username, password) {

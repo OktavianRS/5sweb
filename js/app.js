@@ -52,6 +52,8 @@ angular
   function(event, toState, toParams, fromState, fromParams){
     if (!$sessionStorage.auth_key) {
       $location.path('/login');
+    } else {
+      $rootScope.role = $sessionStorage.role;
     }
     if ($location.$$url === '/companies') {
       $sessionStorage.role !== 'site admin' && $location.path('/dashboard');

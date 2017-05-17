@@ -2,24 +2,30 @@ angular
 .module('app')
 .controller('usersCtrl', usersCtrl)
 
-usersCtrl.$inject = ['$scope', 'toast', 'ngDialog', 'usersModel'];
-function usersCtrl($scope, toast, ngDialog, usersModel) {
+usersCtrl.$inject = ['$scope', '$rootScope', 'toast', 'ngDialog', 'usersModel', 'companiesModel'];
+function usersCtrl($scope, $rootScope, toast, ngDialog, usersModel, companiesModel) {
   $scope.state = {
     isDisabled: true
   }
   $scope.usersList = [];
+  $scope.companiesList = [];
 
   $scope.user = {
-    first_name: '',
-    last_name: '',
+    firstname: '',
+    lastname: '',
     email: '',
     password: '',
   }
+
+  console.log($rootScope.role)
 
   // fetch all initial data
   function constuctor() {
     usersModel.fetchUsers(function(result) {
       $scope.usersList = result;
+    });
+    companiesModel.fetchCompanies(function(result) {
+      $scope.companiesList = result;
     });
   }
   constuctor();
@@ -33,8 +39,8 @@ function usersCtrl($scope, toast, ngDialog, usersModel) {
     usersModel.deleteUser({ id }, constuctor);
   }
 
-  $scope.updateUser = function(id, email, first_name, last_name, password) {
-    usersModel.updateUser({id, email, first_name, last_name, password}, constuctor);
+  $scope.updateUser = function(id, email, firstname, lastname, password) {
+    usersModel.updateUser({id, email, firstname, lastname, password}, constuctor);
     ngDialog.closeAll();
   }
 
@@ -47,6 +53,7 @@ function usersCtrl($scope, toast, ngDialog, usersModel) {
   }
 
   $scope.editUser = function(data) {
+    console.log(data)
     $scope.editElement = Object.create(data);
     ngDialog.open({
       template:'/views/components/editUserDialog.html',

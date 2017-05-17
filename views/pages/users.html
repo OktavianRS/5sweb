@@ -22,9 +22,10 @@
                     >
                           <thead>
                               <tr>
-                                  <th>Name</th>
+                                  <th>First name</th>
+                                  <th>Last name</th>
                                   <th>Email</th>
-                                  <th>Status</th>
+                                  <th>Department</th>
                                   <th>Actions</th>
                               </tr>
                           </thead>
@@ -35,29 +36,21 @@
                                   <td
                                     class="department-name"
                                   >
-                                     {{user.username}}
+                                     {{user.firstname}}
                                    </td>
+                                  <td
+                                    class="department-name"
+                                  >
+                                     {{user.lastname}}
+                                  </td>
                                   <td
                                     class="department-name"
                                     ng-click="editUser(user)">
                                     <i class="fa fa-pencil"></i>
                                      {{user.email}}
                                    </td>
-                                  <td ng-if="user.status===10">
-                                    <button
-                                      type="button"
-                                      class="btn btn-outline-success"
-                                    >
-                                      Active
-                                    </button>
-                                  </td>
-                                  <td ng-if="user.status!==10">
-                                    <button
-                                      type="button"
-                                      class="btn btn-outline-danger"
-                                    >
-                                      Deleted
-                                    </button>
+                                  <td>
+                                    
                                   </td>
                                   <td>
                                     <button

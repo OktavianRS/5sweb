@@ -7,13 +7,22 @@
             <li class="nav-item">
                 <a class="nav-link" ui-sref-active="active" ui-sref="app.departments"><i class="icon-organization"></i>Departments</a>
             </li>
-            <li class="nav-item">
+            <li
+                class="nav-item"
+                ng-if="role === 'site admin'"
+            >
                 <a class="nav-link" ui-sref-active="active" ui-sref="app.workplaces"><i class="icon-briefcase"></i>Workplaces</a>
             </li>
-            <li class="nav-item">
+            <li
+                class="nav-item"
+                ng-if="role === 'site admin'"
+            >
                 <a class="nav-link" ui-sref-active="active" ui-sref="app.criteria"><i class="icon-list"></i>Criteria</a>
             </li>
-            <li class="nav-item">
+            <li
+                class="nav-item"
+                ng-if="role === 'site admin'"
+            >
                 <a class="nav-link" ui-sref-active="active" ui-sref="app.check"><i class="icon-check"></i>Check List</a>
             </li>
             <li class="nav-item">

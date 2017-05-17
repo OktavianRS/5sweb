@@ -6,6 +6,7 @@ navbarCtrl.$inject = ['$scope', 'toast', '$sessionStorage', '$location'];
 function navbarCtrl($scope, toast, $sessionStorage, $location) {
 
   $scope.first_name = $sessionStorage.first_name;
+  $scope.email = $sessionStorage.email;
   $scope.last_name = $sessionStorage.last_name;
   $scope.role = $sessionStorage.role;
 
