@@ -10,8 +10,8 @@ DashboardChart.$inject = ['$rootScope','$scope', '$sessionStorage', '$window', '
 function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
 
 
-    var USER_ROLE = $sessionStorage.role;
-    if (USER_ROLE == 'site admin') var isSuperAdmin = true;
+    // var USER_ROLE = $sessionStorage.role;
+    // if (USER_ROLE == 'site admin') var isSuperAdmin = true;
 
     $scope.search = {};
 
@@ -26,7 +26,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         department: {
             name: 'Show all departments',
             id: null,
-            isDisabled: isSuperAdmin || false,
+            isDisabled: false,
         },
         workplace: {
             name: 'Show all workplaces',
@@ -73,56 +73,46 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     // google chart time-line
     // histiry audit
 
-    var addRows = [
-        ['department1', new Date(2016, 5, 4), new Date(2016, 6, 4)],
-        ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
-        ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
-        ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
-        ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
-        ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
-        ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
-        ['department3', new Date(2016, 8, 4), new Date(2016, 9, 4)],
-    ];
-    google.charts.load('current', {
-        'packages': ['timeline']
-    });
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var container = document.getElementById('timeline');
-        var chart = new google.visualization.Timeline(container);
-        var dataTable = new google.visualization.DataTable();
-
-        dataTable.addColumn({type: 'string', id: 'Name'});
-        dataTable.addColumn({type: 'date', id: 'Start'});
-        dataTable.addColumn({type: 'date', id: 'End'});
-        dataTable.addRows(addRows);
-        var rowHeight = 30;
-        var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
-        var options = {
-            avoidOverlappingGridLines: true,
-            height: chartHeight,
-            width: '100%',
-        };
-        chart.draw(dataTable, options);
-        if (chartHeight < 400) {
-            $scope.timelineHeight = {height: chartHeight * 0.6};
-        } else {
-            $scope.timelineHeight = 300
-        }
-    }
-
-
-    angular.element($window).on('resize', function () {
-        google.charts.setOnLoadCallback(drawChart);
-
-        // manuall $digest required as resize event
-        // is outside of angular
-         $scope.$digest();
-    });
+    // var addRows = [
+    //     ['department1', new Date(2016, 5, 4), new Date(2016, 6, 4)],
+    //     ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
+    //     ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
+    //     ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
+    //     ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
+    //     ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
+    //     ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
+    //     ['department3', new Date(2016, 8, 4), new Date(2016, 9, 4)],
+    // ];
+    // google.charts.load('current', {
+    //     'packages': ['timeline']
+    // });
+    // google.charts.setOnLoadCallback(drawChart);
+    // function drawChart() {
+    //     var container = document.getElementById('timeline');
+    //     var chart = new google.visualization.Timeline(container);
+    //     var dataTable = new google.visualization.DataTable();
     //
-    $rootScope.$on('changeWidthChart', function (event, data) {
-        google.charts.setOnLoadCallback(drawChart);
-    });
+    //     dataTable.addColumn({type: 'string', id: 'Name'});
+    //     dataTable.addColumn({type: 'date', id: 'Start'});
+    //     dataTable.addColumn({type: 'date', id: 'End'});
+    //     dataTable.addRows(addRows);
+    //     var rowHeight = 30;
+    //     var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
+    //     var options = {
+    //         avoidOverlappingGridLines: true,
+    //         height: chartHeight,
+    //         width: '100%',
+    //     };
+    //     chart.draw(dataTable, options);
+    //     if (chartHeight < 400) {
+    //         $scope.timelineHeight = {height: chartHeight * 0.6};
+    //     } else {
+    //         $scope.timelineHeight = 300
+    //     }
+    // }
+
+
+
 
 
     // histiry score
@@ -200,6 +190,10 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     // fetch all initial data
     function constuctor() {
 
+
+
+
+
         chartsModel.fetchScoreByCompany({company_id: 1}, function callback(result) {
 
             changesChart(result);
@@ -208,9 +202,35 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         companiesModel.fetchCompanies(function (result) {
 
             $scope.companiesList = result;
-            $scope.withHeaderCompaniesList = $scope.companiesList.slice();
-            $scope.withHeaderCompaniesList.splice(0, 0, headerFilter.company);
-            $scope.search.company = headerFilter.company;
+            $scope.search.company =  $scope.companiesList[0];
+            // $scope.withHeaderCompaniesList = $scope.companiesList.slice();
+            // $scope.withHeaderCompaniesList.splice(0, 0, headerFilter.company);
+            // $scope.search.company = headerFilter.company;
+
+            companiesModel.fetchOneDepartmentList({company_id:$scope.search.company.id}, function callback(result) {
+                $scope.departmentsList = result;
+                $scope.withHeaderDepartments = $scope.departmentsList.slice();
+                $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
+                $scope.search.department = headerFilter.department;
+            })
+
+            chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
+                changesAuditHistory(result);
+
+                angular.element($window).on('resize', function () {
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    // manuall $digest required as resize event
+                    // is outside of angular
+                    $scope.$digest();
+                });
+                //
+                $rootScope.$on('changeWidthChart', function (event, data) {
+                    google.charts.setOnLoadCallback(drawChart);
+                });
+
+            })
+
 
         });
 
@@ -222,16 +242,16 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
         });
 
-        departmentsModel.fetchPlacesList(function (result) {
-            $scope.AllDepartmentsList = result;
-
-            $scope.departmentsList = $scope.AllDepartmentsList.slice();
-            $scope.withHeaderDepartments = $scope.departmentsList.slice();
-            $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
-            $scope.search.department = headerFilter.department;
-
-
-        });
+        // departmentsModel.fetchPlacesList(function (result) {
+        //     $scope.AllDepartmentsList = result;
+        //
+        //     $scope.departmentsList = $scope.AllDepartmentsList.slice();
+        //     $scope.withHeaderDepartments = $scope.departmentsList.slice();
+        //     $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
+        //     $scope.search.department = headerFilter.department;
+        //
+        //
+        // });
 
     }
 
@@ -325,31 +345,29 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     function selectCompany(item) {
         headerFilter.department.isDisabled = true;
         headerFilter.workplace.isDisabled = true;
-        if (item.id === null) {
-            headerFilter.department.isDisabled = true;
-            headerFilter.workplace.isDisabled = true;
+
+
+        companiesModel.fetchOneDepartmentList({company_id: item.id}, function callback(result) {
+            $scope.departmentsList = result;
+            $scope.withHeaderDepartments = $scope.departmentsList.slice();
+            $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
             $scope.search.department = headerFilter.department;
             $scope.search.place = headerFilter.workplace;
-            companiesModel.fetchCompanies(function (result) {
-
-                // changesAuditHistory(result);
-                changesScoreHistory(result)
-                changesChart(result);
-            });
-
-        } else {
-
-            chartsModel.fetchChartByCompany({company_id: item.id}, function callback(result) {
-                //TODO...
                 headerFilter.department.isDisabled = false;
+
                 // changesAuditHistory(result);
                 changesScoreHistory(result)
 
             });
+
+        chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
+            changesAuditHistory(result);
+        })
+
             chartsModel.fetchScoreByCompany({company_id: item.id}, function callback(result) {
                 changesChart(result);
             });
-        }
+        // }
     }
 
 
@@ -358,12 +376,14 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         if (item.id === null) {
             $scope.search.place = headerFilter.workplace;
 
-            departmentsModel.fetchPlacesList(function (result) {
-
+            companiesModel.fetchOneDepartmentList({company_id: $scope.search.company.id}, function callback(result) {
                 $scope.departmentsList = result;
                 $scope.withHeaderDepartments = $scope.departmentsList.slice();
                 $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
                 $scope.search.department = headerFilter.department;
+
+
+                changesScoreHistory(result)
 
             });
 
@@ -373,19 +393,19 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
 
         } else {
-            chartsModel.fetchChartByDepartment({department_id: item.id}, function callback(result) {
+            departmentsModel.fetchOnePlaceList({department_id: item.id}, function callback(result) {
 
 
                 changesScoreHistory(result)
                 changesChart(result);
 
-                $scope.departmentsList = $scope.AllDepartmentsList.filter(
-                    function (value) {
-                        return value.id === item.id
-                    }
-                );
+                // $scope.departmentsList = $scope.AllDepartmentsList.filter(
+                //     function (value) {
+                //         return value.id === item.id
+                //     }
+                // );
 
-                $scope.workplacesList = $scope.departmentsList[0].places;
+                $scope.workplacesList = result;
                 $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
                 $scope.withHeaderWorkPlaces.splice(0, 0, headerFilter.workplace);
                 $scope.search.place = headerFilter.workplace;
@@ -395,9 +415,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
             });
 
-            chartsModel.fetchAuditHistoryByDepartment({department_id: item.id}, function callback(result) {
-                changesAuditHistory(result);
-            });
+
 
             chartsModel.fetchScoreByDepartment({department_id: item.id}, function callback(result) {
                 changesChart(result);
@@ -422,9 +440,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             chartsModel.fetchChartByPlace({place_id: item.id}, function callback(result) {
             });
 
-            chartsModel.fetchAuditHistoryByPlace({place_id: item.id}, function callback(result) {
-                changesAuditHistory(result);
-            });
+
 
             chartsModel.fetchScoreByPlace({place_id: item.id}, function callback(result) {
                 changesChart(result);
@@ -515,6 +531,9 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
     }
 
+
+    // google chart time-line
+    // histiry audit
     function changesAuditHistory(result) {
 
 

@@ -4,15 +4,32 @@
     <div class="card" ng-controller="DashboardChart">
         <div class="card-block">
             <div class="row">
-                <div class="col-sm-5">
+                <div class="col-sm-12">
                     <h4 class="card-title mb-0">Audit history for departments</h4>
                     <div class="small text-muted">5s-Figures Performance</div>
                 </div>
                 <!--/.col-->
+
+                <!--/.col-->
+            </div>
+            <!--/.row-->
+            <div class="chart-wrapper" style="margin-top:40px;">
+                <!--<canvas class="chart chart-bar" chart-data="historyAudit.data" chart-labels="historyAudit.labels" chart-legend="false" chart-series="historyAudit.series" chart-click="historyAudit.onClick" chart-options="historyAudit.options" chart-colors="historyAudit.colors" chart-dataset-override="historyAudit.datasetOverride" height="300"></canvas>-->
+                <div id="timeline" ng-style="timelineHeight"></div>
+            </div>
+        </div>
+
+
+        <div class="card-block">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h4 class="card-title mb-0">Score history</h4>
+                    <div class="small text-muted">5s-Figures Performance</div>
+                </div>
                 <div class="col-sm-7 select_group">
                     <select ng-disabled="headerFilter.company.isDisabled"
                             class="dashboard__select" name="companySelect" id="companySelect"
-                            ng-options="company.name for company in withHeaderCompaniesList track by company.id"
+                            ng-options="company.name for company in companiesList track by company.id"
                             ng-model="search.company" ng-change="selectCompany(search.company)"
                     >
                     </select>
@@ -30,22 +47,6 @@
                     </select>
 
                 </div>
-                <!--/.col-->
-            </div>
-            <!--/.row-->
-            <div class="chart-wrapper" style="margin-top:40px;">
-                <!--<canvas class="chart chart-bar" chart-data="historyAudit.data" chart-labels="historyAudit.labels" chart-legend="false" chart-series="historyAudit.series" chart-click="historyAudit.onClick" chart-options="historyAudit.options" chart-colors="historyAudit.colors" chart-dataset-override="historyAudit.datasetOverride" height="300"></canvas>-->
-                <div id="timeline" ng-style="timelineHeight"></div>
-            </div>
-
-
-        </div>
-        <div class="card-block">
-            <div class="row">
-                <div class="col-sm-5">
-                    <h4 class="card-title mb-0">Score history</h4>
-                    <div class="small text-muted">5s-Figures Performance</div>
-                </div>
             </div>
             <!--/.row-->
             <div class="chart-wrapper" style="height:300px;margin-top:40px;">
@@ -60,6 +61,8 @@
                 </div>
             </div>
         </div>
+
+
         <div class="card-block">
             <div class="row">
                 <div class="col-sm-5">

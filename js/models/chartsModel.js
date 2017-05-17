@@ -7,6 +7,15 @@ angular.module('model.charts', [])
 
                  //Audit history
 
+            this.fetchAuditHistoryByCompany = function(req, callback) {
+                api.get(
+                    url.fetchAuditHistoryByCompany,
+                    req,
+                    function(res) {
+                        callback(res);
+                    })
+            }
+
             this.fetchAuditHistoryByDepartment = function(req, callback) {
                 api.get(
                     url.fetchAuditHistoryByDepartment,
