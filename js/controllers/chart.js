@@ -471,7 +471,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
 ////////////////// 2 chart ///////////////////////
     function changesScoreHistory(result) {
-debugger
+
         // audit - empty
         if (Array.isArray(result.labels) && result.labels.length === 0) {
             $scope.ScoreHistoryIsEmpty = true;

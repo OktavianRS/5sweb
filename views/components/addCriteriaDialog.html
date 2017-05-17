@@ -5,7 +5,7 @@
               <i class="fa fa-pencil-square-o"></i>Add criteria
           </div>
           <div class="card-block department-form">
-              <form class="form-2orizontal">
+              <form class="form-2orizontal" selected-criteria>
                   <label class="form-control-label" for="prependedInputCriteria">Available Criteria</label>
                   <select
                           ng-model="criteria"
@@ -39,6 +39,7 @@
                           info-all="{{ settings.infoAll }}"
                           info-filtered="{{ settings.infoFiltered }}"
                           info-empty="{{ settings.infoEmpty }}"
+
 
                   >
                   </select>
