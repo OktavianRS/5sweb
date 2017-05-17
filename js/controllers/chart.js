@@ -393,87 +393,105 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     // google chart time-line
     // histiry audit
     function changesAuditHistory(result) {
+
+        // audit - empty
         if (Array.isArray(result) && result.length === 0) {
             $scope.AuditHistoryIsEmpty = true;
         } else {
             $scope.AuditHistoryIsEmpty = false;
         }
 
-
-        var NumberToDate = result.map(function (item) {
-            item.length = 3;
-            var newItem = item.map(function (innerItem, i, arr) {
-                if (i > 0) {
-                    if ((i === 2) && (innerItem === null || innerItem === 0)) {
-                        innerItem = new Date();
-                    }
-                    else if ((i === 1) && (innerItem === null || innerItem === 0)) {
-                        innerItem = new Date();
-                    }
-                    else {
-                        innerItem = new Date(innerItem * 1000);
-                    }
-                }
-                return innerItem;
-            });
-            return newItem;
-        });
-        addRows = NumberToDate;
-        google.charts.load('current', {
-            'packages': ['timeline']
-        });
-
-        drawChart = function () {
-            var container = document.getElementById('timeline');
-            var chart = new google.visualization.Timeline(container);
-            var dataTable = new google.visualization.DataTable();
-
-            dataTable.addColumn({type: 'string', id: 'Name'});
-            dataTable.addColumn({type: 'date', id: 'Start'});
-            dataTable.addColumn({type: 'date', id: 'End'});
-            dataTable.addRows(addRows);
-             var rowHeight = 30;
-            if (addRows.length == 1) rowHeight = 60;
-             var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
-            if (addRows.length > 10) chartHeight = 300;
-
-            var options = {
-                avoidOverlappingGridLines: true,
-                height: chartHeight,
-                width: '100%',
-            };
-            chart.draw(dataTable, options);
-
-            if (addRows.length == 1) {
-                $scope.timelineHeight = {height: chartHeight * 2};
-            } else if (addRows.length < 8) {
-                $scope.timelineHeight = {height: chartHeight * 0.8};
-            } else {
-                $scope.timelineHeight = {height: chartHeight * 0.9};
-            }
+        // message-error
+        if (result.message || result.errors) {
+            $scope.messageErrorAuditHistory =  result.message || result.errors;
+            $scope.AuditHistoryIsEmpty = true;
         }
 
-       $timeout(function () {
-           google.charts.setOnLoadCallback(drawChart);
-       },0);
+        // result success
+        if ($scope.AuditHistoryIsEmpty === false && (!result.message || !result.errors)){
+            var NumberToDate = result.map(function (item) {
+                item.length = 3;
+                var newItem = item.map(function (innerItem, i, arr) {
+                    if (i > 0) {
+                        if ((i === 2) && (innerItem === null || innerItem === 0)) {
+                            innerItem = new Date();
+                        }
+                        else if ((i === 1) && (innerItem === null || innerItem === 0)) {
+                            innerItem = new Date();
+                        }
+                        else {
+                            innerItem = new Date(innerItem * 1000);
+                        }
+                    }
+                    return innerItem;
+                });
+                return newItem;
+            });
+            addRows = NumberToDate;
+            google.charts.load('current', {
+                'packages': ['timeline']
+            });
+
+            drawChart = function () {
+                var container = document.getElementById('timeline');
+                var chart = new google.visualization.Timeline(container);
+                var dataTable = new google.visualization.DataTable();
+
+                dataTable.addColumn({type: 'string', id: 'Name'});
+                dataTable.addColumn({type: 'date', id: 'Start'});
+                dataTable.addColumn({type: 'date', id: 'End'});
+                dataTable.addRows(addRows);
+                var rowHeight = 30;
+                if (addRows.length == 1) rowHeight = 60;
+                var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
+                if (addRows.length > 10) chartHeight = 300;
+
+                var options = {
+                    avoidOverlappingGridLines: true,
+                    height: chartHeight,
+                    width: '100%',
+                };
+                chart.draw(dataTable, options);
+
+                if (addRows.length == 1) {
+                    $scope.timelineHeight = {height: chartHeight * 2};
+                } else if (addRows.length < 8) {
+                    $scope.timelineHeight = {height: chartHeight * 0.8};
+                } else {
+                    $scope.timelineHeight = {height: chartHeight * 0.9};
+                }
+            }
+
+            $timeout(function () {
+                google.charts.setOnLoadCallback(drawChart);
+            },0);
+        }
 
     }
 
 ////////////////// 2 chart ///////////////////////
     function changesScoreHistory(result) {
-
-        if (Array.isArray(result.label) && result.label.length === 0) {
+debugger
+        // audit - empty
+        if (Array.isArray(result.labels) && result.labels.length === 0) {
             $scope.ScoreHistoryIsEmpty = true;
         } else {
             $scope.ScoreHistoryIsEmpty = false;
         }
+        // message-error
+        if (result.message || result.errors) {
+            $scope.messageErrorScoreHistory =  result.message || result.errors;
+            $scope.ScoreHistoryIsEmpty = true;
+        }
+        // result success
+        if ($scope.ScoreHistoryIsEmpty === false && (!result.message || !result.errors)){
+            $scope.historyScore.labels = result.labels;
+            $scope.historyScore.data = result.data;
 
-        $scope.historyScore.labels = result.labels;
-        $scope.historyScore.data = result.data;
+            var max =  Math.max.apply(null,(result.data[0].concat(result.data[1], result.data[2])));
+            $scope.historyScore.options.scales.yAxes[0].ticks.max = (Math.floor((max+20)/10))*10-10;
 
-        var max =  Math.max.apply(null,(result.data[0].concat(result.data[1], result.data[2])));
-        $scope.historyScore.options.scales.yAxes[0].ticks.max = (Math.floor((max+20)/10))*10-10;
-
+        }
 
     }
 
@@ -482,55 +500,65 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 ///// functional for chart - Score (3 chart) //////
     function changesChart(result) {
 
-        if (result.errors === 'The requested place has not any started audit') {
-            $scope.scoreByError = true;
+        // audit - empty
+        if (Array.isArray(result.labels) && result.labels.length === 0) {
+            $scope.ScoreIsEmpty = true;
         } else {
-            $scope.scoreByError = false;
+            $scope.ScoreIsEmpty = false;
         }
 
-        // if we have string then push it in array
-        for (var i in result) {
-            if (typeof result[i] !== 'object') {
-                result[i] = [result[i]];
+        // message-error
+        if (result.message || result.errors) {
+            $scope.messageErrorScore =  result.message || result.errors;
+            $scope.ScoreIsEmpty = true;
+        }
+
+        // result success
+        if ($scope.ScoreIsEmpty === false && (!result.message || !result.errors)){
+            // if we have string then push it in array
+            for (var i in result) {
+                if (typeof result[i] !== 'object') {
+                    result[i] = [result[i]];
+                }
             }
-        }
 
-        if (result.departmentName && !result.placeName) {
-            $scope.labels = result.departmentName;
-            data1 = result.departmentCurrentScore;  // current week
-            data2 = result.departmentLastScore;  // previous week
-            $scope.options.scales.yAxes[0].ticks.max = 100;
-            $scope.options.scales.yAxes[0].ticks.stepSize = 10;
-            countScore(data1, 0);
-            countScore(data2, 1);
-        }
-        else if (result.placeName && result.departmentName) {
-            $scope.labels = result.placeName;
-            data1 = result.placeCurrentScore;  // current week
-            data2 = result.placeLastScore;  // previous week
-            $scope.options.scales.yAxes[0].ticks.max = 100;
-            $scope.options.scales.yAxes[0].ticks.stepSize = 10;
-            countScore(data1, 0);
-            countScore(data1, 0);
-            countScore(data2, 1);
-        }
-        else if (result.criteriaName) {
-            $scope.labels = result.criteriaName;
-            var data1 = result.criteriaStatus;
-            $scope.data = [];
-            $scope.options.scales.yAxes[0].ticks.max = 3;
-            $scope.options.scales.yAxes[0].ticks.stepSize = 1;
-            countScore(data1, 0);
-        }
+            if (result.departmentName && !result.placeName) {
+                $scope.labels = result.departmentName;
+                data1 = result.departmentCurrentScore;  // current week
+                data2 = result.departmentLastScore;  // previous week
+                $scope.options.scales.yAxes[0].ticks.max = 100;
+                $scope.options.scales.yAxes[0].ticks.stepSize = 10;
+                countScore(data1, 0);
+                countScore(data2, 1);
+            }
+            else if (result.placeName && result.departmentName) {
+                $scope.labels = result.placeName;
+                data1 = result.placeCurrentScore;  // current week
+                data2 = result.placeLastScore;  // previous week
+                $scope.options.scales.yAxes[0].ticks.max = 100;
+                $scope.options.scales.yAxes[0].ticks.stepSize = 10;
+                countScore(data1, 0);
+                countScore(data1, 0);
+                countScore(data2, 1);
+            }
+            else if (result.criteriaName) {
+                $scope.labels = result.criteriaName;
+                var data1 = result.criteriaStatus;
+                $scope.data = [];
+                $scope.options.scales.yAxes[0].ticks.max = 3;
+                $scope.options.scales.yAxes[0].ticks.stepSize = 1;
+                countScore(data1, 0);
+            }
 
 
-        function countScore(dataScore, i) {
+            function countScore(dataScore, i) {
 
-            if (dataScore.length > 1) {
-                $scope.data[i] = dataScore;
-            } else {
-                $scope.data[i] = [];
-                $scope.data[i].push(dataScore);
+                if (dataScore.length > 1) {
+                    $scope.data[i] = dataScore;
+                } else {
+                    $scope.data[i] = [];
+                    $scope.data[i].push(dataScore);
+                }
             }
         }
 

@@ -12,8 +12,15 @@ angular.module('model.charts', [])
                     url.fetchAuditHistoryByCompany,
                     req,
                     function(res) {
+                         if (res.errors) {
+                            toast('error', res.errors, '');
+                        }
                         callback(res);
-                    })
+                    },
+                    function errorCallback(res) {
+                        console.log(res);
+                        callback(res);
+                    });
             }
 
             this.fetchAuditHistoryByDepartment = function(req, callback) {
@@ -41,6 +48,13 @@ angular.module('model.charts', [])
                     url.fetchScoreHistoryByCompany,
                     req,
                     function(res) {
+                        if (res.errors) {
+                            toast('error', res.errors, '');
+                        }
+                        callback(res);
+                    },
+                    function errorCallback(res) {
+                        console.log(res);
                         callback(res);
                     })
             }
@@ -50,6 +64,13 @@ angular.module('model.charts', [])
                     url.fetchScoreHistoryByDepartment,
                     req,
                     function(res) {
+                        if (res.errors) {
+                            toast('error', res.errors, '');
+                        }
+                        callback(res);
+                    },
+                    function errorCallback(res) {
+                        console.log(res);
                         callback(res);
                     })
             }
@@ -59,6 +80,13 @@ angular.module('model.charts', [])
                     url.fetchScoreHistoryByPlace,
                     req,
                     function(res) {
+                        if (res.errors) {
+                            toast('error', res.errors, '');
+                        }
+                        callback(res);
+                    },
+                    function errorCallback(res) {
+                        console.log(res);
                         callback(res);
                     })
             }
@@ -70,6 +98,13 @@ angular.module('model.charts', [])
                     url.fetchScoreByCompany,
                     req,
                     function(res) {
+                        if (res.errors) {
+                            toast('error', res.errors, '');
+                        }
+                        callback(res);
+                    },
+                    function errorCallback(res) {
+                        console.log(res);
                         callback(res);
                     })
             }
@@ -79,6 +114,13 @@ angular.module('model.charts', [])
                     url.fetchScoreByDepartment,
                     req,
                     function(res) {
+                        if (res.errors) {
+                            toast('error', res.errors, '');
+                        }
+                        callback(res);
+                    },
+                    function errorCallback(res) {
+                        console.log(res);
                         callback(res);
                     })
             }
@@ -88,6 +130,13 @@ angular.module('model.charts', [])
                     url.fetchScoreByPlace,
                     req,
                     function(res) {
+                        if (res.errors) {
+                            toast('error', res.errors, '');
+                        }
+                        callback(res);
+                    },
+                    function errorCallback(res) {
+                        console.log(res);
                         callback(res);
                     })
             }
