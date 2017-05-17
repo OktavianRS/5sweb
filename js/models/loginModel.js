@@ -8,8 +8,9 @@ angular.module('model.login', [])
             function(res) {
               if (res.status) {
                 $sessionStorage.auth_key = res.auth_key;
-                $sessionStorage.first_name = res.first_name;
-                $sessionStorage.last_name = res.last_name;
+                $sessionStorage.email = res.email;
+                $sessionStorage.first_name = res.firstname;
+                $sessionStorage.last_name = res.lastname;
                 $sessionStorage.role = res.role;
                 $location.path('/dashboard');
               } else {
