@@ -111,7 +111,6 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
     };
 
     $scope.add = function() {
-        // console.log('ass')
         lastIndex++;
         updateList();
     };

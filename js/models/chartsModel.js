@@ -34,6 +34,36 @@ angular.module('model.charts', [])
                     })
             }
 
+
+            //Score history
+            this.fetchScoreHistoryByCompany = function(req, callback) {
+                api.get(
+                    url.fetchScoreHistoryByCompany,
+                    req,
+                    function(res) {
+                        callback(res);
+                    })
+            }
+
+            this.fetchScoreHistoryByDepartment = function(req, callback) {
+                api.get(
+                    url.fetchScoreHistoryByDepartment,
+                    req,
+                    function(res) {
+                        callback(res);
+                    })
+            }
+
+            this.fetchScoreHistoryByPlace = function(req, callback) {
+                api.get(
+                    url.fetchScoreHistoryByPlace,
+                    req,
+                    function(res) {
+                        callback(res);
+                    })
+            }
+
+
             // new score
             this.fetchScoreByCompany = function(req, callback) {
                 api.get(
