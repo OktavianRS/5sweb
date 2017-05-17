@@ -5,7 +5,8 @@ angular
 navbarCtrl.$inject = ['$scope', 'toast', '$sessionStorage', '$location'];
 function navbarCtrl($scope, toast, $sessionStorage, $location) {
 
-  $scope.username = $sessionStorage.username;
+  $scope.first_name = $sessionStorage.first_name;
+  $scope.last_name = $sessionStorage.last_name;
   $scope.role = $sessionStorage.role;
 
   $scope.logout = function() {
