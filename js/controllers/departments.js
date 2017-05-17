@@ -13,7 +13,7 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
 
   $scope.department = {
     name: '',
-    company_id: '',
+    company_id: $rootScope.company_id || '',
   }
 
   $scope.options = {

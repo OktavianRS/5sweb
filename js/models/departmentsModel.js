@@ -1,6 +1,6 @@
 angular.module('model.departments', [])
-    .service('departmentsModel', ['url', 'api', 'toast', '$q', '$location', '$sessionStorage',
-      function(url, api, toast, $q, $location, $sessionStorage) {
+    .service('departmentsModel', ['url', 'api', 'toast', '$q', '$location', '$sessionStorage', '$rootScope',
+      function(url, api, toast, $q, $location, $sessionStorage, $rootScope) {
 
       	this.createDepartment = function(req, callback) {
           api.post(
@@ -17,12 +17,22 @@ angular.module('model.departments', [])
         }
 
         this.fetchDepartments = function(callback) {
-          api.get(
+          if ($rootScope.role === 'site admin') {
+            api.get(
             url.fetchDepartments,
             {},
             function(res) {
               callback(res);
             })
+          } else {
+            const company_id = $rootScope.company_id;
+            api.get(
+            url.fetchDepartmentsByCompanyId,
+            {company_id},
+            function(res) {
+              callback(res);
+            })
+          }
         }
 
 

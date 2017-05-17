@@ -6,8 +6,7 @@
           </div>
           <div class="card-block department-form">
               <form class="form-2orizontal">
-                <div class="form-group row">
-                  <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
                     <label class="form-control-label" for="prependedInput">Name</label>
                     <div class="controls">
                         <div class="input-prepend input-group">
@@ -21,7 +20,10 @@
                         </div>
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-6">
+                  <div
+                    class="form-group"
+                    ng-if="isAdmin()"
+                  >
                     <label class="form-control-label" for="prependedInputDepartment">Company</label>
                     <div class="controls">
                         <div class="input-prepend input-group">
@@ -42,7 +44,6 @@
                         </div>
                     </div>
                   </div>
-                </div>
                   <div class="form-actions">
                       <button
                         type="submit"
