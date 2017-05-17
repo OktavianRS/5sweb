@@ -70,61 +70,32 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     };
 
 
-    // google chart time-line
-    // histiry audit
+    //////////////// google chart time-line -- init ///////////////
+    /////////////// histiry audit //////////////////////
 
-    // var addRows = [
-    //     ['department1', new Date(2016, 5, 4), new Date(2016, 6, 4)],
-    //     ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
-    //     ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
-    //     ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
-    //     ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
-    //     ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
-    //     ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
-    //     ['department3', new Date(2016, 8, 4), new Date(2016, 9, 4)],
-    // ];
-    // google.charts.load('current', {
-    //     'packages': ['timeline']
-    // });
-    // google.charts.setOnLoadCallback(drawChart);
-    // function drawChart() {
-    //     var container = document.getElementById('timeline');
-    //     var chart = new google.visualization.Timeline(container);
-    //     var dataTable = new google.visualization.DataTable();
+    var drawChart; // init variable for observe change of width
+
+    angular.element($window).on('resize', function () {
+        if (!$scope.AuditHistoryIsEmpty) google.charts.setOnLoadCallback(drawChart);
+
+        // manuall $digest required as resize event
+        // is outside of angular
+        $scope.$digest();
+    });
     //
-    //     dataTable.addColumn({type: 'string', id: 'Name'});
-    //     dataTable.addColumn({type: 'date', id: 'Start'});
-    //     dataTable.addColumn({type: 'date', id: 'End'});
-    //     dataTable.addRows(addRows);
-    //     var rowHeight = 30;
-    //     var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
-    //     var options = {
-    //         avoidOverlappingGridLines: true,
-    //         height: chartHeight,
-    //         width: '100%',
-    //     };
-    //     chart.draw(dataTable, options);
-    //     if (chartHeight < 400) {
-    //         $scope.timelineHeight = {height: chartHeight * 0.6};
-    //     } else {
-    //         $scope.timelineHeight = 300
-    //     }
-    // }
+    $rootScope.$on('changeWidthChart', function (event, data) {
+        if (!$scope.AuditHistoryIsEmpty)  google.charts.setOnLoadCallback(drawChart);
+    });
 
 
 
+    ////////////////// chart history score -- init //////////////////
 
-
-    // histiry score
-    $scope.historyScore = {
-        labels: ["Audit1", "Audit2", "Audit3", "Audit4", "Audit5", "Audit6", "Audit7"],
-        data: [
-            [17, 25, 22, 20, 8, 10, 7],
-            [21, 28, 24, 25, 12, 13, 15],
-            [25, 32, 31, 26, 18, 19, 16],
-        ],
-    };
-
+    $scope.labels = [];
+    $scope.data = [];
+    $scope.colors = [];
+    $scope.series = ["Current", "Target", "Last"];
+    $scope.historyScore={};
     $scope.historyScore.datasetOverride = [
         {
             label: "target",
@@ -159,11 +130,11 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         },
 
     ];
-
     $scope.historyScore.options = {
         responsive: true,
         maintainAspectRatio: false,
         scaleShowLabels: false,
+
         tooltips: {
             enabled: true,
             mode: 'single',
@@ -173,126 +144,53 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 }
             }
         },
-        scales: {},
-    }
-
-
-    // TODO carrent, last, target
-    var data3 = [90, 90, 90, 90, 90, 90],
-        data4 = [100, 100, 100, 100, 100, 100],
-        data5 = [80, 80, 80, 80, 80, 80];
-
-    $scope.labels = [];
-    $scope.data = [];
-    $scope.colors = [];
-    $scope.series = ["Current", "Target", "Last"];
-
-    // fetch all initial data
-    function constuctor() {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    min: 0,
+                },
+            }]
+        }
+    };
 
 
 
-
-
-        chartsModel.fetchScoreByCompany({company_id: 1}, function callback(result) {
-
-            changesChart(result);
-        });
-
-        companiesModel.fetchCompanies(function (result) {
-
-            $scope.companiesList = result;
-            $scope.search.company =  $scope.companiesList[0];
-            // $scope.withHeaderCompaniesList = $scope.companiesList.slice();
-            // $scope.withHeaderCompaniesList.splice(0, 0, headerFilter.company);
-            // $scope.search.company = headerFilter.company;
-
-            companiesModel.fetchOneDepartmentList({company_id:$scope.search.company.id}, function callback(result) {
-                $scope.departmentsList = result;
-                $scope.withHeaderDepartments = $scope.departmentsList.slice();
-                $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
-                $scope.search.department = headerFilter.department;
-            })
-
-            chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
-                changesAuditHistory(result);
-
-                angular.element($window).on('resize', function () {
-                    google.charts.setOnLoadCallback(drawChart);
-
-                    // manuall $digest required as resize event
-                    // is outside of angular
-                    $scope.$digest();
-                });
-                //
-                $rootScope.$on('changeWidthChart', function (event, data) {
-                    google.charts.setOnLoadCallback(drawChart);
-                });
-
-            })
-
-
-        });
-
-        workplacesModel.fetchAllWorkPlaces(function (result) {
-            $scope.workplacesList = result;
-            $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
-            $scope.withHeaderWorkPlaces.splice(0, 0, headerFilter.workplace);
-            $scope.search.place = headerFilter.workplace;
-
-        });
-
-        // departmentsModel.fetchPlacesList(function (result) {
-        //     $scope.AllDepartmentsList = result;
-        //
-        //     $scope.departmentsList = $scope.AllDepartmentsList.slice();
-        //     $scope.withHeaderDepartments = $scope.departmentsList.slice();
-        //     $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
-        //     $scope.search.department = headerFilter.department;
-        //
-        //
-        // });
-
-    }
-
-    constuctor();
-
-
-    $scope.datasetOverride = [
-        {}, {},
-        {
-            label: "target",
-            borderWidth: 3,
-            type: 'line',
-            pointRadius: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#a32428',
-            pointHoverBackgroundColor: '#a32428',
-            pointHoverBorderColor: '#a32428'
-        },
-        {
-
-            label: "last",
-            borderWidth: 3,
-            type: 'line',
-            pointRadius: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#339163',
-            pointHoverBackgroundColor: '#339163',
-            pointHoverBorderColor: '#339163'
-        },
-        {
-            label: "current",
-            borderWidth: 3,
-            type: 'line',
-            pointRadius: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#e8f170',
-            pointHoverBackgroundColor: '#e8f170',
-            pointHoverBorderColor: '#e8f170'
-        },
-
-    ];
+///// 3 chart -- init //////
+//     $scope.datasetOverride = [
+//         {}, {},
+//         {
+//             label: "target",
+//             borderWidth: 3,
+//             type: 'line',
+//             pointRadius: 0,
+//             backgroundColor: 'transparent',
+//             borderColor: '#a32428',
+//             pointHoverBackgroundColor: '#a32428',
+//             pointHoverBorderColor: '#a32428'
+//         },
+//         {
+//
+//             label: "last",
+//             borderWidth: 3,
+//             type: 'line',
+//             pointRadius: 0,
+//             backgroundColor: 'transparent',
+//             borderColor: '#339163',
+//             pointHoverBackgroundColor: '#339163',
+//             pointHoverBorderColor: '#339163'
+//         },
+//         {
+//             label: "current",
+//             borderWidth: 3,
+//             type: 'line',
+//             pointRadius: 0,
+//             backgroundColor: 'transparent',
+//             borderColor: '#e8f170',
+//             pointHoverBackgroundColor: '#e8f170',
+//             pointHoverBorderColor: '#e8f170'
+//         },
+//
+//     ];
 
     $scope.options = {
         responsive: true,
@@ -335,6 +233,50 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     }
 
 
+
+
+
+    // fetch all initial data
+    function constuctor() {
+
+
+        companiesModel.fetchCompanies(function (result) {
+
+            $scope.companiesList = result;
+            $scope.search.company =  $scope.companiesList[0];
+
+            companiesModel.fetchOneDepartmentList({company_id:$scope.search.company.id}, function callback(result) {
+                $scope.departmentsList = result;
+                $scope.withHeaderDepartments = $scope.departmentsList.slice();
+                $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
+                $scope.search.department = headerFilter.department;
+
+                $scope.withHeaderWorkPlaces = [];
+                $scope.withHeaderWorkPlaces.splice(0, 0, headerFilter.workplace);
+                $scope.search.place = headerFilter.workplace;
+            })
+
+            chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
+                changesAuditHistory(result);
+            });
+
+            chartsModel.fetchScoreHistoryByCompany({company_id:  $scope.search.company.id}, function callback(result) {
+                changesScoreHistory(result);
+            });
+
+            chartsModel.fetchScoreByCompany({company_id: $scope.search.company.id}, function callback(result) {
+                changesChart(result);
+            });
+
+
+        });
+
+    }
+
+    constuctor();
+
+
+
 // selected inputs (filters)
 
     $scope.selectCompany = selectCompany;
@@ -354,20 +296,21 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             $scope.search.department = headerFilter.department;
             $scope.search.place = headerFilter.workplace;
                 headerFilter.department.isDisabled = false;
-
-                // changesAuditHistory(result);
-                changesScoreHistory(result)
-
             });
 
         chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
             changesAuditHistory(result);
         })
 
-            chartsModel.fetchScoreByCompany({company_id: item.id}, function callback(result) {
-                changesChart(result);
-            });
-        // }
+        chartsModel.fetchScoreHistoryByCompany({company_id: item.id}, function callback(result) {
+            changesScoreHistory(result);
+        });
+
+         chartsModel.fetchScoreByCompany({company_id: item.id}, function callback(result) {
+             changesChart(result);
+         });
+
+
     }
 
 
@@ -382,9 +325,10 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
                 $scope.search.department = headerFilter.department;
 
+            });
 
-                changesScoreHistory(result)
-
+            chartsModel.fetchScoreHistoryByCompany({company_id: $scope.search.company.id}, function callback(result) {
+                changesScoreHistory(result);
             });
 
             chartsModel.fetchScoreByCompany({company_id: $scope.search.company.id}, function callback(result) {
@@ -395,34 +339,26 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         } else {
             departmentsModel.fetchOnePlaceList({department_id: item.id}, function callback(result) {
 
-
-                changesScoreHistory(result)
-                changesChart(result);
-
-                // $scope.departmentsList = $scope.AllDepartmentsList.filter(
-                //     function (value) {
-                //         return value.id === item.id
-                //     }
-                // );
-
                 $scope.workplacesList = result;
                 $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
                 $scope.withHeaderWorkPlaces.splice(0, 0, headerFilter.workplace);
                 $scope.search.place = headerFilter.workplace;
 
-
                 headerFilter.workplace.isDisabled = false;
 
             });
 
-
+            chartsModel.fetchScoreHistoryByDepartment({department_id: item.id}, function callback(result) {
+                changesScoreHistory(result);
+            });
 
             chartsModel.fetchScoreByDepartment({department_id: item.id}, function callback(result) {
                 changesChart(result);
             });
 
-        }
-        ;
+
+
+        };
 
 
     }
@@ -430,17 +366,19 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     function selectPlace(item) {
         if (item.id === null) {
 
+            chartsModel.fetchScoreHistoryByDepartment({department_id:$scope.search.department.id}, function callback(result) {
+                changesScoreHistory(result);
+            });
 
-            chartsModel.fetchScoreByDepartment({department_id: $scope.search.department.id}, function callback(result) {
+            chartsModel.fetchScoreByDepartment({department_id:$scope.search.department.id}, function callback(result) {
                 changesChart(result);
             });
 
         } else {
 
-            chartsModel.fetchChartByPlace({place_id: item.id}, function callback(result) {
+            chartsModel.fetchScoreHistoryByPlace({place_id: item.id}, function callback(result) {
+                changesScoreHistory(result);
             });
-
-
 
             chartsModel.fetchScoreByPlace({place_id: item.id}, function callback(result) {
                 changesChart(result);
@@ -450,12 +388,98 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         }
     };
 
-    // chartsModel.fetchAuditHistoryByPlace({place_id:item.id},function callback (result) {
-    //     changesAuditHistory(result)
-    // });
+
+    ////////////////// 1 chart ///////////////////////
+    // google chart time-line
+    // histiry audit
+    function changesAuditHistory(result) {
+        if (Array.isArray(result) && result.length === 0) {
+            $scope.AuditHistoryIsEmpty = true;
+        } else {
+            $scope.AuditHistoryIsEmpty = false;
+        }
 
 
-///// functional for chart - Score//////
+        var NumberToDate = result.map(function (item) {
+            item.length = 3;
+            var newItem = item.map(function (innerItem, i, arr) {
+                if (i > 0) {
+                    if ((i === 2) && (innerItem === null || innerItem === 0)) {
+                        innerItem = new Date();
+                    }
+                    else if ((i === 1) && (innerItem === null || innerItem === 0)) {
+                        innerItem = new Date();
+                    }
+                    else {
+                        innerItem = new Date(innerItem * 1000);
+                    }
+                }
+                return innerItem;
+            });
+            return newItem;
+        });
+        addRows = NumberToDate;
+        google.charts.load('current', {
+            'packages': ['timeline']
+        });
+
+        drawChart = function () {
+            var container = document.getElementById('timeline');
+            var chart = new google.visualization.Timeline(container);
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({type: 'string', id: 'Name'});
+            dataTable.addColumn({type: 'date', id: 'Start'});
+            dataTable.addColumn({type: 'date', id: 'End'});
+            dataTable.addRows(addRows);
+             var rowHeight = 30;
+            if (addRows.length == 1) rowHeight = 60;
+             var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
+            if (addRows.length > 10) chartHeight = 300;
+
+            var options = {
+                avoidOverlappingGridLines: true,
+                height: chartHeight,
+                width: '100%',
+            };
+            chart.draw(dataTable, options);
+
+            if (addRows.length == 1) {
+                $scope.timelineHeight = {height: chartHeight * 2};
+            } else if (addRows.length < 8) {
+                $scope.timelineHeight = {height: chartHeight * 0.8};
+            } else {
+                $scope.timelineHeight = {height: chartHeight * 0.9};
+            }
+        }
+
+       $timeout(function () {
+           google.charts.setOnLoadCallback(drawChart);
+       },0);
+
+    }
+
+////////////////// 2 chart ///////////////////////
+    function changesScoreHistory(result) {
+
+        if (Array.isArray(result.label) && result.label.length === 0) {
+            $scope.ScoreHistoryIsEmpty = true;
+        } else {
+            $scope.ScoreHistoryIsEmpty = false;
+        }
+
+        $scope.historyScore.labels = result.labels;
+        $scope.historyScore.data = result.data;
+
+        var max =  Math.max.apply(null,(result.data[0].concat(result.data[1], result.data[2])));
+        $scope.historyScore.options.scales.yAxes[0].ticks.max = (Math.floor((max+20)/10))*10-10;
+
+
+    }
+
+
+
+///// functional for chart - Score (3 chart) //////
     function changesChart(result) {
 
         if (result.errors === 'The requested place has not any started audit') {
@@ -510,121 +534,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             }
         }
 
-
-        // console.log($scope.colors   ,'$scope.colors[1].backgroundColor')
-
-        // var colors =  [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'];
-
-        // $scope.colors = [
-        //     {
-        //         backgroundColor: result.departmentColor,
-        //         borderColor: result.departmentColor,
-        //         pointHoverBackgroundColor: '#fff'
-        //     },
-        //     {
-        //         backgroundColor: lastWeekColor(result.departmentColor),
-        //         borderColor: result.departmentColor,
-        //         pointHoverBackgroundColor: '#fff'
-        //     },
-        // ];
-
-
     }
-
-
-    // google chart time-line
-    // histiry audit
-    function changesAuditHistory(result) {
-
-
-
-        var NumberToDate = result.map(function (item) {
-            item.length = 3;
-            var newItem = item.map(function (innerItem, i, arr) {
-                if (i > 0) {
-                    if ((i === 2) && (innerItem === null || innerItem === 0)) {
-                        innerItem = new Date();
-                    }
-                    else if ((i === 1) && (innerItem === null || innerItem === 0)) {
-                        innerItem = new Date();
-                    }
-                    else {
-                        innerItem = new Date(innerItem * 1000);
-                    }
-                }
-                return innerItem;
-            });
-            return newItem;
-        });
-        var addRows = NumberToDate;
-
-        // var addRows=[
-        //         ['department1', new Date(now), new Date()],
-        //         ['department1', new Date(), new Date()]
-        // ];
-        // var addRows = [
-        //     ['department1', new Date(1493996348), new Date()],
-        //     ['department1', new Date(2016, 7, 4), new Date(2016, 8, 4)],
-        //     ['department1', new Date(2016, 10, 4), new Date(2016, 12, 4)],
-        //     ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
-        //     ['department2', new Date(2016, 9, 4), new Date(2016, 10, 4)],
-        //     ['department2', new Date(2016, 8, 30), new Date(2016, 9, 3)],
-        //     ['department3', new Date(2016, 10, 4), new Date(2016, 11, 4)],
-        //     ['department3', new Date(2016, 8, 4), new Date(2018, 9, 4)],
-        //     ['department4', new Date(2016, 8, 4), new Date(2018, 9, 4)],
-        //     ['department5', new Date(2016, 8, 4), new Date(2018, 9, 4)],
-        //
-        // ];
-        google.charts.load('current', {
-            'packages': ['timeline']
-        });
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var container = document.getElementById('timeline');
-            var chart = new google.visualization.Timeline(container);
-            var dataTable = new google.visualization.DataTable();
-
-            dataTable.addColumn({type: 'string', id: 'Name'});
-            dataTable.addColumn({type: 'date', id: 'Start'});
-            dataTable.addColumn({type: 'date', id: 'End'});
-            dataTable.addRows(addRows);
-            var rowHeight = 30;
-            if (addRows.length == 1) var rowHeight = 60;
-            // if (addRows.length > 4) var rowHeight = 30;
-            //  if (addRows.length > 8) var rowHeight = 20;
-            var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
-            if (addRows.length > 10) var chartHeight = 300;
-
-            var options = {
-                avoidOverlappingGridLines: true,
-                height: chartHeight,
-                width: '100%',
-            };
-            chart.draw(dataTable, options);
-
-            if (addRows.length == 1) {
-                $scope.timelineHeight = {height: chartHeight * 2};
-            } else if (addRows.length < 8) {
-                $scope.timelineHeight = {height: chartHeight * 0.8};
-            } else {
-                $scope.timelineHeight = {height: chartHeight * 0.9};
-            }
-        }
-
-    }
-
-
-    function changesScoreHistory(result) {
-        $scope.historyScore = {
-            labels: ["Audit1", "Audit2", "Audit3", "Audit4", "Audit5", "Audit6", "Audit7"],
-            data: [
-                [17, 25, 22, 40, 8, 10, 7],
-                [21, 96, 24, 20, 12, 13, 15],
-                [25, 32, 31, 26, 18, 19, 16],
-            ],
-        };
-    }
-
-
 
 }

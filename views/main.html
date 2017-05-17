@@ -13,9 +13,12 @@
                 <!--/.col-->
             </div>
             <!--/.row-->
-            <div class="chart-wrapper" style="margin-top:40px;">
+            <div ng-show="!AuditHistoryIsEmpty" class="chart-wrapper" style="margin-top:40px;">
                 <!--<canvas class="chart chart-bar" chart-data="historyAudit.data" chart-labels="historyAudit.labels" chart-legend="false" chart-series="historyAudit.series" chart-click="historyAudit.onClick" chart-options="historyAudit.options" chart-colors="historyAudit.colors" chart-dataset-override="historyAudit.datasetOverride" height="300"></canvas>-->
                 <div id="timeline" ng-style="timelineHeight"></div>
+            </div>
+            <div ng-show="AuditHistoryIsEmpty">
+                <h4>The requested audit of history is empty</h4>
             </div>
         </div>
 
@@ -49,7 +52,7 @@
                 </div>
             </div>
             <!--/.row-->
-            <div class="chart-wrapper" style="height:300px;margin-top:40px;">
+            <div ng-if="!ScoreHistoryIsEmpty" class="chart-wrapper" style="height:300px;margin-top:40px;">
                 <canvas class="chart chart-line" chart-data="historyScore.data" chart-labels="historyScore.labels" chart-legend="false" chart-series="historyScore.series" chart-click="historyScore.onClick" chart-options="historyScore.options" chart-colors="historyScore.colors" chart-dataset-override="historyScore.datasetOverride" height="300"></canvas>
                 <div>
                     <div id="js-legend" class="chart-legend">
@@ -59,6 +62,9 @@
                             <li><span style="" class="fa fa-square current"></span>Current</li></ul>
                     </div>
                 </div>
+            </div>
+            <div ng-if="ScoreHistoryIsEmpty">
+                <h4>The requested score of history is empty</h4>
             </div>
         </div>
 

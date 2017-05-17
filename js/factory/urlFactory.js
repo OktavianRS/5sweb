@@ -20,6 +20,10 @@ angular.module('factory.url', [])
           fetchAuditHistoryByDepartment: baseUrl + '/chart/audit-history-by-department',
           fetchAuditHistoryByPlace: baseUrl + '/chart/audit-history-by-place',
 
+          fetchScoreHistoryByCompany: baseUrl + '/chart/score-history-by-company',
+          fetchScoreHistoryByDepartment: baseUrl + '/chart/score-history-by-department',
+          fetchScoreHistoryByPlace: baseUrl + '/chart/score-history-by-place',
+
           fetchScoreByCompany: baseUrl + '/chart/score-by-company',
           fetchScoreByDepartment: baseUrl + '/chart/score-by-department',
           fetchScoreByPlace: baseUrl + '/chart/score-by-place',
