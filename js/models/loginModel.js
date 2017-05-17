@@ -12,6 +12,7 @@ angular.module('model.login', [])
                 $sessionStorage.first_name = res.firstname;
                 $sessionStorage.last_name = res.lastname;
                 $sessionStorage.role = res.role;
+                $sessionStorage.company_id = res.company_id;
                 $location.path('/dashboard');
               } else {
                 let errorText = res.msg.password[0] || 'PLease try again';

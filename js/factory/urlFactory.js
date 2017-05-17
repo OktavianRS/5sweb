@@ -58,6 +58,7 @@ angular.module('factory.url', [])
           fetchPlacesList: baseUrl + '/department/places-list',
           fetchAllCriteriaByWorkplaces: baseUrl + '/criteria/by-place',
           fetchOnePlaceList: baseUrl + '/department/one-place-list',
+          fetchDepartmentsByCompanyId: baseUrl + '/company/one-department-list',
 
 
 

@@ -54,6 +54,10 @@ angular
       $location.path('/login');
     } else {
       $rootScope.role = $sessionStorage.role;
+      $rootScope.company_id = $sessionStorage.company_id;
+      $rootScope.isAdmin = () => {
+        return $sessionStorage.role === 'site admin';
+      }
     }
     if ($location.$$url === '/companies') {
       $sessionStorage.role !== 'site admin' && $location.path('/dashboard');
