@@ -6,36 +6,37 @@
           </div>
           <div class="card-block department-form">
               <form class="form-2orizontal">
-                  <div class="form-group row">
-                      <div class="col-sm-12 col-md-6">
-                          <label class="form-control-label" for="prependedInputWorkplace">Name</label>
-                          <div class="controls">
-                              <div class="input-prepend input-group">
-                                  <input
-                                          id="prependedInputWorkplace"
-                                          class="form-control"
-                                          size="16"
-                                          type="text"
-                                          ng-model="editElement.name"
-                                  >
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6">
-                          <label class="form-control-label" for="prependedInputDepartment">Department</label>
-                          <div class="controls">
-                              <div class="input-prepend input-group">
-                                  <select
-                                          class="form-control" name="prependedInputDepartment" id="prependedInputDepartment"
-                                          ng-options="department.name for department in departmentsList track by department.id"
-                                          ng-model="selectedDepartment" ng-change="selectPlace(workplace.department)"
+                    <div class="form-group">
+                        <label class="form-control-label" for="prependedInputWorkplace">Name</label>
+                        <div class="controls">
+                            <div class="input-prepend input-group">
+                                <input
+                                        id="prependedInputWorkplace"
+                                        class="form-control"
+                                        size="16"
+                                        type="text"
+                                        ng-model="workplace.name"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="form-group"
+                        ng-if="!hideDepartment"
+                    >
+                        <label class="form-control-label" for="prependedInputDepartment">Department</label>
+                        <div class="controls">
+                            <div class="input-prepend input-group">
+                                <select
+                                        class="form-control" name="prependedInputDepartment" id="prependedInputDepartment"
+                                        ng-options="department.name for department in departmentsList track by department.id"
+                                        ng-model="workplace.department" ng-change="selectPlace(workplace.department)"
 
-                                  >
-                                  </select>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+                                >
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="form-control-label" for="prependedInputDepartment">Check list</label>
                         <div class="controls">
