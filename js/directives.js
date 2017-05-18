@@ -324,21 +324,28 @@ function selectedCriteria($timeout) {
 
   function link(scope, element, attrs) {
     // function for work with DOM and create attrs for elements  which has the same labels as names in array 'selected';
-    var selected=['criteria1','criteria4'];
-    $timeout(function () {
-      var length = angular.element(document.querySelectorAll('option')).length/2
-      for (var i=length;i<length*2;i++){
-        for (var j=0; j<selected.length; j++){
-          var el = angular.element(document.querySelectorAll('option'))[i];
-          var val = el.getAttribute('label');
-            if (selected[j] === val) {
-              var el = angular.element(document.querySelectorAll('option'))[i];
-              el.setAttribute("selected", "selected");
-            }
-        }
-      }
-     angular.element($('select[name="prependedInputCriteria"]')).bootstrapDualListbox('refresh', true);
-    },0);
+ var listener =  scope.$watch( function () {return scope.criteriasInCheckList !== undefined}, function (newValue, oldValue) {
+     if (newValue){
+       // $timeout(function () {
+         var selected=scope.criteriasInCheckList;
+         var length = angular.element(document.querySelectorAll('option')).length/2
+         for (var i=length;i<length*2;i++){
+           for (var j=0; j<selected.length; j++){
+             var el = angular.element(document.querySelectorAll('option'))[i];
+             var val = el.getAttribute('label');
+             if (selected[j].name === val) {
+               var el = angular.element(document.querySelectorAll('option'))[i];
+               el.setAttribute("selected", "selected");
+             }
+           }
+         }
+         angular.element($('select[name="prependedInputCriteria"]')).bootstrapDualListbox('refresh', true);
+       listener(); // Would clear the watch
+       // },0);
+     }
+
+    })
+
 
   }
 }
