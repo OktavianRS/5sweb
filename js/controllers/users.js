@@ -15,9 +15,8 @@ function usersCtrl($scope, $rootScope, toast, ngDialog, usersModel, companiesMod
     lastname: '',
     email: '',
     password: '',
-  }
-
-  console.log($rootScope.role)
+    company_id: $rootScope.company_id || '',
+  };
 
   // fetch all initial data
   function constuctor() {

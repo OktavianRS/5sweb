@@ -18,21 +18,28 @@ angular.module('model.departments', [])
 
         this.fetchDepartments = function(callback) {
           if ($rootScope.role === 'site admin') {
-            api.get(
-            url.fetchDepartments,
-            {},
-            function(res) {
-              callback(res);
-            })
+            this.fetchAllDepartments(callback);
           } else {
-            const company_id = $rootScope.company_id;
-            api.get(
-            url.fetchDepartmentsByCompanyId,
-            {company_id},
-            function(res) {
-              callback(res);
-            })
+            this.fetchCompanyDepartments(callback);
           }
+        }
+
+        this.fetchAllDepartments = function(callback) {
+          api.get(
+          url.fetchDepartments,
+          {},
+          function(res) {
+            callback(res);
+          });
+        }
+
+        this.fetchCompanyDepartments = function(company_id = $rootScope.company_id, callback) {
+          api.get(
+          url.fetchDepartmentsByCompanyId,
+          {company_id},
+          function(res) {
+            callback(res);
+          })
         }
 
 

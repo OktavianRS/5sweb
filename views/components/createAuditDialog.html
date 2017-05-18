@@ -52,6 +52,30 @@
                           </div>
                       </div>
                   </div>
+                  <div
+                    class="form-group"
+                    ng-if="isAdmin()"
+                  >
+                    <label class="form-control-label" for="prependedInputDepartment">Company</label>
+                    <div class="controls">
+                        <div class="input-prepend input-group">
+                            <select
+                                    class="form-control"
+                                    name="prependedInputDepartment"
+                                    id="prependedInputDepartment"
+                                    ng-model="audit.company_id"
+                                    ng-change="selectCompany()"
+                            >
+                              <option
+                                ng-value="company.id"
+                                ng-repeat="company in companiesList track by $index"
+                              >
+                                {{company.name}}
+                              </option>
+                            </select>
+                        </div>
+                    </div>
+                  </div>
                   <div class="form-group">
                       <label class="form-control-label audit__selectLabel2" for="prependedInput">Department</label>
                       <div class="controls">
