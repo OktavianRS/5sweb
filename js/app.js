@@ -54,6 +54,7 @@ angular
       $location.path('/login');
     } else {
       $rootScope.role = $sessionStorage.role;
+      $rootScope.email = $sessionStorage.email;
       $rootScope.company_id = $sessionStorage.company_id;
       $rootScope.isAdmin = () => {
         return $sessionStorage.role === 'site admin';
