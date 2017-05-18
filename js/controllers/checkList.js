@@ -98,6 +98,21 @@ function checkListCtrl($scope, $state, toast, ngDialog, checkListModel, criteria
       template:'/views/components/addCriteriaDialog.html',
       className: 'ngdialog-theme-default',
       scope: $scope,
+      controller: [ function  () {
+      }],
+      resolve: {
+        popUp : function popUp () {
+        return  checkListModel.fetchCriteriasByCheckList({
+          checklist_id: checklist_id
+        }, function(result) {
+           $scope.criteriasInCheckList = result;
+
+
+        });
+      }
+
+
+      }
     })
   }
 
