@@ -13,9 +13,17 @@
                 <!--/.col-->
             </div>
             <!--/.row-->
-            <div ng-show="!AuditHistoryIsEmpty || !messageErrorAuditHistory" class="chart-wrapper" style="margin-top:40px;">
+            <div style="display:flex; flex-direction:row; justify-content:space-between" ng-show="!AuditHistoryIsEmpty || !messageErrorAuditHistory" class="chart-wrapper" style="margin-top:40px;">
                 <!--<canvas class="chart chart-bar" chart-data="historyAudit.data" chart-labels="historyAudit.labels" chart-legend="false" chart-series="historyAudit.series" chart-click="historyAudit.onClick" chart-options="historyAudit.options" chart-colors="historyAudit.colors" chart-dataset-override="historyAudit.datasetOverride" height="300"></canvas>-->
-                <div id="timeline" ng-style="timelineHeight"></div>
+                <div style="">
+                     <div height-row style="" id="timeline" ng-style="timelineHeight"></div>
+                </div>
+                <div>
+                    <div ng-repeat="row in getNumber(AuditHistoryCountRow) track by $index" style="height:41px; display: flex;  align-items: center;">
+                        <button class="btn btn-outline-success" ng-if="!auditDone[row]" style="float:left; margin:0px 20px">Start</button>
+                        <button class="btn btn-outline-error" ng-if="auditDone[row]" style="float:left; margin:0px 20px">Stop</button>
+                    </div>
+                </div>
             </div>
             <div ng-show="AuditHistoryIsEmpty && !messageErrorAuditHistory">
                 <h4>The requested audit of history is empty</h4>
@@ -33,7 +41,8 @@
                     <div class="small text-muted">5s-Figures Performance</div>
                 </div>
                 <div class="col-sm-7 select_group">
-                    <select ng-disabled="headerFilter.company.isDisabled"
+                    <select ng-if="$root.isAdmin()"
+                            ng-disabled="headerFilter.company.isDisabled"
                             class="dashboard__select" name="companySelect" id="companySelect"
                             ng-options="company.name for company in companiesList track by company.id"
                             ng-model="search.company" ng-change="selectCompany(search.company)"
