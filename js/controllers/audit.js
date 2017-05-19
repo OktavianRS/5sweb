@@ -2,9 +2,10 @@ angular
 .module('app')
 .controller('auditCtrl', auditCtrl)
 
-auditCtrl.$inject = ['$scope', 'toast', 'ngDialog', 'usersModel', 'auditModel', 'departmentsModel'];
-function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsModel) {
+auditCtrl.$inject = ['$scope', '$rootScope', 'toast', 'ngDialog', 'usersModel', 'auditModel', 'departmentsModel', 'companiesModel'];
+function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, departmentsModel, companiesModel) {
   $scope.search = [];
+  $scope.companyList = [];
   $scope.scoreSlider = {
     value: 50,
     options: {
@@ -27,6 +28,7 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
     target: $scope.scoreSlider.value,
     place_id: '',
     user_id: '',
+    company_id: $rootScope.company_id || null,
   }
 
   // fetch all initial data
@@ -40,16 +42,12 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
       $scope.auditList = result;
     });
 
-    departmentsModel.fetchPlacesList(function(result) {
+    companiesModel.fetchCompanies((result) => {
+      $scope.companiesList = result;
+    });
+
+    departmentsModel.fetchCompanyDepartments($scope.audit.company_id, function(result) {
       $scope.departmentsList = result;
-      $scope.search.department = $scope.departmentsList[0];
-
-      if ($scope.search.department.places.length === 0) {
-        $scope.search.department.places.push({name:'List is empty'});
-      }
-      $scope.workPlacesList = $scope.search.department.places;
-      $scope.search.workplace = $scope.workPlacesList[0];
-
     });
   }
   constuctor();
@@ -61,6 +59,12 @@ function auditCtrl($scope, toast, ngDialog, usersModel, auditModel, departmentsM
     $scope.workPlacesList = item.places;
     $scope.search.workplace = $scope.workPlacesList[0];
 
+  }
+
+  $scope.selectCompany = function() {
+    departmentsModel.fetchCompanyDepartments($scope.audit.company_id, function(result) {
+      $scope.departmentsList = result;
+    });
   }
 
   $scope.submit = function() {

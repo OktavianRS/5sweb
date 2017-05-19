@@ -38,24 +38,4 @@ angular.module('model.audit', [])
             })
         }
 
-        // this.deleteUser = function(req, callback) {
-        //   api.delete(
-        //     url.deleteUser,
-        //     req,
-        //     function() {
-        //       callback();
-        //     }
-        //   );
-        // }
-        //
-        // this.updateUser = function(req, callback) {
-        //   api.put(
-        //     url.updateUser,
-        //     req,
-        //     function(res) {
-        //       callback();
-        //     }
-        //   );
-        // }
-
       }])

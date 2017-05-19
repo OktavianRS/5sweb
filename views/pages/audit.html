@@ -25,6 +25,7 @@
                                   <th>Name</th>
                                   <th>Description</th>
                                   <th>Department</th>
+                                  <th>Auditor name</th>
                                   <th>Target</th>
                                   <th>Date</th>
                               </tr>
@@ -40,7 +41,10 @@
                                      {{audit.description}}
                                    </td>
                                   <td class="audit-name">
-                                     {{audit.description}}
+                                     {{audit.department_name}}
+                                   </td>
+                                  <td class="audit-name">
+                                     {{audit.user_firstname}}
                                    </td>
                                   <td class="audit-name">
                                       {{audit.target}}

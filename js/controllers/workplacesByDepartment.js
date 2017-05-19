@@ -5,14 +5,16 @@ angular
     .module('app')
     .controller('workplacesByDepartmentCtrl', workplacesByDepartmentCtrl)
 
-workplacesByDepartmentCtrl.$inject = ['$scope', '$rootScope', '$state', '$stateParams', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel'];
-function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ngDialog, workplacesModel, criteriasModel, departmentsModel) {
+workplacesByDepartmentCtrl.$inject = ['$scope', '$rootScope', '$state', '$stateParams', 'ngDialog' , 'workplacesModel', 'criteriasModel', 'departmentsModel', 'checkListModel'];
+function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ngDialog, workplacesModel, criteriasModel, departmentsModel, checkListModel) {
 
     $scope.workplacesList = [];
     $scope.criteriasList = [];
     $scope.departmentsList = [];
+    $scope.checkList = [];
     $scope.AllPlacesList = [];
     $scope.editElement = {};
+    $scope.hideDepartment = true;
     $scope.workplace = {
         name: ''
     }
@@ -22,6 +24,9 @@ function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ng
 
         workplacesModel.fetchAllWorkPlacesByDepartment({department_id: $stateParams.department_id},(result) => {
             $scope.workplacesList = result;
+        });
+        checkListModel.fetchChecks(function(result) {
+            $scope.checkList = result;
         });
         criteriasModel.fetchCriterias(function(result) {
             $scope.criteriasList = result;
@@ -36,7 +41,7 @@ function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ng
     constuctor();
 
     $scope.createWorkPlace = function() {
-        $scope.workplace.department_id = $scope.workplace.department.id;
+        $scope.workplace.department_id = $stateParams.department_id;
         workplacesModel.createWorkPlace($scope.workplace, addCriteriaToWorkPlace);
         ngDialog.closeAll();
     }
@@ -45,7 +50,8 @@ function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ng
         workplacesModel.deleteWorkPlace({ id }, constuctor);
     }
 
-    $scope.updateWorkPlace = function(id, name, department_id) {
+    $scope.updateWorkPlace = function(id, name) {
+        const department_id = $stateParams.department_id;
         workplacesModel.updateWorkPlace({ id, name, department_id }, constuctor);
         ngDialog.closeAll();
     }
@@ -74,7 +80,7 @@ function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ng
 
     $scope.editWorkplace = function(data) {
         $scope.editElement = Object.create(data);
-
+        $scope.hideDepartment = true;
         ngDialog.open({
             template:'/views/components/editWorkplaceDialog.html',
             className: 'ngdialog-theme-default',
@@ -83,11 +89,19 @@ function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ng
     }
 
     $scope.createWorkplaceModal = function() {
+      $scope.hideDepartment = true;
       ngDialog.open({
         template:'/views/components/createWorkplaceDialog.html',
         className: 'ngdialog-theme-default',
         scope: $scope,
       });
+    }
+
+    $scope.selectCheck = function (selectedItem) {
+        $scope.selectedCheckList = selectedItem;
+        checkListModel.fetchCriteriasByCheckList({ checklist_id: selectedItem.id }, function(result) {
+            $scope.criteriasList = result;
+        });
     }
 
 }
