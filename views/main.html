@@ -16,7 +16,7 @@
             <div style="display:flex;
                       flex-direction:row;
                         justify-content:space-between"
-                        ng-show="!AuditHistoryIsEmpty || !messageErrorAuditHistory"
+                        ng-show="!AuditHistoryIsEmpty && !messageErrorAuditHistory"
                         class="chart-wrapper"
                         style="margin-top:40px;height: 300px; overflow-y: auto; overflow-x: hidden;">
                 <!--<canvas class="chart chart-bar" chart-data="historyAudit.data" chart-labels="historyAudit.labels" chart-legend="false" chart-series="historyAudit.series" chart-click="historyAudit.onClick" chart-options="historyAudit.options" chart-colors="historyAudit.colors" chart-dataset-override="historyAudit.datasetOverride" height="300"></canvas>-->
@@ -26,7 +26,7 @@
                 <div>
                     <div ng-repeat="row in getNumber(AuditHistoryCountRow) track by $index" style="height:41px; display: flex;  align-items: center;">
                         <button class="btn btn-outline-success" ng-click="" ng-if="!auditDone[$index]" style="float:left; margin:0px 20px">Start</button>
-                        <button class="btn btn-outline-danger" ng-click="" ng-if="auditDone[$index]" style="float:left; margin:0px 20px">Stop</button>
+                        <button class="btn btn-outline-danger" ng-click="auditStop($index)" ng-if="auditDone[$index]" style="float:left; margin:0px 20px">Stop</button>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <!--/.row-->
-            <div ng-if="!ScoreHistoryIsEmpty || !messageErrorScoreHistory" class="chart-wrapper" style="height:300px;margin-top:40px;">
+            <div ng-if="!ScoreHistoryIsEmpty && !messageErrorScoreHistory" class="chart-wrapper" style="height:300px;margin-top:40px;">
                 <canvas class="chart chart-line" chart-data="historyScore.data" chart-labels="historyScore.labels" chart-legend="false" chart-series="historyScore.series" chart-click="historyScore.onClick" chart-options="historyScore.options" chart-colors="historyScore.colors" chart-dataset-override="historyScore.datasetOverride" height="300"></canvas>
                 <div>
                     <div id="js-legend" class="chart-legend">
@@ -97,7 +97,7 @@
                 </div>
             </div>
             <!--/.row-->
-            <div class="chart-wrapper" style="height:300px;margin-top:40px;" ng-if="!ScoreIsEmpty || !messageErrorScore">
+            <div class="chart-wrapper" style="height:300px;margin-top:40px;" ng-if="!ScoreIsEmpty && !messageErrorScore">
                 <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" chart-legend="false" chart-series="series" chart-click="onClick" chart-options="options" chart-colors="colors" chart-dataset-override="datasetOverride" height="300"></canvas>
                 <div>
                     <div id="js-legend" class="chart-legend">
