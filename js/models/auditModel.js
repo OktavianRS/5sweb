@@ -1,6 +1,6 @@
 angular.module('model.audit', [])
-    .service('auditModel', ['url', 'api', 'toast', '$q', '$location', '$sessionStorage',
-      function(url, api, toast, $q, $location, $sessionStorage) {
+    .service('auditModel', ['url', 'api', 'toast', '$q', '$location', '$sessionStorage', '$rootScope',
+      function(url, api, toast, $q, $location, $sessionStorage, $rootScope) {
 
       	this.startAudit = function(req, callback) {
           api.post(
@@ -30,12 +30,29 @@ angular.module('model.audit', [])
           }
 
         this.fetchAudits = function(callback) {
+          if ($rootScope.role === 'site admin') {
+            this.fetchAllAudits(callback);
+          } else {
+            this.fetchCompanyAudits(undefined, callback);
+          }
+        }
+
+        this.fetchAllAudits = function(callback) {
           api.get(
-            url.fetchAudits,
-            {},
-            function(res) {
-              callback(res);
-            })
+          url.fetchAudits,
+          {},
+          function(res) {
+            callback(res);
+          })
+        }
+
+        this.fetchCompanyAudits = function(company_id = $rootScope.company_id, callback) {
+          api.get(
+          url.fetchCompanyAudits,
+          {company_id},
+          function(res) {
+            callback(res);
+          })
         }
 
       }])
