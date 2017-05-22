@@ -11,6 +11,7 @@ angular
 .directive('tab', bootstrapTabsDirective)
 .directive('button', cardCollapseDirective)
 .directive('selectedCriteria', selectedCriteria)
+.directive('heightRow', heightRow)
 
 
 //Prevent click if href="#"
@@ -315,6 +316,7 @@ function cardCollapseDirective() {
 // }
 
 //selectedCriteria
+selectedCriteria.$inject = ['$timeout'];
 function selectedCriteria($timeout) {
   var directive = {
     restrict: 'A',
@@ -345,6 +347,35 @@ function selectedCriteria($timeout) {
      }
 
     })
+
+
+  }
+}
+
+//heightRow of time-line chart
+heightRow.$inject = ['$window', '$timeout','$rootScope'];
+function heightRow($timeout, $window, $rootScope) {
+  var directive = {
+    restrict: 'A',
+    link: link
+  }
+  return directive;
+
+  function link(scope, element, attrs) {
+
+    var listenerHeightRow =  scope.$watch( function () {
+      return angular.element(document.querySelectorAll('rect')).length !== 0},
+        function (newValue, oldValue) {
+           if (newValue) {
+             var arrHeightRow = angular.element(document.querySelectorAll('g')).eq(0).find('rect');
+
+             for (var i=0; i<arrHeightRow; i++) {
+               angular.element(arrHeightRow[i]).attr("height",41);
+             }
+
+             listenerHeightRow(); // Would clear the watch
+           }
+        });
 
 
   }

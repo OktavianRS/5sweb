@@ -75,14 +75,16 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
     var drawChart; // init variable for observe change of width
 
+
     angular.element($window).on('resize', function () {
+
         if (!$scope.AuditHistoryIsEmpty) google.charts.setOnLoadCallback(drawChart);
 
         // manuall $digest required as resize event
         // is outside of angular
         $scope.$digest();
     });
-    //
+
     $rootScope.$on('changeWidthChart', function (event, data) {
         if (!$scope.AuditHistoryIsEmpty)  google.charts.setOnLoadCallback(drawChart);
     });
@@ -409,12 +411,23 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
         // result success
         if ($scope.AuditHistoryIsEmpty === false && (!result.message || !result.errors)){
-            var NumberToDate = result.map(function (item) {
+            var countRow = 1;
+            var auditDone = [];
+            var NumberToDate = result.map(function (item, k, array) {
                 item.length = 3;
+                if (array[k-1] !== undefined){
+                    if (array[k][0] !== array[k-1][0]) {
+                        countRow++;
+                    }
+                }
+
+
                 var newItem = item.map(function (innerItem, i, arr) {
+
                     if (i > 0) {
                         if ((i === 2) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
+                            auditDone[countRow-1] = true;
                         }
                         else if ((i === 1) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
@@ -422,11 +435,20 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                         else {
                             innerItem = new Date(innerItem * 1000);
                         }
+
+
                     }
                     return innerItem;
                 });
                 return newItem;
             });
+
+
+             $scope.AuditHistoryCountRow = countRow;
+            $scope.auditDone  = auditDone;
+            $scope.getNumber = function(countRow) {
+                return new Array(countRow);
+            }
             addRows = NumberToDate;
             google.charts.load('current', {
                 'packages': ['timeline']
@@ -440,32 +462,39 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 dataTable.addColumn({type: 'string', id: 'Name'});
                 dataTable.addColumn({type: 'date', id: 'Start'});
                 dataTable.addColumn({type: 'date', id: 'End'});
+
                 dataTable.addRows(addRows);
-                var rowHeight = 30;
-                if (addRows.length == 1) rowHeight = 60;
-                var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
-                if (addRows.length > 10) chartHeight = 300;
+                 var rowHeight = 40;
+                // if (addRows.length == 1) rowHeight = 60;
+                //  var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
+                 var chartHeight = (countRow * rowHeight)+60;
+                console.log(countRow);
+                // if (addRows.length > 10) chartHeight = 300;
+
+                var chartWidth = angular.element(document.querySelector(".card-block")).width() - 150;
 
                 var options = {
                     avoidOverlappingGridLines: true,
-                    height: chartHeight,
-                    width: '100%',
+                    width: chartWidth,
+                    height:chartHeight
                 };
                 chart.draw(dataTable, options);
 
-                if (addRows.length == 1) {
-                    $scope.timelineHeight = {height: chartHeight * 2};
-                } else if (addRows.length < 8) {
-                    $scope.timelineHeight = {height: chartHeight * 0.8};
-                } else {
-                    $scope.timelineHeight = {height: chartHeight * 0.9};
-                }
+                // if (addRows.length == 1) {
+                //     $scope.timelineHeight = {height: chartHeight * 2};
+                // } else if (addRows.length < 8) {
+                //     $scope.timelineHeight = {height: chartHeight * 0.8};
+                // } else {
+                //     $scope.timelineHeight = {height: chartHeight * 0.9};
+                // }
             }
 
             $timeout(function () {
                 google.charts.setOnLoadCallback(drawChart);
             },0);
         }
+
+
 
     }
 
@@ -563,5 +592,10 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         }
 
     }
+
+    // $rootScope.$on('changeHeightRowChart_timeLine', function (event, data) {
+    //     angular.element(document.querySelectorAll(".wrapper_buttonAudit")).css("height",data);
+    //     console.log(data);
+    // });
 
 }
