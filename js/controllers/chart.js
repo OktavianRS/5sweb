@@ -415,6 +415,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             var auditDone = [];
             var NumberToDate = result.map(function (item, k, array) {
                 item.length = 3;
+                // item.color  = 'red';
                 if (array[k-1] !== undefined){
                     if (array[k][0] !== array[k-1][0]) {
                         countRow++;
@@ -424,10 +425,11 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
                 var newItem = item.map(function (innerItem, i, arr) {
 
-                    if (i > 0) {
+                    if (i > 0 && i<3) {
                         if ((i === 2) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
                             auditDone[countRow-1] = true;
+
                         }
                         else if ((i === 1) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
@@ -446,6 +448,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
              $scope.AuditHistoryCountRow = countRow;
             $scope.auditDone  = auditDone;
+
             $scope.getNumber = function(countRow) {
                 return new Array(countRow);
             }
@@ -460,6 +463,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 var dataTable = new google.visualization.DataTable();
 
                 dataTable.addColumn({type: 'string', id: 'Name'});
+                // dataTable.addColumn({type: 'color', id: 'color'});
                 dataTable.addColumn({type: 'date', id: 'Start'});
                 dataTable.addColumn({type: 'date', id: 'End'});
 
@@ -476,8 +480,12 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 var options = {
                     avoidOverlappingGridLines: true,
                     width: chartWidth,
-                    height:chartHeight
-                };
+                    height: chartHeight,
+
+
+                     colors: ['#cbb69d', '#603913', '#c69c6e'],
+
+                }
                 chart.draw(dataTable, options);
 
                 // if (addRows.length == 1) {
