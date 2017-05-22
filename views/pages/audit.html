@@ -26,8 +26,10 @@
                                   <th>Description</th>
                                   <th>Department</th>
                                   <th>Auditor name</th>
+                                  <th>Auditor email</th>
                                   <th>Target</th>
-                                  <th>Date</th>
+                                  <th>Start date</th>
+                                  <th>End date</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -47,10 +49,16 @@
                                      {{audit.user_firstname}}
                                    </td>
                                   <td class="audit-name">
+                                     {{audit.user_email}}
+                                  </td>
+                                  <td class="audit-name">
                                       {{audit.target}}
                                   </td>
                                   <td class="audit-name">
                                       {{audit.started_at * 1000 | date:'yyyy-MM-dd HH:mm'}}
+                                  </td>
+                                  <td class="audit-name">
+                                      {{audit.finished_at * 1000 | date:'yyyy-MM-dd HH:mm'}}
                                   </td>
                               </tr>
                           </tbody>
