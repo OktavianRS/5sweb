@@ -367,9 +367,11 @@ function heightRow($timeout, $window, $rootScope) {
       return angular.element(document.querySelectorAll('rect')).length !== 0},
         function (newValue, oldValue) {
            if (newValue) {
-             var arrHeightRow = angular.element(document.querySelectorAll('g')).eq(0).find('rect');
 
-             for (var i=0; i<arrHeightRow; i++) {
+             var parentElement =  (angular.element(document.querySelectorAll('rect')).eq(0))[0].parentElement;
+             var arrHeightRow = angular.element(parentElement).find('rect');
+
+             for (var i=0; i<arrHeightRow.length; i++) {
                angular.element(arrHeightRow[i]).attr("height",41);
              }
 

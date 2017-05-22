@@ -5,7 +5,7 @@
         <div class="card-block">
             <div class="row">
                 <div class="col-sm-12">
-                    <h4 class="card-title mb-0">Audit history for departments</h4>
+                    <h4 class="card-title mb-0" ">Audit history for departments</h4>
                     <div class="small text-muted">5s-Figures Performance</div>
                 </div>
                 <!--/.col-->
@@ -13,15 +13,20 @@
                 <!--/.col-->
             </div>
             <!--/.row-->
-            <div style="display:flex; flex-direction:row; justify-content:space-between" ng-show="!AuditHistoryIsEmpty || !messageErrorAuditHistory" class="chart-wrapper" style="margin-top:40px;">
+            <div style="display:flex;
+                      flex-direction:row;
+                        justify-content:space-between"
+                        ng-show="!AuditHistoryIsEmpty || !messageErrorAuditHistory"
+                        class="chart-wrapper"
+                        style="margin-top:40px;height: 300px; overflow-y: auto; overflow-x: hidden;">
                 <!--<canvas class="chart chart-bar" chart-data="historyAudit.data" chart-labels="historyAudit.labels" chart-legend="false" chart-series="historyAudit.series" chart-click="historyAudit.onClick" chart-options="historyAudit.options" chart-colors="historyAudit.colors" chart-dataset-override="historyAudit.datasetOverride" height="300"></canvas>-->
                 <div style="">
                      <div height-row style="" id="timeline" ng-style="timelineHeight"></div>
                 </div>
                 <div>
                     <div ng-repeat="row in getNumber(AuditHistoryCountRow) track by $index" style="height:41px; display: flex;  align-items: center;">
-                        <button class="btn btn-outline-success" ng-if="!auditDone[row]" style="float:left; margin:0px 20px">Start</button>
-                        <button class="btn btn-outline-error" ng-if="auditDone[row]" style="float:left; margin:0px 20px">Stop</button>
+                        <button class="btn btn-outline-success" ng-click="" ng-if="!auditDone[$index]" style="float:left; margin:0px 20px">Start</button>
+                        <button class="btn btn-outline-danger" ng-click="" ng-if="auditDone[$index]" style="float:left; margin:0px 20px">Stop</button>
                     </div>
                 </div>
             </div>
