@@ -9,19 +9,18 @@
             </li>
             <li
                 class="nav-item"
-                ng-if="role === 'site admin'"
+                ng-if="isAdmin()"
             >
                 <a class="nav-link" ui-sref-active="active" ui-sref="app.workplaces"><i class="icon-briefcase"></i>Workplaces</a>
             </li>
             <li
                 class="nav-item"
-                ng-if="role === 'site admin'"
+                ng-if="isAdmin()"
             >
                 <a class="nav-link" ui-sref-active="active" ui-sref="app.criteria"><i class="icon-list"></i>Criteria</a>
             </li>
             <li
                 class="nav-item"
-                ng-if="role === 'site admin'"
             >
                 <a class="nav-link" ui-sref-active="active" ui-sref="app.check"><i class="icon-check"></i>Check List</a>
             </li>
@@ -31,7 +30,7 @@
             <li class="nav-item">
                 <a class="nav-link" ui-sref-active="active" ui-sref="app.audit"><i class="icon-note"></i>Audit</a>
             </li>
-            <li class="nav-item" ng-if="role === 'site admin'">
+            <li class="nav-item" ng-if="isAdmin()">
                 <a class="nav-link" ui-sref-active="active" ui-sref="app.companies"><i class="icon-briefcase"></i>Companies</a>
             </li>
 

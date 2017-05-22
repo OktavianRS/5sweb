@@ -22,7 +22,7 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
   }
 
   // fetch all initial data
-  function constuctor() {
+  function constructor() {
     departmentsModel.fetchDepartments((result) => {
       $scope.departmentsList = result;
     });
@@ -31,23 +31,23 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
     });
 
   }
-  constuctor();
+  constructor();
 
   $scope.changeSort = function() {
     $scope.sortSettings === 'name' ? $scope.sortSettings = '-name' : $scope.sortSettings = 'name';
   }
 
   $scope.createDepartment = function() {
-    departmentsModel.createDepartment($scope.department, constuctor);
+    departmentsModel.createDepartment($scope.department, constructor);
     ngDialog.closeAll();
   }
 
   $scope.deleteDepartment = function(id) {
-    departmentsModel.deleteDepartment({ id }, constuctor);
+    departmentsModel.deleteDepartment({ id }, constructor);
   }
 
   $scope.updateDepartment = function(id, name, company_id) {
-    departmentsModel.updateDepartment({ id, name, company_id }, constuctor);
+    departmentsModel.updateDepartment({ id, name, company_id }, constructor);
     ngDialog.closeAll();
   }
 
