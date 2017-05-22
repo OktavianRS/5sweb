@@ -6,14 +6,15 @@ angular
     .controller('DashboardChart', DashboardChart);
 
 
-DashboardChart.$inject = ['$rootScope','$scope', '$sessionStorage', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel'];
-function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel) {
+DashboardChart.$inject = ['$rootScope','$scope', '$sessionStorage', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel', 'auditModel'];
+function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel, auditModel) {
 
 
     // var USER_ROLE = $sessionStorage.role;
     // if (USER_ROLE == 'site admin') var isSuperAdmin = true;
 
     $scope.search = {};
+    $scope.auditStop = auditStop;
 
     // headers and configuration of visible company filter and disabled of department+workplaces
 
@@ -246,8 +247,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
             $scope.companiesList = result;
             $scope.search.company =  $scope.companiesList[0];
-
-            companiesModel.fetchOneDepartmentList({company_id:$scope.search.company.id}, function callback(result) {
+            var company_id = $rootScope.role === 'site admin' ? $scope.search.company.id : $rootScope.company_id;
+            companiesModel.fetchOneDepartmentList({company_id:company_id}, function callback(result) {
                 $scope.departmentsList = result;
                 $scope.withHeaderDepartments = $scope.departmentsList.slice();
                 $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
@@ -257,16 +258,23 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 $scope.withHeaderWorkPlaces.splice(0, 0, headerFilter.workplace);
                 $scope.search.place = headerFilter.workplace;
             })
+            console.log($rootScope);
+             // if ($rootScope.role === 'site admin') {
+             //     var company_id = $scope.search.company.id;
+             // } else {
+             //     var company_id  = $rootScope.company_id;
+             // }
 
-            chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
+
+            chartsModel.fetchAuditHistoryByCompany({company_id:company_id}, function callback (result) {
                 changesAuditHistory(result);
             });
 
-            chartsModel.fetchScoreHistoryByCompany({company_id:  $scope.search.company.id}, function callback(result) {
+            chartsModel.fetchScoreHistoryByCompany({company_id:  company_id}, function callback(result) {
                 changesScoreHistory(result);
             });
 
-            chartsModel.fetchScoreByCompany({company_id: $scope.search.company.id}, function callback(result) {
+            chartsModel.fetchScoreByCompany({company_id: company_id}, function callback(result) {
                 changesChart(result);
             });
 
@@ -300,6 +308,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 headerFilter.department.isDisabled = false;
             });
 
+
+
         chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
             changesAuditHistory(result);
         })
@@ -320,8 +330,9 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         headerFilter.workplace.isDisabled = true;
         if (item.id === null) {
             $scope.search.place = headerFilter.workplace;
+            var company_id = $rootScope.role === 'site admin' ? $scope.search.company.id : $rootScope.company_id;
 
-            companiesModel.fetchOneDepartmentList({company_id: $scope.search.company.id}, function callback(result) {
+            companiesModel.fetchOneDepartmentList({company_id: company_id}, function callback(result) {
                 $scope.departmentsList = result;
                 $scope.withHeaderDepartments = $scope.departmentsList.slice();
                 $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
@@ -329,11 +340,11 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
             });
 
-            chartsModel.fetchScoreHistoryByCompany({company_id: $scope.search.company.id}, function callback(result) {
+            chartsModel.fetchScoreHistoryByCompany({company_id: company_id}, function callback(result) {
                 changesScoreHistory(result);
             });
 
-            chartsModel.fetchScoreByCompany({company_id: $scope.search.company.id}, function callback(result) {
+            chartsModel.fetchScoreByCompany({company_id: company_id}, function callback(result) {
                 changesChart(result);
             });
 
@@ -407,6 +418,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         if (result.message || result.errors) {
             $scope.messageErrorAuditHistory =  result.message || result.errors;
             $scope.AuditHistoryIsEmpty = true;
+        } else{
+            $scope.messageErrorScoreHistory = undefined;
         }
 
         // result success
@@ -468,6 +481,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 dataTable.addColumn({type: 'date', id: 'End'});
 
                 dataTable.addRows(addRows);
+                console.log(addRows, 'addRows');
                  var rowHeight = 40;
                 // if (addRows.length == 1) rowHeight = 60;
                 //  var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
@@ -483,7 +497,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                     height: chartHeight,
 
 
-                     colors: ['#cbb69d', '#603913', '#c69c6e'],
+                     // colors: ['#cbb69d', '#603913', '#c69c6e'],
 
                 }
                 chart.draw(dataTable, options);
@@ -519,6 +533,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         if (result.message || result.errors) {
             $scope.messageErrorScoreHistory =  result.message || result.errors;
             $scope.ScoreHistoryIsEmpty = true;
+        } else {
+            $scope.messageErrorScoreHistory = undefined;
         }
         // result success
         if ($scope.ScoreHistoryIsEmpty === false && (!result.message || !result.errors)){
@@ -548,6 +564,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         if (result.message || result.errors) {
             $scope.messageErrorScore =  result.message || result.errors;
             $scope.ScoreIsEmpty = true;
+        }else {
+            $scope.messageErrorScoreHistory = undefined;
         }
 
         // result success
@@ -601,9 +619,10 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
     }
 
-    // $rootScope.$on('changeHeightRowChart_timeLine', function (event, data) {
-    //     angular.element(document.querySelectorAll(".wrapper_buttonAudit")).css("height",data);
-    //     console.log(data);
-    // });
+
+    function auditStop (index) {
+
+        auditModel.stopAudit({})
+    }
 
 }
