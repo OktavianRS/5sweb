@@ -73,6 +73,7 @@ angular.module('factory.url', [])
           fetchUsers: baseUrl + '/user/index',
           deleteUser: baseUrl + '/user/delete',
           updateUser: baseUrl + '/user/update',
+          fetchCompanyUsers: baseUrl + '/user/company-list',
 
           //auditModel
           startAudit: baseUrl + '/audit/start',

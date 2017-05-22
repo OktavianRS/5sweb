@@ -20,7 +20,7 @@ angular.module('model.departments', [])
           if ($rootScope.role === 'site admin') {
             this.fetchAllDepartments(callback);
           } else {
-            this.fetchCompanyDepartments(callback);
+            this.fetchCompanyDepartments(undefined, callback);
           }
         }
 

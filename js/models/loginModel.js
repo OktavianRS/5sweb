@@ -6,7 +6,14 @@ angular.module('model.login', [])
             url.login,
             req,
             function(res) {
-              if (res.status) {
+              if (res.role === 'user') {
+                toast(
+                  'error',
+                  'Authentication failed',
+                  'You do not have permissions, please try to login from mobile app.'
+                );
+              }
+              else if (res.status) {
                 $sessionStorage.auth_key = res.auth_key;
                 $sessionStorage.email = res.email;
                 $sessionStorage.first_name = res.firstname;
