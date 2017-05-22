@@ -25,7 +25,7 @@
                 </div>
                 <div>
                     <div ng-repeat="row in getNumber(AuditHistoryCountRow) track by $index" style="height:41px; display: flex;  align-items: center;">
-                        <button class="btn btn-outline-success" ng-click="" ng-if="!auditDone[$index]" style="float:left; margin:0px 20px">Start</button>
+                        <button class="btn btn-outline-success" ng-click="auditStart($index)" ng-if="!auditDone[$index]" style="float:left; margin:0px 20px">Start</button>
                         <button class="btn btn-outline-danger" ng-click="auditStop($index)" ng-if="auditDone[$index]" style="float:left; margin:0px 20px">Stop</button>
                     </div>
                 </div>

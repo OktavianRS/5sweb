@@ -15,6 +15,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
     $scope.search = {};
     $scope.auditStop = auditStop;
+    $scope.auditStart = auditStart;
 
     // headers and configuration of visible company filter and disabled of department+workplaces
 
@@ -633,16 +634,28 @@ debugger
             return department_name === department.name;
         })
 
-        console.log(department_name);
-        console.log(StoppedDepartment);
-        console.log($scope);
-
-
-        auditModel.stopAudit({id:StoppedDepartment[0].id}, function callback(result) {
-            chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
-                changesAuditHistory(result);
-            })
-        })
+        // auditModel.stopAudit({id:StoppedDepartment[0].id}, function callback(result) {
+            // chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
+            //     changesAuditHistory(result);
+            // })
+        // })
     }
+
+    function auditStart (index) {
+        var department_name = $scope.rowName[index];
+        var departmentsList = $scope.departmentsList;
+        var StoppedDepartment = departmentsList.filter(function (department) {
+            debugger
+            return department_name === department.name;
+        })
+
+        // auditModel.startAudit({id:StoppedDepartment[0].id}, function callback(result) {
+            // chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
+            //     changesAuditHistory(result);
+            // })
+        // })
+    }
+
+
 
 }
