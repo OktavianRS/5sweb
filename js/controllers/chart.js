@@ -10,8 +10,6 @@ DashboardChart.$inject = ['$rootScope','$scope', '$sessionStorage', '$window', '
 function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel, auditModel, ngDialog) {
 
 
-    // var USER_ROLE = $sessionStorage.role;
-    // if (USER_ROLE == 'site admin') var isSuperAdmin = true;
 
     $scope.search = {};
     $scope.auditStop = auditStop;
@@ -260,12 +258,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 $scope.search.place = headerFilter.workplace;
             })
 
-             // if ($rootScope.role === 'site admin') {
-             //     var company_id = $scope.search.company.id;
-             // } else {
-             //     var company_id  = $rootScope.company_id;
-             // }
-
 
             chartsModel.fetchAuditHistoryByCompany({company_id:company_id}, function callback (result) {
                 $scope.ListAuditHistoryByCompany = result;
@@ -505,14 +497,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
                 }
                 chart.draw(dataTable, options);
-
-                // if (addRows.length == 1) {
-                //     $scope.timelineHeight = {height: chartHeight * 2};
-                // } else if (addRows.length < 8) {
-                //     $scope.timelineHeight = {height: chartHeight * 0.8};
-                // } else {
-                //     $scope.timelineHeight = {height: chartHeight * 0.9};
-                // }
             }
 
             $timeout(function () {
@@ -628,7 +612,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         var department_name = $scope.rowName[index];
         var departmentsList = $scope.departmentsList;
         var StoppedDepartment = departmentsList.filter(function (department) {
-
             return department_name === department.name;
         })
 
@@ -653,9 +636,26 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             });
         }
 
-        // .... TODO Function for get information about last audit
-
         $scope.startAuditFromChart = true;
+        $scope.scoreSlider = {
+            value: 50,
+            options: {
+                floor: 0,
+                ceil: 100,
+                step: 1,
+                minLimit: 0,
+                maxLimit: 100
+            }
+        };
+
+        $scope.audit = {
+            name: new Date().toDateString(),
+            description: '',
+            target: $scope.scoreSlider.value,
+            place_id: '',
+            user_id: '',
+            company_id: $rootScope.company_id || null,
+        };
 
         auditModel.startLastAudit({department_id:StartedDepartment[0].id}, function callback(result) {
 
@@ -688,16 +688,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             }
         })
 
-
-        // auditModel.startAudit({id:...}, function callback(result) {
-        // }
-
-
-        // auditModel.startAudit({id:StoppedDepartment[0].id}, function callback(result) {
-            // chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
-            //     changesAuditHistory(result);
-            // })
-        // })
     }
 
 

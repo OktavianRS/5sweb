@@ -2,8 +2,8 @@ angular
 .module('app')
 .controller('auditCtrl', auditCtrl)
 
-auditCtrl.$inject = ['$scope', '$rootScope', 'toast', 'ngDialog', 'usersModel', 'auditModel', 'departmentsModel', 'companiesModel'];
-function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, departmentsModel, companiesModel) {
+auditCtrl.$inject = ['$scope', '$rootScope', 'toast', 'ngDialog', 'usersModel', 'auditModel', 'departmentsModel', 'companiesModel', '$filter'];
+function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, departmentsModel, companiesModel, $filter) {
   $scope.search = [];
   $scope.companyList = [];
   $scope.scoreSlider = {
@@ -23,12 +23,11 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
   $scope.auditList = [];
 
   $scope.audit = {
-    name: '',
+    name: new Date().toDateString(),
     description: '',
     target: $scope.scoreSlider.value,
-    place_id: '',
     user_id: '',
-    company_id: $rootScope.company_id || null,
+    company_id: $rootScope.company_id || undefined,
   }
 
   // fetch all initial data
