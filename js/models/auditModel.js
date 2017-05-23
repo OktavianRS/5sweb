@@ -55,4 +55,15 @@ angular.module('model.audit', [])
           })
         }
 
+
+          this.stopLastAudit = function(req, callback) {
+              api.put(
+                  url.stopLastAudit,
+                  req,
+                  function(res) {
+                      callback();
+                  }
+              );
+          }
+
       }])

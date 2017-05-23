@@ -368,14 +368,105 @@ function heightRow($timeout, $window, $rootScope) {
         function (newValue, oldValue) {
            if (newValue) {
 
-             var parentElement =  (angular.element(document.querySelectorAll('rect')).eq(0))[0].parentElement;
-             var arrHeightRow = angular.element(parentElement).find('rect');
+             var parentElementRow =  (angular.element(document.querySelectorAll('rect')).eq(0))[0].parentElement;
+               var grandGrandElementAudit = angular.element(parentElementRow.parentElement)[0];
+             var grandElementAudit =  angular.element(parentElementRow.parentElement)[0].children[3];
+             var arrHeightRow = angular.element(parentElementRow).find('rect');
+             var parentElementAudit = angular.element(grandElementAudit).find('rect');
+
 
              for (var i=0; i<arrHeightRow.length; i++) {
                angular.element(arrHeightRow[i]).attr("height",41);
              }
 
-             listenerHeightRow(); // Would clear the watch
+
+var newElements="";
+
+             for (var i=0; i<parentElementAudit.length; i++) {
+
+                 //angular way
+
+                //  var linearGradient = angular.element(document.createElement("linearGradient"));
+                //  linearGradient.attr("attrLinearGradient_id","MyGradient" + i);
+                //
+                //
+                //  var stop1 = angular.element(document.createElement("stop"));
+                //  stop1.attr("offset","5%");
+                //  stop1.attr("stop-color","red");
+                //
+                //  var stop2 = angular.element(document.createElement("stop"));
+                //  stop2.attr("offset","5%");
+                //  stop2.attr("stop-color","red");
+                //
+                //  linearGradient.append(stop1);
+                //  linearGradient.append(stop2);
+                //  console.log(linearGradient);
+                //
+                //  var newRect = angular.element(parentElementAudit[i]).clone();
+                //  console.log(newRect);
+                //  newRect.attr("style","fill:url(#MyGradient"+i+")");
+                //  var newElement = linearGradient.after(newRect);
+                // newElements += newElement;
+                //  console.log(newElement);
+                //  angular.element(parentElementAudit[i]).replaceWith(linearGradient)
+                //   linearGradient.after(newRect);
+
+
+                 // javascript way
+               // var linearGradient = document.createElement("linearGradient");
+               // var attrLinearGradient_id = document.createAttribute("id");
+               // attrLinearGradient_id.value = "MyGradient" + i;
+               // linearGradient.setAttributeNode(attrLinearGradient_id);
+               //
+               // var stop1 = document.createElement("stop");
+               // var offset = document.createAttribute("offset");
+               // var stopColor = document.createAttribute("stop-color");
+               // offset.value = "5%";
+               // stopColor.value = "red";
+               // stop1.setAttributeNode(offset);
+               // stop1.setAttributeNode(stopColor);
+               //
+               // var stop2 = document.createElement("stop");
+               // var offset = document.createAttribute("offset");
+               // var stopColor = document.createAttribute("stop-color");
+               // offset.value = "95%";
+               // stopColor.value = "#FF6";
+               // stop2.setAttributeNode(offset);
+               // stop2.setAttributeNode(stopColor);
+               //
+               // linearGradient.appendChild(stop1);
+               // linearGradient.appendChild(stop2);
+               //
+               //
+               // var style = document.createAttribute("style");
+               // style.value = "fill:url(#MyGradient"+i+")";
+               // var newElementAudit = parentElementAudit[i].cloneNode(true);
+               //   newElementAudit.setAttributeNode(style);
+               //
+               //   console.log(grandElementAudit);
+               //
+               //  console.log(newElementAudit);
+               //   grandElementAudit.insertBefore(linearGradient,  parentElementAudit[i])
+               //     grandElementAudit.replaceChild(newElementAudit, parentElementAudit[i]);
+
+
+
+             }
+               // scope.$apply();
+               // console.log(newElements);
+               // console.log(angular.element(newElements));
+               // angular.element(parentElementAudit).replaceWith(angular.element(newElements))
+             // console.log(grandElementAudit, "grandElementAudit");
+             //   var svg = document.createElement("svg");
+             //   var a = grandElementAudit.cloneNode(true);
+             //   console.log(a, "a");
+             //    svg.appendChild(a);
+             //   console.log(svg, "svg");
+             //   grandGrandElementAudit.replaceChild(svg, grandElementAudit);
+
+
+
+                listenerHeightRow(); // Would clear the watch
            }
         });
 

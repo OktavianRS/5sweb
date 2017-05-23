@@ -18,7 +18,6 @@ angular.module('model.charts', [])
                         callback(res);
                     },
                     function errorCallback(res) {
-                        console.log(res);
                         callback(res);
                     });
             }
@@ -54,7 +53,6 @@ angular.module('model.charts', [])
                         callback(res);
                     },
                     function errorCallback(res) {
-                        console.log(res);
                         callback(res);
                     })
             }
@@ -70,7 +68,6 @@ angular.module('model.charts', [])
                         callback(res);
                     },
                     function errorCallback(res) {
-                        console.log(res);
                         callback(res);
                     })
             }
@@ -86,7 +83,6 @@ angular.module('model.charts', [])
                         callback(res);
                     },
                     function errorCallback(res) {
-                        console.log(res);
                         callback(res);
                     })
             }
@@ -104,7 +100,6 @@ angular.module('model.charts', [])
                         callback(res);
                     },
                     function errorCallback(res) {
-                        console.log(res);
                         callback(res);
                     })
             }
@@ -120,7 +115,6 @@ angular.module('model.charts', [])
                         callback(res);
                     },
                     function errorCallback(res) {
-                        console.log(res);
                         callback(res);
                     })
             }
@@ -136,7 +130,6 @@ angular.module('model.charts', [])
                         callback(res);
                     },
                     function errorCallback(res) {
-                        console.log(res);
                         callback(res);
                     })
             }
