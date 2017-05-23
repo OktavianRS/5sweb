@@ -630,7 +630,6 @@ debugger
         var department_name = $scope.rowName[index];
         var departmentsList = $scope.departmentsList;
         var StoppedDepartment = departmentsList.filter(function (department) {
-            debugger
             return department_name === department.name;
         })
 
@@ -646,7 +645,6 @@ debugger
         var department_name = $scope.rowName[index];
         var departmentsList = $scope.departmentsList;
         var StoppedDepartment = departmentsList.filter(function (department) {
-            debugger
             return department_name === department.name;
         })
 
