@@ -142,7 +142,17 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             mode: 'single',
             callbacks: {
                 label: function (tooltipItems, data) {
-                    return tooltipItems.yLabel + ' score ';
+                    console.log(tooltipItems, data);
+                    for (var i=0; i<4; i++){
+                         if (tooltipItems.datasetIndex === i){
+                             for (var j=0; j<data.labels.length;j++) {
+                                 if (tooltipItems.index === j)
+                                     return $scope.historyScore.tooltips[i][j] + ' score ';
+                             }
+                         }
+
+                    }
+
                 }
             }
         },
@@ -156,43 +166,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     };
 
 
-
-///// 3 chart -- init //////
-//     $scope.datasetOverride = [
-//         {}, {},
-//         {
-//             label: "target",
-//             borderWidth: 3,
-//             type: 'line',
-//             pointRadius: 0,
-//             backgroundColor: 'transparent',
-//             borderColor: '#a32428',
-//             pointHoverBackgroundColor: '#a32428',
-//             pointHoverBorderColor: '#a32428'
-//         },
-//         {
-//
-//             label: "last",
-//             borderWidth: 3,
-//             type: 'line',
-//             pointRadius: 0,
-//             backgroundColor: 'transparent',
-//             borderColor: '#339163',
-//             pointHoverBackgroundColor: '#339163',
-//             pointHoverBorderColor: '#339163'
-//         },
-//         {
-//             label: "current",
-//             borderWidth: 3,
-//             type: 'line',
-//             pointRadius: 0,
-//             backgroundColor: 'transparent',
-//             borderColor: '#e8f170',
-//             pointHoverBackgroundColor: '#e8f170',
-//             pointHoverBorderColor: '#e8f170'
-//         },
-//
-//     ];
 
     $scope.options = {
         responsive: true,
@@ -480,10 +453,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
                 dataTable.addRows(addRows);
                  var rowHeight = 40;
-                // if (addRows.length == 1) rowHeight = 60;
-                //  var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
                  var chartHeight = (countRow * rowHeight)+60;
-                // if (addRows.length > 10) chartHeight = 300;
+
 
                 var chartWidth = angular.element(document.querySelector(".card-block")).width() - 150;
 
@@ -491,10 +462,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                     avoidOverlappingGridLines: true,
                     width: chartWidth,
                     height: chartHeight,
-
-
-                     // colors: ['#cbb69d', '#603913', '#c69c6e'],
-
                 }
                 chart.draw(dataTable, options);
             }
@@ -528,6 +495,18 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         if ($scope.ScoreHistoryIsEmpty === false && (!result.message || !result.errors)){
             $scope.historyScore.labels = result.labels;
             $scope.historyScore.data = result.data;
+            console.log(result.data, "result.data;");
+            $scope.historyScore.tooltips = $scope.historyScore.data.map(function (item, i, arr){
+               if (i>0) {
+                  return item.map(function (smallItem, j, smallArr){
+                       smallItem =  smallItem - arr[i-1][j];
+                       return smallItem;
+                    })
+               } else {
+                   return item;
+               }
+            });
+
 
             var max =  Math.max.apply(null,(result.data[0].concat(result.data[1], result.data[2])));
             $scope.historyScore.options.scales.yAxes[0].ticks.max = (Math.floor((max+20)/10))*10-10;
