@@ -6,14 +6,15 @@ angular
     .controller('DashboardChart', DashboardChart);
 
 
-DashboardChart.$inject = ['$rootScope','$scope', '$sessionStorage', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel', 'auditModel', 'ngDialog'];
-function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel, auditModel, ngDialog) {
+DashboardChart.$inject = ['$rootScope','$scope', '$sessionStorage', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel', 'auditModel', 'ngDialog', 'usersModel'];
+function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel, auditModel, ngDialog, usersModel) {
 
 
 
     $scope.search = {};
     $scope.auditStop = auditStop;
     $scope.auditStart = auditStart;
+    $scope.usersList = [];
 
     // headers and configuration of visible company filter and disabled of department+workplaces
 
@@ -245,6 +246,10 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             });
 
 
+        });
+
+        usersModel.fetchUsers(function(result) {
+            $scope.usersList = result;
         });
 
     }
@@ -614,26 +619,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         }
 
         $scope.startAuditFromChart = true;
-        $scope.scoreSlider = {
-            value: 50,
-            options: {
-                floor: 0,
-                ceil: 100,
-                step: 1,
-                minLimit: 0,
-                maxLimit: 100
-            }
-        };
-
-        $scope.audit = {
-            name: new Date().toDateString(),
-            description: '',
-            target: $scope.scoreSlider.value,
-            place_id: '',
-            user_id: '',
-            company_id: $rootScope.company_id || null,
-        };
-
         auditModel.startLastAudit({department_id:StartedDepartment[0].id}, function callback(result) {
 
             $scope.scoreSlider = {
@@ -648,7 +633,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             };
 
             $scope.audit = {
-                name: result.name,
+                name: new Date().toDateString(),
                 description: result.description,
                 department_id: result.department_id,
                 target: $scope.scoreSlider.value,
