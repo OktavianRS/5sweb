@@ -26,9 +26,8 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
     name: new Date().toDateString(),
     description: '',
     target: $scope.scoreSlider.value,
-    place_id: '',
     user_id: '',
-    company_id: $rootScope.company_id || null,
+    company_id: $rootScope.company_id || undefined,
   }
 
   // fetch all initial data
