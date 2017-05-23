@@ -666,7 +666,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         };
 
         $scope.audit = {
-            name: '',
+            name: new Date().toDateString(),
             description: '',
             target: $scope.scoreSlider.value,
             place_id: '',
