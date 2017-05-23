@@ -8,11 +8,14 @@ angular.module('model.audit', [])
             req,
             function(res) {
               if (typeof res.created_at !== 'undefined') {
-                toast('success', 'Created successfully', '');
+                toast('success', 'Audit started', '');
                 callback();
               }
-               else if (res.errors['There are not criterias in the place']) {
-                    toast('error', 'Please, add criterias for workplace on workplace page', '');
+               else if (res.errors) {
+                  var errors = Object.keys(res.errors);
+                    errors.forEach(function(item) {
+                        toast('error', item, '');
+                    })
                 }else {
                 toast('error', 'Some error occured', 'Audit not started');
               }
@@ -55,12 +58,32 @@ angular.module('model.audit', [])
           })
         }
 
+          this.startLastAudit = function(req, callback) {
+              api.post(
+                  url.startLastAudit,
+                  req,
+                  function(res) {
+                      if (typeof res.department_id !== 'undefined') {
+                          callback(res);
+                      }
+                      else if (res.errors) {
+                          var errors = Object.keys(res.errors);
+                          errors.forEach(function(item) {
+                              toast('error', item, '');
+                          });
+                      }else {
+                          toast('error', 'Some error occured', 'Audit not started');
+                      }
+                  })
+          }
+
 
           this.stopLastAudit = function(req, callback) {
               api.put(
                   url.stopLastAudit,
                   req,
                   function(res) {
+                      toast('error', 'Audit stoped', '');
                       callback();
                   }
               );

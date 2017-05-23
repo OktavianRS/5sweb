@@ -641,7 +641,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     function auditStart (index) {
         var department_name = $scope.rowName[index];
         var departmentsList = $scope.departmentsList;
-        var StoppedDepartment = departmentsList.filter(function (department) {
+        var StartedDepartment = departmentsList.filter(function (department) {
             return department_name === department.name;
         })
 
@@ -655,34 +655,40 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
         // .... TODO Function for get information about last audit
 
-        $scope.scoreSlider = {
-            value: 50,
-            options: {
-                floor: 0,
-                ceil: 100,
-                step: 1,
-                minLimit: 0,
-                maxLimit: 100
-            }
-        };
+        $scope.startAuditFromChart = true;
 
-        $scope.audit = {
-            name: '',
-            description: '',
-            target: $scope.scoreSlider.value,
-            place_id: '',
-            user_id: '',
-            company_id: $rootScope.company_id || null,
-        };
+        auditModel.startLastAudit({department_id:StartedDepartment[0].id}, function callback(result) {
 
-        $scope.submit = function() {
-            $scope.audit.user_id = $scope.search.user.id;
-            $scope.audit.department_id = $scope.search.department.id;
-            auditModel.startAudit($scope.audit, constructor);
-            ngDialog.closeAll();
-        }
+            $scope.scoreSlider = {
+                value: result.target,
+                options: {
+                    floor: 0,
+                    ceil: 100,
+                    step: 1,
+                    minLimit: 0,
+                    maxLimit: 100
+                }
+            };
 
+            $scope.audit = {
+                name: result.name,
+                description: result.description,
+                department_id: result.department_id,
+                target: $scope.scoreSlider.value,
+                place_id: '',
+                user_id: result.user_id,
+                company_id: $rootScope.company_id || null,
+            };
             createAuditModal();
+
+            $scope.submit = function() {
+                $scope.audit.target = $scope.scoreSlider.value;
+                auditModel.startAudit($scope.audit, constructor);
+                ngDialog.closeAll();
+            }
+        })
+
+
         // auditModel.startAudit({id:...}, function callback(result) {
         // }
 
