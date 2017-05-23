@@ -142,7 +142,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             mode: 'single',
             callbacks: {
                 label: function (tooltipItems, data) {
-                    console.log(tooltipItems, data);
                     for (var i=0; i<4; i++){
                          if (tooltipItems.datasetIndex === i){
                              for (var j=0; j<data.labels.length;j++) {
@@ -495,7 +494,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         if ($scope.ScoreHistoryIsEmpty === false && (!result.message || !result.errors)){
             $scope.historyScore.labels = result.labels;
             $scope.historyScore.data = result.data;
-            console.log(result.data, "result.data;");
             $scope.historyScore.tooltips = $scope.historyScore.data.map(function (item, i, arr){
                if (i>0) {
                   return item.map(function (smallItem, j, smallArr){
