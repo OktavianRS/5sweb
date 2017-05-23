@@ -259,7 +259,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 $scope.withHeaderWorkPlaces.splice(0, 0, headerFilter.workplace);
                 $scope.search.place = headerFilter.workplace;
             })
-            console.log($rootScope);
+
              // if ($rootScope.role === 'site admin') {
              //     var company_id = $scope.search.company.id;
              // } else {
@@ -354,7 +354,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
         } else {
             departmentsModel.fetchOnePlaceList({department_id: item.id}, function callback(result) {
-debugger
+
                 $scope.workplacesList = result;
                 $scope.withHeaderWorkPlaces = $scope.workplacesList.slice();
                 $scope.withHeaderWorkPlaces.splice(0, 0, headerFilter.workplace);
@@ -429,7 +429,7 @@ debugger
         if ($scope.AuditHistoryIsEmpty === false && (!result.message || !result.errors)){
             var countRow = 1;
             var rowName = [];
-            var auditDone = [];
+            var auditInProcess = [];
             var NumberToDate = result.map(function (item, k, array) {
                 item.length = 3;
                 // item.color  = 'red';
@@ -446,7 +446,7 @@ debugger
                     if (i > 0 && i<3) {
                         if ((i === 2) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
-                            auditDone[countRow-1] = true;
+                            auditInProcess[countRow-1] = true;
 
                         }
                         else if ((i === 1) && (innerItem === null || innerItem === 0)) {
@@ -465,7 +465,7 @@ debugger
             rowName.push(NumberToDate[NumberToDate.length-1][0]);
 
              $scope.AuditHistoryCountRow = countRow;
-            $scope.auditDone  = auditDone;
+            $scope.auditInProcess  = auditInProcess;
             $scope.rowName  = rowName;
 
             $scope.getNumber = function(countRow) {
@@ -487,12 +487,10 @@ debugger
                 dataTable.addColumn({type: 'date', id: 'End'});
 
                 dataTable.addRows(addRows);
-                console.log($scope.rowName, '$scope.rowName');
                  var rowHeight = 40;
                 // if (addRows.length == 1) rowHeight = 60;
                 //  var chartHeight = (dataTable.getNumberOfRows() + 1) * rowHeight;
                  var chartHeight = (countRow * rowHeight)+60;
-                console.log(countRow);
                 // if (addRows.length > 10) chartHeight = 300;
 
                 var chartWidth = angular.element(document.querySelector(".card-block")).width() - 150;
@@ -630,28 +628,24 @@ debugger
         var department_name = $scope.rowName[index];
         var departmentsList = $scope.departmentsList;
         var StoppedDepartment = departmentsList.filter(function (department) {
-            debugger
+
             return department_name === department.name;
         })
 
-        // .... TODO Function for get information about last audit
-        // auditModel.stopAudit({id:StoppedDepartment[0].id}, function callback(result) {
-            // chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
-            //     changesAuditHistory(result);
-            // })
-        // })
+
+         auditModel.stopLastAudit({department_id:StoppedDepartment[0].id}, function callback(result) {
+             $scope.auditInProcess[index] =  !$scope.auditInProcess[index];
+         })
     }
 
     function auditStart (index) {
         var department_name = $scope.rowName[index];
         var departmentsList = $scope.departmentsList;
         var StoppedDepartment = departmentsList.filter(function (department) {
-            debugger
             return department_name === department.name;
         })
 
         function createAuditModal ()  {
-            console.log('fesfesfesfsefsefefe');
             ngDialog.open({
                 template:'/views/components/createAuditDialog.html',
                 className: 'ngdialog-theme-default',
