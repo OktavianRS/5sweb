@@ -2,8 +2,8 @@ angular
 .module('app')
 .controller('navbarCtrl', navbarCtrl)
 
-navbarCtrl.$inject = ['$scope', 'toast', '$sessionStorage', '$location'];
-function navbarCtrl($scope, toast, $sessionStorage, $location) {
+navbarCtrl.$inject = ['$scope', 'toast', '$sessionStorage', '$location', '$rootScope'];
+function navbarCtrl($scope, toast, $sessionStorage, $location, $rootScope) {
 
   $scope.first_name = $sessionStorage.first_name;
   $scope.email = $sessionStorage.email;

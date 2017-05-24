@@ -15,6 +15,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     $scope.usersList = [];
     $scope.auditStop = auditStop;
     $scope.auditStart = auditStart;
+    $scope.usersList = [];
 
     // headers and configuration of visible company filter and disabled of department+workplaces
 
@@ -105,10 +106,10 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             borderWidth: 3,
             type: 'line',
             pointRadius: 3,
-            backgroundColor: '#339163',
-            borderColor: '#339163',
-            pointHoverBackgroundColor: '#339163',
-            pointHoverBorderColor: '#339163'
+            backgroundColor: 'rgba(29, 233, 182, .8)',
+            borderColor: 'rgba(29, 233, 182, .8)',
+            pointHoverBackgroundColor: 'rgba(29, 233, 182, .8)',
+            pointHoverBorderColor: 'rgba(29, 233, 182, .8)'
         },
         {
 
@@ -116,20 +117,20 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             borderWidth: 3,
             type: 'line',
             pointRadius: 3,
-            backgroundColor: '#e8f170',
-            borderColor: '#e8f170',
-            pointHoverBackgroundColor: '#e8f170',
-            pointHoverBorderColor: '#e8f170'
+            backgroundColor: 'rgba(255, 255, 0, .8)',
+            borderColor: 'rgba(255, 255, 0, .8)',
+            pointHoverBackgroundColor: 'rgba(255, 255, 0, .8)',
+            pointHoverBorderColor: 'rgba(255, 255, 0, .8)'
         },
         {
             label: "current",
             borderWidth: 3,
             type: 'line',
             pointRadius: 3,
-            backgroundColor: '#a32428',
-            borderColor: '#a32428',
-            pointHoverBackgroundColor: '#a32428',
-            pointHoverBorderColor: '#a32428'
+            backgroundColor: 'rgba(255, 61, 0, .8)',
+            borderColor: 'rgba(255, 61, 0, .8)',
+            pointHoverBackgroundColor: 'rgba(255, 61, 0, .8)',
+            pointHoverBorderColor: 'rgba(255, 61, 0, .8)'
         },
 
     ];
@@ -249,6 +250,10 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             });
 
 
+        });
+
+        usersModel.fetchUsers(function(result) {
+            $scope.usersList = result;
         });
 
     }

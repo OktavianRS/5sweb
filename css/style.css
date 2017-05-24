@@ -8601,8 +8601,8 @@ base-chart.chart {
   border: none;
   background: none; }
 
-.active-sort-item {
-  cursor: pointer; }
+td {
+  cursor: default !important; }
 
 .workplaces-container th, .workplaces-container td {
   text-align: center; }
