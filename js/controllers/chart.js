@@ -6,12 +6,13 @@ angular
     .controller('DashboardChart', DashboardChart);
 
 
-DashboardChart.$inject = ['$rootScope','$scope', '$sessionStorage', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel', 'auditModel', 'ngDialog'];
-function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel, auditModel, ngDialog) {
+DashboardChart.$inject = ['$rootScope','$scope', '$sessionStorage', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel', 'auditModel', 'ngDialog', 'usersModel'];
+function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel, auditModel, ngDialog, usersModel) {
 
 
 
     $scope.search = {};
+    $scope.usersList = [];
     $scope.auditStop = auditStop;
     $scope.auditStart = auditStart;
 
@@ -213,6 +214,9 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     // fetch all initial data
     function constructor() {
 
+        usersModel.fetchUsers(function(result) {
+            $scope.usersList = result;
+        });
 
         companiesModel.fetchCompanies(function (result) {
 
@@ -394,12 +398,18 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             var countRow = 1;
             var rowName = [];
             var auditInProcess = [];
+            var RecentlyStoppedAudit = [];
+            var RecentlyStoppedAuditNumber;
+            var colors = ["#f75151","#f2f24f", "#e4f14f", "#d3f04e", "#c4ef4d", "#a6ef4d", "#65ef4d"];
+
+
             var NumberToDate = result.map(function (item, k, array) {
                 item.length = 3;
                 // item.color  = 'red';
                 if (array[k-1] !== undefined){
                     if (array[k][0] !== array[k-1][0]) {
                         countRow++;
+
                         rowName.push(array[k-1][0]);
                     }
                 }
@@ -410,7 +420,24 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                     if (i > 0 && i<3) {
                         if ((i === 2) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
-                            auditInProcess[countRow-1] = true;
+                            // innerItem.getTime();
+                            // innerItem = new Date(innerItem -1000000000);
+                             auditInProcess[countRow-1] = true;
+
+                        }
+                         else if ((i === 2) && (innerItem > null || innerItem > 0) ) {
+                            var now = new Date();
+                            innerItem = new Date(innerItem*1000);
+                            if ((now-innerItem) < 100000) {
+                                // console.log(innerItem, i, arr);
+                                RecentlyStoppedAuditNumber = k;
+                                RecentlyStoppedAudit = item;
+                            }
+                            // var w =   new Date(a.getTime() + 10000000000);
+                            // innerItem = new Date();
+                            // innerItem.getTime();
+                            // innerItem = new Date(innerItem -1000000000);
+                            // auditInProcess[countRow-1] = true;
 
                         }
                         else if ((i === 1) && (innerItem === null || innerItem === 0)) {
@@ -420,14 +447,31 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                             innerItem = new Date(innerItem * 1000);
                         }
 
-
                     }
                     return innerItem;
                 });
-                return newItem;
-            });
-            rowName.push(NumberToDate[NumberToDate.length-1][0]);
 
+                var randColor = colors[Math.floor(Math.random() * colors.length)];
+                newItem.splice(1,0, '');
+                newItem.splice(2,0, randColor);
+                return newItem;
+
+
+            });
+            // console.log(NumberToDate, "NumberToDate");
+            var now = new Date();
+
+            // var AbstractTimeLine = [RecentlyStoppedAudit[0], new Date(), new Date(now.getTime()+100000000)];
+            //
+            // if (RecentlyStoppedAuditNumber) NumberToDate.splice(RecentlyStoppedAuditNumber,0,AbstractTimeLine);
+            //
+            // console.log(NumberToDate, "NumberToDate");
+            // console.log(AbstractTimeLine, "AbstractTimeLine");
+            // console.log(RecentlyStoppedAudit, "RecentlyStoppedAudit");
+            // console.log(auditInProcess, "auditInProcess");
+
+
+            rowName.push(NumberToDate[NumberToDate.length-1][0]);
              $scope.AuditHistoryCountRow = countRow;
             $scope.auditInProcess  = auditInProcess;
             $scope.rowName  = rowName;
@@ -446,9 +490,11 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 var dataTable = new google.visualization.DataTable();
 
                 dataTable.addColumn({type: 'string', id: 'Name'});
-                // dataTable.addColumn({type: 'color', id: 'color'});
+                dataTable.addColumn({type: 'string', id: 'Name'});
+                 dataTable.addColumn({type: 'string', role: 'style'});
                 dataTable.addColumn({type: 'date', id: 'Start'});
                 dataTable.addColumn({type: 'date', id: 'End'});
+
 
                 dataTable.addRows(addRows);
                  var rowHeight = 40;
@@ -461,6 +507,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                     avoidOverlappingGridLines: true,
                     width: chartWidth,
                     height: chartHeight,
+                    // colors: ['red','yellow', 'blue'],
                 }
                 chart.draw(dataTable, options);
             }
@@ -595,6 +642,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
          auditModel.stopLastAudit({department_id:StoppedDepartment[0].id}, function callback(result) {
              $scope.auditInProcess[index] =  !$scope.auditInProcess[index];
+             constructor();
+
          })
     }
 
@@ -614,26 +663,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         }
 
         $scope.startAuditFromChart = true;
-        $scope.scoreSlider = {
-            value: 50,
-            options: {
-                floor: 0,
-                ceil: 100,
-                step: 1,
-                minLimit: 0,
-                maxLimit: 100
-            }
-        };
-
-        $scope.audit = {
-            name: new Date().toDateString(),
-            description: '',
-            target: $scope.scoreSlider.value,
-            place_id: '',
-            user_id: '',
-            company_id: $rootScope.company_id || null,
-        };
-
         auditModel.startLastAudit({department_id:StartedDepartment[0].id}, function callback(result) {
 
             $scope.scoreSlider = {
@@ -647,13 +676,18 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 }
             };
 
+            var userArr = $scope.usersList.filter(function (item) {
+                return item.id ===  result.user_id;
+            })
+            $scope.search.user = userArr[0];
+
             $scope.audit = {
-                name: result.name,
+                name: new Date().toDateString(),
                 description: result.description,
                 department_id: result.department_id,
                 target: $scope.scoreSlider.value,
                 place_id: '',
-                user_id: result.user_id,
+                user_id: $scope.search.user.id,
                 company_id: $rootScope.company_id || null,
             };
             createAuditModal();

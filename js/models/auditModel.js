@@ -83,7 +83,7 @@ angular.module('model.audit', [])
                   url.stopLastAudit,
                   req,
                   function(res) {
-                      toast('error', 'Audit stoped', '');
+                      toast('success', 'Audit stoped', '');
                       callback();
                   }
               );

@@ -370,7 +370,7 @@ function heightRow($timeout, $window, $rootScope) {
 
              var parentElementRow =  (angular.element(document.querySelectorAll('rect')).eq(0))[0].parentElement;
                var grandGrandElementAudit = angular.element(parentElementRow.parentElement)[0];
-             var grandElementAudit =  angular.element(parentElementRow.parentElement)[0].children[3];
+             var grandElementAudit =  angular.element(parentElementRow.parentElement)[0].children[4];
              var arrHeightRow = angular.element(parentElementRow).find('rect');
              var parentElementAudit = angular.element(grandElementAudit).find('rect');
 
@@ -383,6 +383,12 @@ function heightRow($timeout, $window, $rootScope) {
 var newElements="";
 
              for (var i=0; i<parentElementAudit.length; i++) {
+
+                // angular.element(parentElementAudit[i]).attr("fill","red");
+                //  console.log(parentElementAudit[i]);
+
+
+
 
                  //angular way
 
@@ -466,7 +472,7 @@ var newElements="";
 
 
 
-                listenerHeightRow(); // Would clear the watch
+                // listenerHeightRow(); // Would clear the watch
            }
         });
 
