@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-header">
+              Critical score, %
+          </div>
+          <div class="card-block audit-form">
+              <form ng-submit="CriticalSubmit()" class="form-2orizontal" >
+                  <div>
+                      <label class="form-control-label" >
+                          Set the critical percentage of score to the target</label>
+                      <rzslider  rz-slider-model="criticalScoreSlider.value"
+                                rz-slider-options="criticalScoreSlider.options"></rzslider>
+                  </div>
+                  <div class="form-actions">
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                      >
+                        Set
+                      </button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+  <!--/.col-->
+</div>

@@ -8607,6 +8607,13 @@ td {
 .workplaces-container th, .workplaces-container td {
   text-align: center; }
 
+.chart .glyphicon.glyphicon-cog {
+  float: right;
+  margin-right: 20px;
+  font-size: 20px;
+  color: #5cb85c;
+  cursor: pointer; }
+
 .chart .select_group {
   text-align: end; }
 

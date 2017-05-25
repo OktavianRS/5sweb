@@ -15,7 +15,9 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     $scope.usersList = [];
     $scope.auditStop = auditStop;
     $scope.auditStart = auditStart;
+    $scope.settings = settings;
     $scope.usersList = [];
+
 
     // headers and configuration of visible company filter and disabled of department+workplaces
 
@@ -381,7 +383,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     ////////////////// 1 chart ///////////////////////
     // google chart time-line
     // histiry audit
-    function changesAuditHistory(result) {
+    function changesAuditHistory(result, criticalTarget) {
 
         // audit - empty
         if (Array.isArray(result) && result.length === 0) {
@@ -405,7 +407,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             var auditInProcess = [];
             var RecentlyStoppedAudit = [];
             var RecentlyStoppedAuditNumber;
-            var colors = ["#f75151","#f2f24f", "#e4f14f", "#d3f04e", "#c4ef4d", "#a6ef4d", "#65ef4d"];
+            // var colors = ["#f75151","#f2f24f", "#e4f14f", "#d3f04e", "#c4ef4d", "#a6ef4d", "#65ef4d"];
 
 
             var NumberToDate = result.map(function (item, k, array) {
@@ -423,33 +425,38 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 var newItem = item.map(function (innerItem, i, arr) {
 
                     if (i === 1) {
-                         if (innerItem>1) {innerItem = "green";}
-                        else if (innerItem===0) {innerItem = "red";}
-                        else if (innerItem<1) {innerItem = "yellow";}
+                        if (criticalTarget === undefined) {
+                            innerItem = resultCriticalScore (innerItem);
+                        } else {
+                            innerItem = resultCriticalScore (innerItem, criticalTarget);
+                        }
+
                     }
                     else if (i > 1 && i<4) {
                         if ((i === 3) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
+                            debugger
+
                             // innerItem.getTime();
                             // innerItem = new Date(innerItem -1000000000);
                              auditInProcess[countRow-1] = true;
 
                         }
-                         else if ((i === 3) && (innerItem > null || innerItem > 0) ) {
-                            var now = new Date();
-                            innerItem = new Date(innerItem*1000);
-                            if ((now-innerItem) < 100000) {
-                                // console.log(innerItem, i, arr);
-                                RecentlyStoppedAuditNumber = k;
-                                RecentlyStoppedAudit = item;
-                            }
+                         // else if ((i === 3) && (innerItem > null || innerItem > 0) ) {
+                            // var now = new Date();
+                            // innerItem = new Date(innerItem*1000);
+                            // if ((now-innerItem) < 100000) {
+                            //     // console.log(innerItem, i, arr);
+                            //     RecentlyStoppedAuditNumber = k;
+                            //     RecentlyStoppedAudit = item;
+                            // }
                             // var w =   new Date(a.getTime() + 10000000000);
                             // innerItem = new Date();
                             // innerItem.getTime();
                             // innerItem = new Date(innerItem -1000000000);
                             // auditInProcess[countRow-1] = true;
 
-                        }
+                        // }
                         else if ((i === 2) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
                         }
@@ -463,6 +470,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
                 // var randColor = colors[Math.floor(Math.random() * colors.length)];
                 newItem.splice(1,0, '');
+
                 // newItem.splice(2,0, randColor);
                 return newItem;
 
@@ -708,6 +716,63 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 ngDialog.closeAll();
             }
         })
+
+    }
+
+
+    function settings() {
+        $scope.critical = {};
+        $scope.criticalScoreSlider = {
+            value: 50,
+            options: {
+                floor: 0,
+                ceil: 100,
+                step: 1,
+                minLimit: 0,
+                maxLimit: 100
+            }
+        };
+
+
+        ngDialog.open({
+            template:'/views/components/createCriticalScore.html',
+            className: 'ngdialog-theme-default',
+            scope: $scope,
+        });
+
+        $scope.CriticalSubmit = function() {
+            $scope.critical.target = $scope.criticalScoreSlider.value;
+            console.log($scope.critical.target);
+            var criticalTarget = $scope.critical.target
+            // TODO send $scope.critical.target on server
+            chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
+                $scope.ListAuditHistoryByCompany = result;
+                changesAuditHistory(result, criticalTarget);
+            })
+            // auditModel.startAudit($scope.audit, constructor);
+            ngDialog.closeAll();
+
+
+        }
+    }
+
+    function resultCriticalScore (innerItem, criticalSlider) {
+        console.log(arguments);
+        if (arguments.length === 1){
+            if (innerItem>1) {innerItem = "green";}
+            else if (innerItem===0) {innerItem = "red";}
+            else if (innerItem<1) {innerItem = "yellow";}
+            return innerItem;
+        } else {
+            criticalSlider = criticalSlider / 100;
+
+            // console.log();
+
+            if (innerItem>criticalSlider) {innerItem = "green";}
+            else if (innerItem===0) {innerItem = "red";}
+            else if (innerItem<criticalSlider) {innerItem = "yellow";}
+            return innerItem;
+        }
 
     }
 
