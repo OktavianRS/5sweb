@@ -63,10 +63,6 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
   }
   constuctor();
 
-  $scope.selectDepartment = function (item) {
-    $scope.audit.department_id = item.id;
-  }
-
   $scope.selectCompany = function() {
     departmentsModel.fetchCompanyDepartments($scope.audit.company_id, function(result) {
       $scope.departmentsList = result;
