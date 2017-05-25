@@ -5,8 +5,9 @@
         <div class="card-block">
             <div class="row">
                 <div class="col-sm-12">
-                    <h4 class="card-title mb-0" ">Audit history for departments</h4>
+                    <h4 class="card-title mb-0">Audit history for departments</h4>
                     <div class="small text-muted">5s-Figures Performance</div>
+                    <div class="glyphicon glyphicon-cog"></div>
                 </div>
                 <!--/.col-->
 
@@ -115,42 +116,6 @@
                 <h4>{{messageErrorScore}}</h4>
             </div>
         </div>
-        <!--<div class="card-footer">-->
-        <!---->
-
-            <!--<table id="auditTable" class="table table-bordered">-->
-                <!--<thead>-->
-                <!--<tr>-->
-                    <!--<th>Workplace</th>-->
-                    <!--<th>Department</th>-->
-                    <!--<th style="width: 15%;">Last</th>-->
-                    <!--<th style="width: 15%;">Current</th>-->
-                <!--</tr>-->
-                <!--</thead>-->
-                <!--<tbody class="list">-->
-                <!--<tr ng-repeat="(key, value) in table.placeName track by $index">-->
-                    <!--<td>{{value}}</td>-->
-                    <!--<td ng-style="{backgroundColor: table.departmentColor[$index]}" class="department">{{table.departmentName[$index]}}</td>-->
-                    <!--<td style="width: 15%;" class="last-week">-->
-                        <!--<i class="fa fa-long-arrow-right"  aria-hidden="true" ng-class="-->
-                                                                    <!--{'up': (table.placeLastScore[$index] - table.placePrevScore[$index]) >0,-->
-                                                                    <!--'down': (table.placeLastScore[$index] - table.placePrevScore[$index]) <0,-->
-                                                                    <!--'equal': table.placeLastScore[$index] === table.placePrevScore[$index]}">-->
-                        <!--</i>-->
-                        <!--{{table.placeLastScore[$index]}}</td>-->
-                    <!--<td style="width: 15%;" class="current-week">-->
-                        <!--<i class="fa fa-long-arrow-right" aria-hidden="true" ng-class="-->
-                                                                    <!--{'up': (table.placeCurrentScore[$index] - table.placeLastScore[$index]) >0,-->
-                                                                    <!--'down': (table.placeCurrentScore[$index] - table.placeLastScore[$index]) <0,-->
-                                                                    <!--'equal': table.placeCurrentScore[$index] === table.placeLastScore[$index]}">-->
-
-                        <!--</i>-->
-                        <!--{{table.placeCurrentScore[$index]}}-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-            <!--</table>-->
-        <!--</div>-->
     </div>
     <!--/.card-->
 
