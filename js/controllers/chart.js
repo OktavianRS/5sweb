@@ -409,7 +409,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
 
             var NumberToDate = result.map(function (item, k, array) {
-                item.length = 3;
+                // item.length = 3;
                 // item.color  = 'red';
                 if (array[k-1] !== undefined){
                     if (array[k][0] !== array[k-1][0]) {
@@ -422,15 +422,20 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
                 var newItem = item.map(function (innerItem, i, arr) {
 
-                    if (i > 0 && i<3) {
-                        if ((i === 2) && (innerItem === null || innerItem === 0)) {
+                    if (i === 1) {
+                         if (innerItem>1) {innerItem = "green";}
+                        else if (innerItem===0) {innerItem = "red";}
+                        else if (innerItem<1) {innerItem = "yellow";}
+                    }
+                    else if (i > 1 && i<4) {
+                        if ((i === 3) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
                             // innerItem.getTime();
                             // innerItem = new Date(innerItem -1000000000);
                              auditInProcess[countRow-1] = true;
 
                         }
-                         else if ((i === 2) && (innerItem > null || innerItem > 0) ) {
+                         else if ((i === 3) && (innerItem > null || innerItem > 0) ) {
                             var now = new Date();
                             innerItem = new Date(innerItem*1000);
                             if ((now-innerItem) < 100000) {
@@ -445,7 +450,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                             // auditInProcess[countRow-1] = true;
 
                         }
-                        else if ((i === 1) && (innerItem === null || innerItem === 0)) {
+                        else if ((i === 2) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
                         }
                         else {
@@ -456,9 +461,9 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                     return innerItem;
                 });
 
-                var randColor = colors[Math.floor(Math.random() * colors.length)];
+                // var randColor = colors[Math.floor(Math.random() * colors.length)];
                 newItem.splice(1,0, '');
-                newItem.splice(2,0, randColor);
+                // newItem.splice(2,0, randColor);
                 return newItem;
 
 
