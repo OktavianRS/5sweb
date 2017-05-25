@@ -7,26 +7,39 @@
                         <div class="card-block">
                             <h1>Login</h1>
                             <p class="text-muted">Sign In to your account</p>
-                            <form ng-submit="login()">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-addon"><i class="icon-user"></i>
-                                    </span>
-                                    <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Email"
-                                    ng-model="authParams.email"
-                                    >
+                            <form ng-submit="login()" name="loginForm">
+                                <div class="form-group {{loginForm.email.$error.email && 'has-danger'}}">
+                                    <div class="controls">
+                                        <div class="input-prepend input-group">
+                                            <span class="input-group-addon"><i class="icon-user"></i></span>
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                class="form-control"
+                                                placeholder="Email"
+                                                ng-model="authParams.email"
+                                            >
+                                        </div>
+                                    </div>
+                                    <p class="help-block" ng-show="loginForm.email.$error.email">Entery valid email</p>
+                                    <div style="height: 21px;" ng-hide="loginForm.email.$error.email"></div>
                                 </div>
-                                <div class="input-group mb-4">
-                                    <span class="input-group-addon"><i class="icon-lock"></i>
-                                    </span>
-                                    <input
-                                    type="password"
-                                    class="form-control"
-                                    placeholder="Password"
-                                    ng-model="authParams.password"
-                                    >
+                                <div class="form-group {{loginForm.password.$error.required && 'has-danger'}}">
+                                    <div class="controls">
+                                        <div class="input-prepend input-group">
+                                            <span class="input-group-addon"><i class="icon-lock"></i></span>
+                                            <input
+                                            type="password"
+                                            class="form-control"
+                                            name="password"
+                                            placeholder="Password"
+                                            ng-model="authParams.password"
+                                            required
+                                            >
+                                        </div>
+                                    </div>
+                                    <p class="help-block" ng-show="loginForm.password.$error.required">Password is required</p>
+                                    <div style="height: 21px;" ng-hide="loginForm.password.$error.required"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
