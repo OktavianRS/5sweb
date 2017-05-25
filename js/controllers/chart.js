@@ -108,10 +108,10 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             borderWidth: 3,
             type: 'line',
             pointRadius: 3,
-            backgroundColor: 'rgba(29, 233, 182, .8)',
-            borderColor: 'rgba(29, 233, 182, .8)',
-            pointHoverBackgroundColor: 'rgba(29, 233, 182, .8)',
-            pointHoverBorderColor: 'rgba(29, 233, 182, .8)'
+            backgroundColor: 'rgb(102, 187, 106)',
+            borderColor: 'rgb(102, 187, 106)',
+            pointHoverBackgroundColor: 'rgb(102, 187, 106)',
+            pointHoverBorderColor: 'rgb(102, 187, 106)'
         },
         {
 
@@ -119,10 +119,10 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             borderWidth: 3,
             type: 'line',
             pointRadius: 3,
-            backgroundColor: 'rgba(255, 255, 0, .8)',
-            borderColor: 'rgba(255, 255, 0, .8)',
-            pointHoverBackgroundColor: 'rgba(255, 255, 0, .8)',
-            pointHoverBorderColor: 'rgba(255, 255, 0, .8)'
+            backgroundColor: 'rgb(255, 235, 59)',
+            borderColor: 'rgb(255, 235, 59)',
+            pointHoverBackgroundColor: 'rgb(255, 235, 59)',
+            pointHoverBorderColor: 'rgb(255, 235, 59)'
         },
         {
             label: "current",

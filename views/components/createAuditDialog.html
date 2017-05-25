@@ -84,7 +84,7 @@
                               <select
                                       class="audit__select form-control" name="departmentSelect" id="departmentSelect"
                                       ng-options="department.name for department in departmentsList track by department.id"
-                                      ng-model="search.department" ng-change="selectDepartment(search.department)"
+                                      ng-model="search.department" ng-change="selectDepartment(department)"
                               >
                               </select>
                             </div>
@@ -93,7 +93,7 @@
                   </div>
                   <div>
                       <label class="form-control-label" for="prependedInput">Score for target</label>
-                      <rzslider rz-slider-model="scoreSlider.value"
+                      <rzslider rz-slider-model="audit.target"
                                 rz-slider-options="scoreSlider.options"></rzslider>
                   </div>
                   <div class="form-actions">

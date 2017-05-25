@@ -8,7 +8,8 @@ function criteriaByWorkplacesCtrl($scope, $rootScope, toast, ngDialog, criterias
   $scope.editElement = {};
 
   $scope.criteria = {
-    name: ''
+    name: '',
+    place_id: $rootScope.place_id
   }
 
   // fetch all initial data
