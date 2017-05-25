@@ -435,7 +435,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                     else if (i > 1 && i<4) {
                         if ((i === 3) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
-                            debugger
+
 
                             // innerItem.getTime();
                             // innerItem = new Date(innerItem -1000000000);
@@ -483,10 +483,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             //
             // if (RecentlyStoppedAuditNumber) NumberToDate.splice(RecentlyStoppedAuditNumber,0,AbstractTimeLine);
             //
-            // console.log(NumberToDate, "NumberToDate");
-            // console.log(AbstractTimeLine, "AbstractTimeLine");
-            // console.log(RecentlyStoppedAudit, "RecentlyStoppedAudit");
-            // console.log(auditInProcess, "auditInProcess");
+
 
 
             rowName.push(NumberToDate[NumberToDate.length-1][0]);
@@ -742,37 +739,46 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
         $scope.CriticalSubmit = function() {
             $scope.critical.target = $scope.criticalScoreSlider.value;
-            console.log($scope.critical.target);
             var criticalTarget = $scope.critical.target
             // TODO send $scope.critical.target on server
             chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
                 $scope.ListAuditHistoryByCompany = result;
                 changesAuditHistory(result, criticalTarget);
             })
-            // auditModel.startAudit($scope.audit, constructor);
             ngDialog.closeAll();
 
 
         }
     }
 
-    function resultCriticalScore (innerItem, criticalSlider) {
-        console.log(arguments);
+    function resultCriticalScore (innerItem, criticalTarget) {
         if (arguments.length === 1){
             if (innerItem>1) {innerItem = "green";}
             else if (innerItem===0) {innerItem = "red";}
             else if (innerItem<1) {innerItem = "yellow";}
             return innerItem;
         } else {
-            criticalSlider = criticalSlider / 100;
 
-            // console.log();
+            var criticalColor = "yellow";
+            var point = 255/100;
 
-            if (innerItem>criticalSlider) {innerItem = "green";}
+            if (innerItem>=1) {innerItem = "green";}
             else if (innerItem===0) {innerItem = "red";}
-            else if (innerItem<criticalSlider) {innerItem = "yellow";}
+            else if ((innerItem*100)===criticalTarget) {innerItem = criticalColor}
+            else if ((innerItem*100)<criticalTarget) {
+                var g =  Math.floor(point*innerItem*100);
+                criticalColor = "rgb("+255+","+g+","+0+")";
+                innerItem = criticalColor;
+            }
+            else if ((innerItem*100)>criticalTarget) {
+                var r = Math.floor(point*innerItem*100);
+                criticalColor = "rgb("+r+","+255+","+0+")";
+                innerItem = criticalColor;
+            }
+
             return innerItem;
         }
+
 
     }
 
