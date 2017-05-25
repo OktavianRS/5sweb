@@ -17,6 +17,17 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
     }
   }
 
+  $scope.permissionSlider = {
+    value: 50,
+    options: {
+      floor: 0,
+      ceil: 100,
+      step: 1,
+      minLimit: 0,
+      maxLimit: 100
+    }
+  }
+
   $scope.state = {
     isDisabled: true
   }
@@ -28,6 +39,7 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
     target: $scope.scoreSlider.value,
     user_id: '',
     company_id: $rootScope.company_id || undefined,
+    department_id: '',
   }
 
   // fetch all initial data
@@ -52,12 +64,7 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
   constuctor();
 
   $scope.selectDepartment = function (item) {
-    if (item.places.length === 0) {
-      item.places.push({name:'List is empty'});
-    }
-    $scope.workPlacesList = item.places;
-    $scope.search.workplace = $scope.workPlacesList[0];
-
+    $scope.audit.department_id = item.id;
   }
 
   $scope.selectCompany = function() {

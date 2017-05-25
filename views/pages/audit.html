@@ -49,7 +49,7 @@
                                      {{audit.user_firstname}}
                                    </td>
                                   <td class="audit-name">
-                                     {{audit.user_email}}
+                                     {{audit.user_email || audit.user_firstname}}
                                   </td>
                                   <td class="audit-name">
                                       {{audit.target}}
@@ -58,7 +58,7 @@
                                       {{audit.started_at * 1000 | date:'yyyy-MM-dd HH:mm'}}
                                   </td>
                                   <td class="audit-name">
-                                      {{audit.finished_at * 1000 | date:'yyyy-MM-dd HH:mm'}}
+                                      {{audit.finished_at * 1000 === 0 ? 'Auditing' : audit.finished_at * 1000 | date:'yyyy-MM-dd HH:mm'}}
                                   </td>
                               </tr>
                           </tbody>
