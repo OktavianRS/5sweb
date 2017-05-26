@@ -5,49 +5,59 @@
               User creation
           </div>
           <div class="card-block department-form">
-              <form class="form-2orizontal">
-                  <div class="form-group">
-                      <label class="form-control-label" for="prependedInput">Email</label>
-                      <div class="controls">
-                          <div class="input-prepend input-group">
-                              <input
-                                id="prependedInput"
+              <form class="form-2orizontal" name="userForm" ng-submit="submit()">
+                <div class="form-group {{userForm.email.$error.email && 'has-danger'}} {{userForm.email.$error.required && 'has-danger'}}">
+                    <div class="controls">
+                        <label class="form-control-label" for="email">Email</label>
+                        <div class="input-prepend input-group">
+                            <input
+                                id="email"
+                                type="email"
+                                name="email"
                                 class="form-control"
-                                size="16"
-                                type="text"
+                                required
                                 ng-model="user.email"
-                              >
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label class="form-control-label" for="prependedInput">First name</label>
-                      <div class="controls">
-                          <div class="input-prepend input-group">
-                              <input
-                                id="prependedInput"
-                                class="form-control"
-                                size="16"
-                                type="text"
-                                ng-model="user.firstname"
-                              >
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label class="form-control-label" for="prependedInput">Last name</label>
-                      <div class="controls">
-                          <div class="input-prepend input-group">
-                              <input
-                                id="prependedInput"
-                                class="form-control"
-                                size="16"
-                                type="text"
-                                ng-model="user.lastname"
-                              >
-                          </div>
-                      </div>
-                  </div>
+                            >
+                        </div>
+                    </div>
+                    <p class="help-block" ng-show="userForm.email.$error.email">Enter valid email</p>
+                    <p class="help-block" ng-show="userForm.email.$error.required">Email is required</p>
+                    <div style="height: 21px;" ng-hide="userForm.email.$error.email || userForm.email.$error.required"></div>
+                </div>
+                <div class="form-group {{userForm.first_name.$error.required && 'has-danger'}}">
+                    <div class="controls">
+                        <label class="form-control-label" for="first_name">First name</label>
+                        <div class="input-prepend input-group">
+                            <input
+                            type="text"
+                            id="first_name"
+                            class="form-control"
+                            name="first_name"
+                            ng-model="user.firstname"
+                            required
+                            >
+                        </div>
+                    </div>
+                    <p class="help-block" ng-show="userForm.first_name.$error.required">First name is required</p>
+                    <div style="height: 21px;" ng-hide="userForm.first_name.$error.required"></div>
+                </div>
+                <div class="form-group {{userForm.last_name.$error.required && 'has-danger'}}">
+                    <div class="controls">
+                        <label class="form-control-label" for="last_name">Last name</label>
+                        <div class="input-prepend input-group">
+                            <input
+                            type="text"
+                            id="last_name"
+                            class="form-control"
+                            name="last_name"
+                            ng-model="user.lastname"
+                            required
+                            >
+                        </div>
+                    </div>
+                    <p class="help-block" ng-show="userForm.last_name.$error.required">Last name is required</p>
+                    <div style="height: 21px;" ng-hide="userForm.last_name.$error.required"></div>
+                </div>
                   <div
                     class="form-group"
                     ng-if="role === 'site admin'"
@@ -105,25 +115,27 @@
                         </div>
                     </div>
                   </div>
-                  <div class="form-group">
-                      <label class="form-control-label" for="prependedInput">Password</label>
-                      <div class="controls">
-                          <div class="input-prepend input-group">
-                              <input
-                                id="prependedInput"
-                                class="form-control"
-                                size="16"
-                                type="password"
-                                ng-model="user.password"
-                              >
-                          </div>
-                      </div>
-                  </div>
+                <div class="form-group {{userForm.password.$error.required && 'has-danger'}}">
+                    <div class="controls">
+                        <label class="form-control-label" for="password">Password</label>
+                        <div class="input-prepend input-group">
+                            <input
+                            type="text"
+                            id="password"
+                            class="form-control"
+                            name="password"
+                            ng-model="user.password"
+                            required
+                            >
+                        </div>
+                    </div>
+                    <p class="help-block" ng-show="userForm.password.$error.required">Password is required</p>
+                    <div style="height: 21px;" ng-hide="userForm.password.$error.required"></div>
+                </div>
                   <div class="form-actions">
                       <button
                         type="submit"
                         class="btn btn-primary"
-                        ng-click="submit()"
                       >
                         Update user
                       </button>
