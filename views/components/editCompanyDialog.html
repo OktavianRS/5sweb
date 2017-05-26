@@ -5,26 +5,28 @@
               Company edit
           </div>
           <div class="card-block department-form">
-              <form class="form-2orizontal">
-                  <div class="form-group">
-                      <label class="form-control-label" for="prependedInput">Name</label>
-                      <div class="controls">
-                          <div class="input-prepend input-group">
-                              <input
-                                id="prependedInput"
-                                class="form-control"
-                                size="16"
+              <form class="form-2orizontal" name="companyForm" ng-submit="updateCompany(editElement.id, editElement.name)">
+                <div class="form-group {{companyForm.name.$error.required && 'has-danger'}}">
+                    <div class="controls">
+                        <label class="form-control-label" for="name">Company name</label>
+                        <div class="input-prepend input-group">
+                            <input
                                 type="text"
+                                id="name"
+                                class="form-control"
+                                name="name"
                                 ng-model="editElement.name"
-                              >
-                          </div>
-                      </div>
-                  </div>
+                                required
+                            >
+                        </div>
+                    </div>
+                    <p class="help-block" ng-show="companyForm.name.$error.required">Company name is required</p>
+                    <div style="height: 21px;" ng-hide="companyForm.name.$error.required"></div>
+                </div>
                   <div class="form-actions">
                       <button
                         type="submit"
                         class="btn btn-primary"
-                        ng-click="updateCompany(editElement.id, editElement.name)"
                       >
                         Update company
                       </button>
