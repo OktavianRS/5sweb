@@ -67,10 +67,14 @@ angular.module('model.audit', [])
                           callback(res);
                       }
                       else if (res.errors) {
-                          var errors = Object.keys(res.errors);
-                          errors.forEach(function(item) {
-                              toast('error', item, '');
-                          });
+                          var errors =res.errors;
+                          if (typeof errors ===Array) {
+                              errors.forEach(function(item) {
+                                  toast('error', item, '');
+                              });
+                          } else {
+                              toast('error', errors, '');
+                          }
                       }else {
                           toast('error', 'Some error occured', 'Audit not started');
                       }

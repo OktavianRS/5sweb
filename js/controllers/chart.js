@@ -407,7 +407,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             var auditInProcess = [];
             var RecentlyStoppedAudit = [];
             var RecentlyStoppedAuditNumber;
-            // var colors = ["#f75151","#f2f24f", "#e4f14f", "#d3f04e", "#c4ef4d", "#a6ef4d", "#65ef4d"];
+
 
 
             var NumberToDate = result.map(function (item, k, array) {
@@ -428,37 +428,19 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
                         if (arr[3] === null || arr[3] === 0){innerItem = 'inProcess'}
                         if (criticalTarget === undefined) {
-                            innerItem = resultCriticalScore (innerItem);
-                        } else {
-                            innerItem = resultCriticalScore (innerItem, criticalTarget);
+                            criticalTarget = $sessionStorage.critical_edge;
                         }
+
+                            innerItem = resultCriticalScore (innerItem, criticalTarget);
 
                     }
                     else if (i > 1 && i<4) {
                         if ((i === 3) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
 
-
-                            // innerItem.getTime();
-                            // innerItem = new Date(innerItem -1000000000);
                              auditInProcess[countRow-1] = true;
-
                         }
-                         // else if ((i === 3) && (innerItem > null || innerItem > 0) ) {
-                            // var now = new Date();
-                            // innerItem = new Date(innerItem*1000);
-                            // if ((now-innerItem) < 100000) {
-                            //     // console.log(innerItem, i, arr);
-                            //     RecentlyStoppedAuditNumber = k;
-                            //     RecentlyStoppedAudit = item;
-                            // }
-                            // var w =   new Date(a.getTime() + 10000000000);
-                            // innerItem = new Date();
-                            // innerItem.getTime();
-                            // innerItem = new Date(innerItem -1000000000);
-                            // auditInProcess[countRow-1] = true;
 
-                        // }
                         else if ((i === 2) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
                         }
@@ -470,23 +452,13 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                     return innerItem;
                 });
 
-                // var randColor = colors[Math.floor(Math.random() * colors.length)];
                 newItem.splice(1,0, '');
-
-                // newItem.splice(2,0, randColor);
                 return newItem;
 
 
             });
-            // console.log(NumberToDate, "NumberToDate");
+
             var now = new Date();
-
-            // var AbstractTimeLine = [RecentlyStoppedAudit[0], new Date(), new Date(now.getTime()+100000000)];
-            //
-            // if (RecentlyStoppedAuditNumber) NumberToDate.splice(RecentlyStoppedAuditNumber,0,AbstractTimeLine);
-            //
-
-
 
             rowName.push(NumberToDate[NumberToDate.length-1][0]);
              $scope.AuditHistoryCountRow = countRow;
@@ -707,22 +679,26 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 user_id: $scope.search.user.id,
                 company_id: $rootScope.company_id || null,
             };
-            createAuditModal();
 
             $scope.submit = function() {
                 $scope.audit.target = $scope.scoreSlider.value;
                 auditModel.startAudit($scope.audit, constructor);
                 ngDialog.closeAll();
             }
+
+
+
+            createAuditModal();
         })
 
     }
 
 
     function settings() {
+
         $scope.critical = {};
         $scope.criticalScoreSlider = {
-            value: 50,
+            value:  $sessionStorage.critical_edge,
             options: {
                 floor: 0,
                 ceil: 100,
@@ -733,6 +709,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         };
 
 
+
+
         ngDialog.open({
             template:'/views/components/createCriticalScore.html',
             className: 'ngdialog-theme-default',
@@ -741,12 +719,15 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
         $scope.CriticalSubmit = function() {
             $scope.critical.target = $scope.criticalScoreSlider.value;
-            var criticalTarget = $scope.critical.target
-            // TODO send $scope.critical.target on server
-            chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
-                $scope.ListAuditHistoryByCompany = result;
-                changesAuditHistory(result, criticalTarget);
-            })
+            var criticalTarget = $scope.critical.target;
+            usersModel.setCriticalEdge({critical_edge:$scope.critical.target}, function callback(res){
+                $sessionStorage.critical_edge = $scope.critical.target;
+                chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
+                    $scope.ListAuditHistoryByCompany = result;
+                    changesAuditHistory(result, criticalTarget);
+                })
+            });
+
             ngDialog.closeAll();
 
 

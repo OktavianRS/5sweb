@@ -74,6 +74,8 @@ angular.module('factory.url', [])
           deleteUser: baseUrl + '/user/delete',
           updateUser: baseUrl + '/user/update',
           fetchCompanyUsers: baseUrl + '/user/company-list',
+          getCriticalEdge: baseUrl + '/user/get-critical-edge',
+          setCriticalEdge: baseUrl + '/user/set-critical-edge',
 
           //auditModel
           startAudit: baseUrl + '/audit/start',

@@ -62,4 +62,28 @@ angular.module('model.users', [])
           );
         }
 
+          this.getCriticalEdge = function(callback) {
+              api.get(
+                  url.getCriticalEdge,
+                  {},
+                  function(res) {
+                      callback(res);
+                  })
+          }
+
+          this.setCriticalEdge = function(req, callback) {
+              api.post(
+                  url.setCriticalEdge,
+                  req,
+                  function(res) {
+                      if (typeof res.user_id !== 'undefined') {
+                          toast('success', 'Set successfully', '');
+                          callback();
+                      } else {
+                          toast('error', 'Some error occured', 'No set');
+                      }
+                  })
+          }
+
+
       }])
