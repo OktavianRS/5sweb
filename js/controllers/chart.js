@@ -745,7 +745,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             else if (innerItem<1) {innerItem = "yellow";}
         }
         else {
-
             var criticalColor = "yellow";
             var point = 255/100;
 
