@@ -425,6 +425,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 var newItem = item.map(function (innerItem, i, arr) {
 
                     if (i === 1) {
+
+                        if (arr[3] === null || arr[3] === 0){innerItem = 'inProcess'}
                         if (criticalTarget === undefined) {
                             innerItem = resultCriticalScore (innerItem);
                         } else {
@@ -752,12 +754,16 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     }
 
     function resultCriticalScore (innerItem, criticalTarget) {
-        if (arguments.length === 1){
+
+         if (innerItem === 'inProcess'){
+            innerItem = "#6E73FC";
+        }
+       else if (arguments.length === 1){
             if (innerItem>1) {innerItem = "green";}
             else if (innerItem===0) {innerItem = "red";}
             else if (innerItem<1) {innerItem = "yellow";}
-            return innerItem;
-        } else {
+        }
+        else {
 
             var criticalColor = "yellow";
             var point = 255/100;
@@ -775,10 +781,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 criticalColor = "rgb("+r+","+255+","+0+")";
                 innerItem = criticalColor;
             }
-
-            return innerItem;
         }
-
+        return innerItem;
 
     }
 

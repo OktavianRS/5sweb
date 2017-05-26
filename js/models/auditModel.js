@@ -83,8 +83,22 @@ angular.module('model.audit', [])
                   url.stopLastAudit,
                   req,
                   function(res) {
-                      toast('success', 'Audit stoped', '');
-                      callback();
+                      if (typeof res.department_id !== 'undefined') {
+                          toast('success', 'Audit stoped', '');
+                          callback();
+                      } else if (res.errors) {
+                          var errors =res.errors;
+                          if (typeof errors ===Array) {
+                              errors.forEach(function(item) {
+                                  toast('error', item, '');
+                              });
+                          } else {
+                              toast('error', errors, '');
+                          }
+                      }else {
+                          toast('error', 'Some error occured', 'Audit not started');
+                      }
+
                   }
               );
           }

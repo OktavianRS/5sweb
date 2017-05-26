@@ -130,7 +130,6 @@ function layoutToggleDirective($interval, $rootScope, $timeout) {
           }
         },200);
 
-
       if (element.hasClass('sidebar-toggler')) {
         angular.element('body').toggleClass('sidebar-hidden');
       }
@@ -362,12 +361,12 @@ function heightRow($timeout, $window, $rootScope) {
   return directive;
 
   function link(scope, element, attrs) {
-
+    console.log((document.querySelectorAll('rect')).length, "document.querySelectorAll('rect')).length");
     var listenerHeightRow =  scope.$watch( function () {
       return angular.element(document.querySelectorAll('rect')).length !== 0},
         function (newValue, oldValue) {
            if (newValue) {
-
+console.log((document.querySelectorAll('rect')).length, "document.querySelectorAll('rect')).length");
              var parentElementRow =  (angular.element(document.querySelectorAll('rect')).eq(0))[0].parentElement;
                var grandGrandElementAudit = angular.element(parentElementRow.parentElement)[0];
              var grandElementAudit =  angular.element(parentElementRow.parentElement)[0].children[4];
@@ -379,10 +378,17 @@ function heightRow($timeout, $window, $rootScope) {
                angular.element(arrHeightRow[i]).attr("height",41);
              }
 
+             // $timeout(function () {
+             //   if (document.querySelector('.chart')) {
+             //     $rootScope.$emit('changeWidthChart');
+             //   }
+             // },200);
 
-var newElements="";
 
-             for (var i=0; i<parentElementAudit.length; i++) {
+
+// var newElements="";
+
+             // for (var i=0; i<parentElementAudit.length; i++) {
 
                 // angular.element(parentElementAudit[i]).attr("fill","red");
                 //  console.log(parentElementAudit[i]);
@@ -457,7 +463,7 @@ var newElements="";
 
 
 
-             }
+             // }
                // scope.$apply();
                // console.log(newElements);
                // console.log(angular.element(newElements));
@@ -475,6 +481,20 @@ var newElements="";
                 // listenerHeightRow(); // Would clear the watch
            }
         });
+
+    // scope.oldValueWidth=angular.element(document.querySelectorAll('#charts'))[0].clientWidth;
+    // var listenerWidthChart =  scope.$watch( function () {
+    //   console.log(angular.element(document.querySelectorAll('#charts'))[0].clientWidth, scope.oldValueWidth);
+    //       return angular.element(document.querySelectorAll('#charts'))[0].clientWidth},
+    //     function (newValue, oldValue) {
+    //       console.log(newValue, oldValue)
+    //        // scope.oldValueWidth =  newValue;
+    //       if (true) {
+    //
+    //         $rootScope.$emit('changeWidthChart');
+    //       }
+    //       }
+    //       )
 
 
   }
