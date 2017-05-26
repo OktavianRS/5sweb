@@ -361,12 +361,12 @@ function heightRow($timeout, $window, $rootScope) {
   return directive;
 
   function link(scope, element, attrs) {
-    console.log((document.querySelectorAll('rect')).length, "document.querySelectorAll('rect')).length");
+    // console.log((document.querySelectorAll('rect')).length, "document.querySelectorAll('rect')).length");
     var listenerHeightRow =  scope.$watch( function () {
       return angular.element(document.querySelectorAll('rect')).length !== 0},
         function (newValue, oldValue) {
            if (newValue) {
-console.log((document.querySelectorAll('rect')).length, "document.querySelectorAll('rect')).length");
+// console.log((document.querySelectorAll('rect')).length, "document.querySelectorAll('rect')).length");
              var parentElementRow =  (angular.element(document.querySelectorAll('rect')).eq(0))[0].parentElement;
                var grandGrandElementAudit = angular.element(parentElementRow.parentElement)[0];
              var grandElementAudit =  angular.element(parentElementRow.parentElement)[0].children[4];

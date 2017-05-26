@@ -89,9 +89,10 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         $scope.$digest();
     });
 
-    $rootScope.$on('changeWidthChart', function (event, data) {
+   var changeWidthChartFunc = $rootScope.$on('changeWidthChart', function (event, data) {
         if (!$scope.AuditHistoryIsEmpty)  google.charts.setOnLoadCallback(drawChart);
     });
+
 
 
 
@@ -765,7 +766,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         return innerItem;
 
     }
-
 
 
 }
