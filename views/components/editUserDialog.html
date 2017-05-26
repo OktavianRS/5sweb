@@ -5,49 +5,58 @@
               User edit
           </div>
           <div class="card-block department-form">
-            <form class="form-2orizontal">
-                <div class="form-group">
-                    <label class="form-control-label" for="prependedInput">Email</label>
+            <form class="form-2orizontal" name="userForm" ng-submit="updateUser(editElement.id, editElement.email, editElement.first_name, editElement.last_name, editElement.password)">
+                <div class="form-group {{userForm.email.$error.email && 'has-danger'}} {{userForm.email.$error.required && 'has-danger'}}">
                     <div class="controls">
+                        <label class="form-control-label" for="email">Email</label>
                         <div class="input-prepend input-group">
                             <input
-                              id="prependedInput"
-                              class="form-control"
-                              size="16"
-                              type="text"
-                              ng-model="editElement.email"
-                              placeholder="Email"
+                                id="email"
+                                type="email"
+                                name="email"
+                                class="form-control"
+                                required
+                                ng-model="editElement.email"
                             >
                         </div>
                     </div>
+                    <p class="help-block" ng-show="userForm.email.$error.email">Enter valid email</p>
+                    <p class="help-block" ng-show="userForm.email.$error.required">Email is required</p>
+                    <div style="height: 21px;" ng-hide="userForm.email.$error.email || userForm.email.$error.required"></div>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="prependedInput">First name</label>
+                <div class="form-group {{userForm.first_name.$error.required && 'has-danger'}}">
                     <div class="controls">
+                        <label class="form-control-label" for="first_name">First name</label>
                         <div class="input-prepend input-group">
                             <input
-                            id="prependedInput"
-                            class="form-control"
-                            size="16"
                             type="text"
+                            id="first_name"
+                            class="form-control"
+                            name="first_name"
                             ng-model="editElement.firstname"
+                            required
                             >
                         </div>
                     </div>
+                    <p class="help-block" ng-show="userForm.first_name.$error.required">First name is required</p>
+                    <div style="height: 21px;" ng-hide="userForm.first_name.$error.required"></div>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="prependedInput">Last name</label>
+                <div class="form-group {{userForm.last_name.$error.required && 'has-danger'}}">
                     <div class="controls">
+                        <label class="form-control-label" for="last_name">Last name</label>
                         <div class="input-prepend input-group">
                             <input
-                            id="prependedInput"
-                            class="form-control"
-                            size="16"
                             type="text"
+                            id="last_name"
+                            class="form-control"
+                            name="last_name"
                             ng-model="editElement.lastname"
+                            required
                             >
                         </div>
                     </div>
+                    <p class="help-block" ng-show="userForm.last_name.$error.required">Last name is required</p>
+                    <div style="height: 21px;" ng-hide="userForm.last_name.$error.required"></div>
                 </div>
                 <div
                     class="form-group"
@@ -78,7 +87,6 @@
                   <button
                     type="submit"
                     class="btn btn-primary"
-                    ng-click="updateUser(editElement.id, editElement.email, editElement.first_name, editElement.last_name, editElement.password)"
                   >
                     Update user
                   </button>
