@@ -8684,6 +8684,12 @@ td {
 .audit .card-header button {
   float: right; }
 
+.user-dialog .form-group {
+  margin-bottom: 0 !important; }
+
+.ngdialog {
+  padding-top: 100px !important; }
+
 @media all and (-ms-high-contrast: none) {
   html {
     display: flex;
