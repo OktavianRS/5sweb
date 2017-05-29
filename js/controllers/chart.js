@@ -628,18 +628,40 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
 
     function auditStop (index) {
-        var department_name = $scope.rowName[index];
-        var departmentsList = $scope.departmentsList;
-        var StoppedDepartment = departmentsList.filter(function (department) {
-            return department_name === department.name;
-        })
+
+        function ConfirmStop ()  {
+            ngDialog.open({
+                template:'/views/components/ConfirmStopAudit.html',
+                className: 'ngdialog-theme-default',
+                scope: $scope,
+                width: 250,
+            });
+        };
+        $scope.confirmStopAudit = confirmStopAudit;
+        $scope.NotConfirmStopAudit = NotConfirmStopAudit;
+
+        ConfirmStop ();
+
+        function confirmStopAudit() {
+            var department_name = $scope.rowName[index];
+            var departmentsList = $scope.departmentsList;
+            var StoppedDepartment = departmentsList.filter(function (department) {
+                return department_name === department.name;
+            })
+
+            auditModel.stopLastAudit({department_id:StoppedDepartment[0].id}, function callback(result) {
+                $scope.auditInProcess[index] =  !$scope.auditInProcess[index];
+                ngDialog.closeAll();
+                constructor();
+            })
+        }
+
+        function NotConfirmStopAudit () {
+            ngDialog.closeAll();
+        }
 
 
-         auditModel.stopLastAudit({department_id:StoppedDepartment[0].id}, function callback(result) {
-             $scope.auditInProcess[index] =  !$scope.auditInProcess[index];
-             constructor();
 
-         })
     }
 
     function auditStart (index) {
