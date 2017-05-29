@@ -81,7 +81,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     $scope.variableForTimeLine = true;
 
     angular.element($window).on('resize', function () {
-debugger
         if (!$scope.AuditHistoryIsEmpty &&  $scope.variableForTimeLine) google.charts.setOnLoadCallback(drawChart);
 
         // manuall $digest required as resize event
