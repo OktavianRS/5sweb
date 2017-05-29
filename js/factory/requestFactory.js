@@ -53,8 +53,10 @@ angular.module('factory.request', [
                   toast('error', "Server unavailable");
                 } else if(response.status == 500) {
                   toast('error', "Server Error: " + response.status + ' ' + response.data.message);
+                } else if(response.status == 422) {
+                  toast('error', "Validation failed: " + response.data[0].message);
                 } else {
-                  toast('error', "Server Error: " + response.status + ' ' + response.statusText);
+                  toast('error', "Server Error: " + response.status + ' ' + response.data.message);
                 }
 
                 if(errorCallback) {
