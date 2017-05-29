@@ -77,12 +77,12 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     //////////////// google chart time-line -- init ///////////////
     /////////////// histiry audit //////////////////////
 
-    var drawChart; // init variable for observe change of width
-
+    var drawChart = function () {}; // init variable for observe change of width
+    $scope.variableForTimeLine = true;
 
     angular.element($window).on('resize', function () {
-
-        if (!$scope.AuditHistoryIsEmpty) google.charts.setOnLoadCallback(drawChart);
+debugger
+        if (!$scope.AuditHistoryIsEmpty &&  $scope.variableForTimeLine) google.charts.setOnLoadCallback(drawChart);
 
         // manuall $digest required as resize event
         // is outside of angular
@@ -91,6 +91,12 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
    var changeWidthChartFunc = $rootScope.$on('changeWidthChart', function (event, data) {
         if (!$scope.AuditHistoryIsEmpty)  google.charts.setOnLoadCallback(drawChart);
+    });
+
+
+    $scope.$on('$destroy', function() {
+        $scope.variableForTimeLine = false;
+        changeWidthChartFunc();
     });
 
 
