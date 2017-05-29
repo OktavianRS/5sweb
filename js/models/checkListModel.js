@@ -29,7 +29,13 @@ angular.module('model.check', [])
           api.delete(
             url.deleteCheck,
             req,
-            function() {
+            function(res) {
+              if (res.status) {
+                toast('success', 'Deleted successfully', '');
+                callback();
+              } else {
+                toast('error', 'Some error occured', 'Check not deleted');
+              }
               callback();
             }
           );
@@ -40,6 +46,12 @@ angular.module('model.check', [])
             url.updateCheck,
             req,
             function(res) {
+              if (typeof res.updated_at !== 'undefined') {
+                toast('success', 'Updated successfully', '');
+                callback();
+              } else {
+                toast('error', 'Some error occured', 'Check not updated');
+              }
               callback();
             }
           );
