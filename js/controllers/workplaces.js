@@ -43,14 +43,11 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
 
         departmentsModel.fetchDepartments(function(result) {
             $scope.departmentsList = result;
-            $scope.workplace.department =   $scope.departmentsList[0];
             $scope.selectedDepartment = $scope.workplace.department;
         });
 
         departmentsModel.fetchPlacesList(function(result) {
             $scope.AllPlacesList = result;
-            // $scope.workplace.department =   $scope.departmentsList[0];
-
         });
 
     }

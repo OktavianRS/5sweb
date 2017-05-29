@@ -15,7 +15,7 @@
                                         class="form-control"
                                         size="16"
                                         type="text"
-                                        ng-model="workplace.name"
+                                        ng-model="editElement.name"
                                 >
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                                 <select
                                         class="form-control" name="prependedInputDepartment" id="prependedInputDepartment"
                                         ng-options="department.name for department in departmentsList track by department.id"
-                                        ng-model="workplace.department" ng-change="selectPlace(workplace.department)"
+                                        ng-model="editElement.department" ng-change="selectPlace(editElement.department)"
 
                                 >
                                 </select>
