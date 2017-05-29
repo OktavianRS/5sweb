@@ -5,8 +5,8 @@
                 Workplace creation
             </div>
             <div class="card-block workplace-form">
-                    <form class="form-2orizontal">
-                        <div class="form-group">
+                    <form class="form-2orizontal" name="workplaceForm" ng-submit="createWorkPlace()">
+                        <div class="form-group" ng-class="{ 'has-danger' : workplaceForm.name.$error.required && workplaceForm.name.$touched }">
                             <label class="form-control-label" for="prependedInputWorkplace">Name</label>
                             <div class="controls">
                                 <div class="input-prepend input-group">
@@ -14,11 +14,15 @@
                                             id="prependedInputWorkplace"
                                             class="form-control"
                                             size="16"
+                                            name="name"
                                             type="text"
+                                            required
                                             ng-model="workplace.name"
                                     >
                                 </div>
                             </div>
+                            <p class="help-block" ng-show="workplaceForm.name.$error.required && workplaceForm.name.$touched">Workplace name is required</p>
+                            <div style="height: 21px;" ng-hide="workplaceForm.name.$error.required && workplaceForm.name.$touched"></div>
                         </div>
                         <div
                             class="form-group"
@@ -86,7 +90,6 @@
                         <div style="padding: 15px 0 0 0;" class="form-actions">
                             <button type="submit"
                                     class="btn btn-primary"
-                                    ng-click="createWorkPlace()"
                             >Save workplace</button>
                         </div>
                     </form>
