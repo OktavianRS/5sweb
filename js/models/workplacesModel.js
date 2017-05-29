@@ -55,7 +55,13 @@ angular.module('model.workplaces', [])
           api.delete(
             url.deleteWorkPlace,
             req,
-            function() {
+            function(res) {
+              if (res.status) {
+                toast('success', 'Deleted successfully', '');
+                callback(res);
+              } else {
+                toast('error', 'Some error occured', 'workplace not deleted');
+              }
               callback();
             }
           );
@@ -66,6 +72,12 @@ angular.module('model.workplaces', [])
             url.updateWorkPlace,
             req,
             function(res) {
+              if (typeof res.updated_at !== 'undefined') {
+                toast('success', 'Updated successfully', '');
+                callback(res);
+              } else {
+                toast('error', 'Some error occured', 'workplace not updated');
+              }
               callback();
             }
           );
