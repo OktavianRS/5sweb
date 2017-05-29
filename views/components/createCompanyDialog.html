@@ -6,7 +6,7 @@
           </div>
           <div class="card-block department-form">
               <form class="form-2orizontal" name="companyForm" ng-submit="createCompany()">
-                <div class="form-group {{companyForm.name.$error.required && 'has-danger'}}">
+                <div class="form-group" ng-class="{ 'has-danger' : companyForm.name.$error.required && companyForm.name.$touched }">
                     <div class="controls">
                         <label class="form-control-label" for="name">Company name</label>
                         <div class="input-prepend input-group">
@@ -20,8 +20,8 @@
                             >
                         </div>
                     </div>
-                    <p class="help-block" ng-show="companyForm.name.$error.required">Company name is required</p>
-                    <div style="height: 21px;" ng-hide="companyForm.name.$error.required"></div>
+                    <p class="help-block" ng-show="companyForm.name.$error.required && companyForm.name.$touched">Company name is required</p>
+                    <div style="height: 21px;" ng-hide="companyForm.name.$error.required && companyForm.name.$touched"></div>
                 </div>
                   <div class="form-actions">
                       <button

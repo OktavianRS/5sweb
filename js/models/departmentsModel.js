@@ -47,7 +47,13 @@ angular.module('model.departments', [])
           api.delete(
             url.deleteDepartment,
             req,
-            function() {
+            function(res) {
+              if (typeof res.status) {
+                toast('success', 'Deleted successfully', '');
+                callback();
+              } else {
+                toast('error', 'Some error occured', 'Department not deleted');
+              }
               callback();
             }
           );
@@ -58,6 +64,12 @@ angular.module('model.departments', [])
             url.updateDepartment,
             req,
             function(res) {
+              if (typeof res.updated_at !== 'undefined') {
+                toast('success', 'Updated successfully', '');
+                callback();
+              } else {
+                toast('error', 'Some error occured', 'Department not updated');
+              }
               callback();
             }
           );

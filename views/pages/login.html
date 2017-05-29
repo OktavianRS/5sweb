@@ -8,7 +8,7 @@
                             <h1>Login</h1>
                             <p class="text-muted">Sign In to your account</p>
                             <form ng-submit="login()" name="loginForm">
-                                <div class="form-group {{loginForm.email.$error.email && 'has-danger'}}">
+                                <div class="form-group" ng-class="{ 'has-danger' : loginForm.email.$error.email && loginForm.email.$touched }">
                                     <div class="controls">
                                         <div class="input-prepend input-group">
                                             <span class="input-group-addon"><i class="icon-user"></i></span>
@@ -21,10 +21,10 @@
                                             >
                                         </div>
                                     </div>
-                                    <p class="help-block" ng-show="loginForm.email.$error.email">Entery valid email</p>
-                                    <div style="height: 21px;" ng-hide="loginForm.email.$error.email"></div>
+                                    <p class="help-block" ng-show="loginForm.email.$error.email && loginForm.email.$touched">Entery valid email</p>
+                                    <div style="height: 21px;" ng-hide="loginForm.email.$error.email && loginForm.email.$touched"></div>
                                 </div>
-                                <div class="form-group {{loginForm.password.$error.required && 'has-danger'}}">
+                                <div class="form-group" ng-class="{ 'has-danger' : loginForm.password.$error.required && loginForm.password.$touched }">
                                     <div class="controls">
                                         <div class="input-prepend input-group">
                                             <span class="input-group-addon"><i class="icon-lock"></i></span>
@@ -38,8 +38,8 @@
                                             >
                                         </div>
                                     </div>
-                                    <p class="help-block" ng-show="loginForm.password.$error.required">Password is required</p>
-                                    <div style="height: 21px;" ng-hide="loginForm.password.$error.required"></div>
+                                    <p class="help-block" ng-show="loginForm.password.$error.required && loginForm.password.$touched">Password is required</p>
+                                    <div style="height: 21px;" ng-hide="loginForm.password.$error.required && loginForm.password.$touched"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">

@@ -29,7 +29,12 @@ angular.module('model.companies', [])
           api.delete(
             url.deleteCompany,
             req,
-            function() {
+            function(res) {
+              if (typeof res.status) {
+                toast('success', 'Deleted successfully', '');
+              } else {
+                toast('error', 'Some error occured', 'Company not deleted');
+              }
               callback();
             }
           );
@@ -40,6 +45,12 @@ angular.module('model.companies', [])
             url.updateCompany,
             req,
             function(res) {
+              if (typeof res.updated_at !== 'undefined') {
+                toast('success', 'Updated successfully', '');
+                callback();
+              } else {
+                toast('error', 'Some error occured', 'Company not updated');
+              }
               callback();
             }
           );

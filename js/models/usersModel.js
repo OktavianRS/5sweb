@@ -46,7 +46,13 @@ angular.module('model.users', [])
           api.delete(
             url.deleteUser,
             req,
-            function() {
+            function(res) {
+              if (res.status) {
+                toast('success', 'Deleted successfully', '');
+                callback();
+              } else {
+                toast('error', 'Some error occured', 'User not deleted');
+              }
               callback();
             }
           );
@@ -57,6 +63,12 @@ angular.module('model.users', [])
             url.updateUser,
             req,
             function(res) {
+              if (typeof res.updated_at !== 'undefined') {
+                toast('success', 'Updated successfully', '');
+                callback();
+              } else {
+                toast('error', 'Some error occured', 'User not updated');
+              }
               callback();
             }
           );

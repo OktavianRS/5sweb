@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row user-dialog">
   <div class="col-lg-12">
       <div class="card">
           <div class="card-header">
@@ -6,7 +6,7 @@
           </div>
           <div class="card-block department-form">
               <form class="form-2orizontal" name="userForm" ng-submit="submit()">
-                <div class="form-group {{userForm.email.$error.email && 'has-danger'}} {{userForm.email.$error.required && 'has-danger'}}">
+                <div class="form-group" ng-class="{ 'has-danger' : userForm.email.$error.email && userForm.email.$error.required && userForm.email.$touched }">
                     <div class="controls">
                         <label class="form-control-label" for="email">Email</label>
                         <div class="input-prepend input-group">
@@ -20,11 +20,11 @@
                             >
                         </div>
                     </div>
-                    <p class="help-block" ng-show="userForm.email.$error.email">Enter valid email</p>
-                    <p class="help-block" ng-show="userForm.email.$error.required">Email is required</p>
-                    <div style="height: 21px;" ng-hide="userForm.email.$error.email || userForm.email.$error.required"></div>
+                    <p class="help-block" ng-show="userForm.email.$error.email && userForm.email.$touched">Enter valid email</p>
+                    <p class="help-block" ng-show="userForm.email.$error.required && userForm.email.$touched">Email is required</p>
+                    <div style="height: 21px;" ng-hide="(userForm.email.$error.email || userForm.email.$error.required) && userForm.email.$touched"></div>
                 </div>
-                <div class="form-group {{userForm.first_name.$error.required && 'has-danger'}}">
+                <div class="form-group" ng-class="{ 'has-danger' : userForm.first_name.$error.required && userForm.first_name.$touched }">
                     <div class="controls">
                         <label class="form-control-label" for="first_name">First name</label>
                         <div class="input-prepend input-group">
@@ -38,10 +38,10 @@
                             >
                         </div>
                     </div>
-                    <p class="help-block" ng-show="userForm.first_name.$error.required">First name is required</p>
-                    <div style="height: 21px;" ng-hide="userForm.first_name.$error.required"></div>
+                    <p class="help-block" ng-show="userForm.first_name.$error.required && userForm.first_name.$touched">First name is required</p>
+                    <div style="height: 21px;" ng-hide="userForm.first_name.$error.required && userForm.first_name.$touched"></div>
                 </div>
-                <div class="form-group {{userForm.last_name.$error.required && 'has-danger'}}">
+                <div class="form-group" ng-class="{ 'has-danger' : userForm.last_name.$error.required && userForm.last_name.$touched }">
                     <div class="controls">
                         <label class="form-control-label" for="last_name">Last name</label>
                         <div class="input-prepend input-group">
@@ -55,8 +55,8 @@
                             >
                         </div>
                     </div>
-                    <p class="help-block" ng-show="userForm.last_name.$error.required">Last name is required</p>
-                    <div style="height: 21px;" ng-hide="userForm.last_name.$error.required"></div>
+                    <p class="help-block" ng-show="userForm.last_name.$error.required && userForm.last_name.$touched">Last name is required</p>
+                    <div style="height: 21px;" ng-hide="userForm.last_name.$error.required && userForm.last_name.$touched"></div>
                 </div>
                   <div
                     class="form-group"
@@ -90,6 +90,7 @@
                             </select>
                         </div>
                     </div>
+                    <div style="height: 21px;"></div>
                   </div>
                   <div
                     class="form-group"
@@ -114,13 +115,14 @@
                             </select>
                         </div>
                     </div>
+                    <div style="height: 21px;"></div>
                   </div>
-                <div class="form-group {{userForm.password.$error.required && 'has-danger'}}">
+                <div class="form-group" ng-class="{ 'has-danger' : userForm.password.$error.required && userForm.password.$touched }">
                     <div class="controls">
                         <label class="form-control-label" for="password">Password</label>
                         <div class="input-prepend input-group">
                             <input
-                            type="text"
+                            type="password"
                             id="password"
                             class="form-control"
                             name="password"
@@ -129,15 +131,15 @@
                             >
                         </div>
                     </div>
-                    <p class="help-block" ng-show="userForm.password.$error.required">Password is required</p>
-                    <div style="height: 21px;" ng-hide="userForm.password.$error.required"></div>
+                    <p class="help-block" ng-show="userForm.password.$error.required && userForm.password.$touched">Password is required</p>
+                    <div style="height: 21px;" ng-hide="userForm.password.$error.required && userForm.password.$touched"></div>
                 </div>
                   <div class="form-actions">
                       <button
                         type="submit"
                         class="btn btn-primary"
                       >
-                        Update user
+                        Create user
                       </button>
                   </div>
               </form>
