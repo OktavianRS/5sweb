@@ -21,8 +21,8 @@
                                             >
                                         </div>
                                     </div>
-                                    <p class="help-block" ng-show="loginForm.email.$error.email">Entery valid email</p>
-                                    <div style="height: 21px;" ng-hide="loginForm.email.$error.email"></div>
+                                    <p class="help-block" ng-show="loginForm.email.$error.email && loginForm.email.$touched">Entery valid email</p>
+                                    <div style="height: 21px;" ng-hide="loginForm.email.$error.email && loginForm.email.$touched"></div>
                                 </div>
                                 <div class="form-group" ng-class="{ 'has-danger' : loginForm.password.$error.required && loginForm.password.$touched }">
                                     <div class="controls">
@@ -38,8 +38,8 @@
                                             >
                                         </div>
                                     </div>
-                                    <p class="help-block" ng-show="loginForm.password.$error.required">Password is required</p>
-                                    <div style="height: 21px;" ng-hide="loginForm.password.$error.required"></div>
+                                    <p class="help-block" ng-show="loginForm.password.$error.required && loginForm.password.$touched">Password is required</p>
+                                    <div style="height: 21px;" ng-hide="loginForm.password.$error.required && loginForm.password.$touched"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
