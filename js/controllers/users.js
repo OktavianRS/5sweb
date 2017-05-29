@@ -31,6 +31,7 @@ function usersCtrl($scope, $rootScope, toast, ngDialog, usersModel, companiesMod
 
   $scope.submit = function() {
     usersModel.createUser($scope.user, constuctor);
+    $scope.editElement = Object.create({});
     ngDialog.closeAll();
   }
 
@@ -48,11 +49,13 @@ function usersCtrl($scope, $rootScope, toast, ngDialog, usersModel, companiesMod
       template:'/views/components/createUserDialog.html',
       className: 'ngdialog-theme-default',
       scope: $scope,
+      preCloseCallback:function(){
+        $scope.user = null;
+      }
     });
   }
 
   $scope.editUser = function(data) {
-    console.log(data)
     $scope.editElement = Object.create(data);
     ngDialog.open({
       template:'/views/components/editUserDialog.html',
