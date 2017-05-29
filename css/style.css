@@ -8607,6 +8607,12 @@ td {
 .workplaces-container th, .workplaces-container td {
   text-align: center; }
 
+.confirm-delete .form-actions {
+  text-align: center; }
+
+.confirm-delete button {
+  margin: 10px; }
+
 .chart .glyphicon.glyphicon-cog {
   float: right;
   margin-right: 20px;
