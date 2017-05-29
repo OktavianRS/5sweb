@@ -39,6 +39,9 @@ function criteriaCtrl($scope, toast, ngDialog, criteriasModel) {
       template:'/views/components/createCriteriaDialog.html',
       className: 'ngdialog-theme-default',
       scope: $scope,
+      preCloseCallback:function(){
+        $scope.criteria = null;
+      }
     });
   }
 
