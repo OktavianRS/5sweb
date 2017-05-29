@@ -40,6 +40,12 @@ angular.module('model.companies', [])
             url.updateCompany,
             req,
             function(res) {
+              if (typeof res.updated_at !== 'undefined') {
+                toast('success', 'Updated successfully', '');
+                callback();
+              } else {
+                toast('error', 'Some error occured', 'Company not updated');
+              }
               callback();
             }
           );
