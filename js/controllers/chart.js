@@ -390,7 +390,6 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     // google chart time-line
     // histiry audit
     function changesAuditHistory(result, criticalTarget) {
-
         // audit - empty
         if (Array.isArray(result) && result.length === 0) {
             $scope.AuditHistoryIsEmpty = true;
@@ -750,7 +749,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             var criticalTarget = $scope.critical.target;
             usersModel.setCriticalEdge({critical_edge:$scope.critical.target}, function callback(res){
                 $sessionStorage.critical_edge = $scope.critical.target;
-                chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
+                var company_id = $rootScope.role === 'site admin' ? $scope.search.company.id : $rootScope.company_id;
+                chartsModel.fetchAuditHistoryByCompany({company_id:company_id}, function callback (result) {
                     $scope.ListAuditHistoryByCompany = result;
                     changesAuditHistory(result, criticalTarget);
                 })
