@@ -60,6 +60,12 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
       template:'/views/components/createDepartmentDialog.html',
       className: 'ngdialog-theme-default',
       scope: $scope,
+      preCloseCallback:function(){
+        $scope.department = {
+          name: '',
+          company_id: $rootScope.company_id || '',
+        }
+      }
     });
   }
 

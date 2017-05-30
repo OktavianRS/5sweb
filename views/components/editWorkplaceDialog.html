@@ -28,11 +28,18 @@
                         <div class="controls">
                             <div class="input-prepend input-group">
                                 <select
-                                        class="form-control" name="prependedInputDepartment" id="prependedInputDepartment"
-                                        ng-options="department.name for department in departmentsList track by department.id"
-                                        ng-model="editElement.department" ng-change="selectPlace(editElement.department)"
-
+                                    class="form-control"
+                                    name="prependedInputDepartment"
+                                    id="prependedInputDepartment"
+                                    ng-model="editElement.department_id"
                                 >
+                                    <option
+                                        ng-selected="editElement.department_id === department.id"
+                                        ng-value="department.id"
+                                        ng-repeat="department in departmentsList track by $index"
+                                    >
+                                        {{department.name}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -42,12 +49,18 @@
                         <div class="controls">
                             <div class="input-prepend input-group">
                                 <select
-                                        class="form-control" name="prependedInputChecklist"
-                                        id="prependedInputChecklist"
-                                        ng-options="check.name for check in checkList track by check.id"
-                                        ng-model="selectedCheckList" ng-change="selectCheck(selectedCheckList)"
-
+                                    class="form-control"
+                                    name="prependedInputDepartment"
+                                    id="prependedInputDepartment"
+                                    ng-model="editElement.checklist_id"
                                 >
+                                    <option
+                                        ng-selected="editElement.checklist_id === check.id"
+                                        ng-value="check.id"
+                                        ng-repeat="check in checkList track by $index"
+                                    >
+                                        {{check.name}}
+                                    </option>
                                 </select>
                             </div>
                         </div>

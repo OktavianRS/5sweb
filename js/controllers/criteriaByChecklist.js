@@ -6,6 +6,7 @@ criteriaByChecklistCtrl.$inject = ['$scope', '$state', '$rootScope', 'toast', 'n
 function criteriaByChecklistCtrl($scope, $state, $rootScope, toast, ngDialog, criteriasModel, checkListModel) {
   $scope.criteriasList = [];
   $scope.editElement = {};
+  var checklist_id = Number($rootScope.check_id);
 
   $scope.criteria = {
     name: ''
@@ -14,14 +15,14 @@ function criteriaByChecklistCtrl($scope, $state, $rootScope, toast, ngDialog, cr
   // fetch all initial data
   function constuctor() {
     checkListModel.fetchCriteriasByCheckList({
-      checklist_id: $rootScope.check_id
+      checklist_id
     }, function(result) {
       $scope.criteriasList = result;
     });
   }
   constuctor();
-  $scope.deleteCriteria = function(id) {
-    criteriasModel.deleteCriteria({ id }, constuctor);
+  $scope.deleteCriteria = function(criteria_id) {
+    checkListModel.removeCriteria({ checklist_id, criteria_id }, constuctor);
   }
 
   $scope.updateCriteria = function(id, name) {

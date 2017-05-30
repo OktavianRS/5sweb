@@ -10,13 +10,15 @@ angular.module('model.audit', [])
               if (typeof res.created_at !== 'undefined') {
                 toast('success', 'Audit started', '');
                 callback();
-              }
-               else if (res.errors) {
-                  var errors = Object.keys(res.errors);
-                    errors.forEach(function(item) {
-                        toast('error', item, '');
-                    })
-                }else {
+                } else if (
+                    typeof res.errors !== 'undefined'
+                    && typeof res.errors.name !== 'undefined'
+                    && typeof res.errors.name.length !== 'undefined'
+                ) {
+                toast('error', 'Some error occured', res.errors.name[0]);
+              } else if (typeof res.errors !== undefined && typeof res.errors === 'string') {
+                toast('error', 'Some error occured', res.errors);
+              } else {
                 toast('error', 'Some error occured', 'Audit not started');
               }
             })

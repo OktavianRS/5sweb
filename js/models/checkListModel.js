@@ -41,6 +41,22 @@ angular.module('model.check', [])
           );
         }
 
+        this.removeCriteria = function(req, callback) {
+          api.post(
+            url.removeCriteria,
+            req,
+            function(res) {
+              if (res.status) {
+                toast('success', 'Removed successfully', '');
+                callback();
+              } else {
+                toast('error', 'Some error occured', 'Criteria not removed');
+              }
+              callback();
+            }
+          );
+        }
+
         this.updateCheck = function(req, callback) {
           api.put(
             url.updateCheck,

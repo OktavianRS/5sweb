@@ -10,6 +10,12 @@ angular.module('model.criterias', [])
                         if (typeof res.created_at !== 'undefined') {
                             toast('success', 'Created successfully', '');
                             callback();
+                        } else if (
+                            typeof res.errors !== 'undefined'
+                            && typeof res.errors.name !== 'undefined'
+                            && typeof res.errors.name.length !== 'undefined'
+                        ) {
+                            toast('error', 'Some error occured', res.errors.name[0]);
                         } else {
                             toast('error', 'Some error occured', 'criteria not created');
                         }

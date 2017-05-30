@@ -92,6 +92,7 @@ angular.module('factory.url', [])
           updateCheck: baseUrl + '/checklist/update',
           addCriteriaToCheckList: baseUrl + '/checklist/add-criteria',
           fetchCriteriasByCheckList: baseUrl + '/checklist/criteria-list',
+          removeCriteria: baseUrl + '/checklist/remove-criteria',
 
 
         }
