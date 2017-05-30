@@ -94,6 +94,12 @@ function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ng
         template:'/views/components/createWorkplaceDialog.html',
         className: 'ngdialog-theme-default',
         scope: $scope,
+        preCloseCallback:function(){
+            $scope.workplace = {
+                name: '',
+            }
+            $scope.selectedCheckList = '';
+        }
       });
     }
 
