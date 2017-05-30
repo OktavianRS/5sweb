@@ -38,7 +38,13 @@ angular.module('model.criterias', [])
                 api.delete(
                     url.deleteCriteria,
                     req,
-                    function() {
+                    function(res) {
+                        if (res.status) {
+                            toast('success', 'Deleted successfully', '');
+                            callback();
+                        } else {
+                            toast('error', 'Some error occured', 'criteria not deleted');
+                        }
                         callback();
                     }
                 );
@@ -49,6 +55,12 @@ angular.module('model.criterias', [])
                     url.updateCriteria,
                     req,
                     function(res) {
+                        if (typeof res.updated_at !== 'undefined') {
+                            toast('success', 'Updated successfully', '');
+                            callback();
+                        } else {
+                            toast('error', 'Some error occured', 'criteria not updated');
+                        }
                         callback();
                     }
                 );

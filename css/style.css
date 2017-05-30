@@ -8596,6 +8596,8 @@ base-chart.chart {
 
 .app-header .user-nav {
   margin: 0 20px; }
+  .app-header .user-nav .padding-right-20 {
+    padding-right: 20px; }
 
 .ngdialog-content .ngdialog-close {
   border: none;
