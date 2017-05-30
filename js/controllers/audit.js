@@ -85,6 +85,16 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
       template:'/views/components/createAuditDialog.html',
       className: 'ngdialog-theme-default',
       scope: $scope,
+      preCloseCallback:function(){
+        $scope.audit = {
+          name: new Date().toDateString(),
+          description: '',
+          target: $scope.scoreSlider.value,
+          user_id: '',
+          company_id: $rootScope.company_id || undefined,
+          department_id: '',
+        }
+      }
     });
   }
 }
