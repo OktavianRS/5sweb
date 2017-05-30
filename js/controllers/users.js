@@ -50,7 +50,13 @@ function usersCtrl($scope, $rootScope, toast, ngDialog, usersModel, companiesMod
       className: 'ngdialog-theme-default',
       scope: $scope,
       preCloseCallback:function(){
-        $scope.user = null;
+        $scope.user = {
+          firstname: '',
+          lastname: '',
+          email: '',
+          password: '',
+          company_id: $rootScope.company_id || '',
+        };
       }
     });
   }
