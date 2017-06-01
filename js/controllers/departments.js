@@ -8,6 +8,16 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
   $scope.departmentsList = [];
   $scope.workPlacesList = [];
   $scope.placesForDepartment = [];
+  $scope.paginationSetup = {
+    page: 1,
+    pageSize: 10
+  }
+  $scope.paginationParams = {
+    totalPages: 0,
+    pageCount: Array.from(Array(1).keys()),
+    current: 0,
+    totalCount: 0
+  }
 
   $scope.sortSettings = 'name';
 
@@ -23,8 +33,11 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
 
   // fetch all initial data
   function constructor() {
-    departmentsModel.fetchDepartments((result) => {
-      $scope.departmentsList = result;
+    departmentsModel.fetchDepartments($scope.paginationSetup, (result) => {
+      $scope.departmentsList = result.departments;
+      $scope.paginationParams = result.page;
+      $scope.paginationParams.totalPages = result.page.pageCount;
+      $scope.paginationParams.pageCount = Array.from(Array(result.page.pageCount).keys())
     });
     companiesModel.fetchCompanies((result) => {
       $scope.companiesList = result;
@@ -35,6 +48,25 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
 
   $scope.changeSort = function() {
     $scope.sortSettings === 'name' ? $scope.sortSettings = '-name' : $scope.sortSettings = 'name';
+  }
+
+  $scope.changePage = function(page) {
+      $scope.paginationSetup.page = page;
+      constructor();
+  }
+
+  $scope.prevPage = function() {
+      if ($scope.paginationSetup.page !== 1) {
+        $scope.paginationSetup.page = $scope.paginationSetup.page-1;
+        constructor();
+      }
+  }
+
+  $scope.nextPage = function() {
+      if ($scope.paginationParams.totalPages !== $scope.paginationSetup.page) {
+        $scope.paginationSetup.page = $scope.paginationSetup.page+1;
+        constructor();
+      }
   }
 
   $scope.createDepartment = function() {
