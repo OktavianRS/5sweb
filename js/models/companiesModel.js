@@ -22,10 +22,10 @@ angular.module('model.companies', [])
             })
         }
 
-        this.fetchCompanies = function(callback) {
+        this.fetchCompanies = function(callback, req={}) {
           api.get(
             url.fetchCompanies,
-            {},
+            req,
             function(res) {
               callback(res);
             })

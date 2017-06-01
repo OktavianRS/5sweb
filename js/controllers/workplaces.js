@@ -11,7 +11,6 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
     $scope.workplacesList = [];
     $scope.criteriasList = [];
     $scope.departmentsList = [];
-    $scope.AllPlacesList = [];
     $scope.checkList = [];
     $scope.editElement = {};
     $scope.selectedCheckList = '';
@@ -21,13 +20,26 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         department: '',
     }
 
+    $scope.paginationSetup = {
+        page: 1,
+        pageSize: 10
+    }
+    $scope.paginationParams = {
+        totalPages: 0,
+        pageCount: Array.from(Array(1).keys()),
+        current: 0,
+        totalCount: 0
+    }
 
     // fetch all initial data
-    function constuctor() {
+    function constructor() {
 
         workplacesModel.fetchWorkPlaces(function(result) {
-            $scope.workplacesList = result;
-        });
+            $scope.workplacesList = result.places;
+            $scope.paginationParams = result.page;
+            $scope.paginationParams.totalPages = result.page.pageCount;
+            $scope.paginationParams.pageCount = Array.from(Array(result.page.pageCount).keys())
+        }, $scope.paginationSetup);
         criteriasModel.fetchCriterias(function(result) {
             $scope.criteriasList = result;
 
@@ -38,21 +50,35 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
         });
 
         criteriasModel.fetchCriterias(function(result) {
-            $scope.criteriasList = result;
+            $scope.criteriasList = result.criterias;
         });
 
-        departmentsModel.fetchDepartments(function(result) {
-            $scope.departmentsList = result;
+        departmentsModel.fetchDepartments({}, function(result) {
+            $scope.departmentsList = result.departments;
             $scope.selectedDepartment = $scope.workplace.department;
         });
 
-        departmentsModel.fetchPlacesList(function(result) {
-            $scope.AllPlacesList = result;
-        });
-
     }
-    constuctor();
+    constructor();
 
+    $scope.changePage = function(page) {
+        $scope.paginationSetup.page = page;
+        constructor();
+    }
+
+    $scope.prevPage = function() {
+        if ($scope.paginationSetup.page !== 1) {
+            $scope.paginationSetup.page = $scope.paginationSetup.page-1;
+            constructor();
+        }
+    }
+
+    $scope.nextPage = function() {
+        if ($scope.paginationParams.totalPages !== $scope.paginationSetup.page) {
+            $scope.paginationSetup.page = $scope.paginationSetup.page+1;
+            constructor();
+        }
+    }
 
     $scope.workPlaceState = true;
 

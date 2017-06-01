@@ -18,29 +18,62 @@ function usersCtrl($scope, $rootScope, toast, ngDialog, usersModel, companiesMod
     company_id: $rootScope.company_id || '',
   };
 
+  $scope.paginationSetup = {
+      page: 1,
+      pageSize: 10
+  }
+  $scope.paginationParams = {
+      totalPages: 0,
+      pageCount: Array.from(Array(1).keys()),
+      current: 0,
+      totalCount: 0
+  }
+
   // fetch all initial data
-  function constuctor() {
+  function constructor() {
     usersModel.fetchUsers(function(result) {
-      $scope.usersList = result;
-    });
+      $scope.usersList = result.users;
+      $scope.paginationParams = result.page;
+      $scope.paginationParams.totalPages = result.page.pageCount;
+      $scope.paginationParams.pageCount = Array.from(Array(result.page.pageCount).keys())
+    }, $scope.paginationSetup);
     companiesModel.fetchCompanies(function(result) {
-      $scope.companiesList = result;
+      $scope.companiesList = result.companies;
     });
   }
-  constuctor();
+  constructor();
+
+  $scope.changePage = function(page) {
+      $scope.paginationSetup.page = page;
+      constructor();
+  }
+
+  $scope.prevPage = function() {
+      if ($scope.paginationSetup.page !== 1) {
+          $scope.paginationSetup.page = $scope.paginationSetup.page-1;
+          constructor();
+      }
+  }
+
+  $scope.nextPage = function() {
+      if ($scope.paginationParams.totalPages !== $scope.paginationSetup.page) {
+          $scope.paginationSetup.page = $scope.paginationSetup.page+1;
+          constructor();
+      }
+  }
 
   $scope.submit = function() {
-    usersModel.createUser($scope.user, constuctor);
+    usersModel.createUser($scope.user, constructor);
     $scope.editElement = Object.create({});
     ngDialog.closeAll();
   }
 
   $scope.deleteUser = function(id) {
-    usersModel.deleteUser({ id }, constuctor);
+    usersModel.deleteUser({ id }, constructor);
   }
 
   $scope.updateUser = function(id, email, firstname, lastname, password) {
-    usersModel.updateUser({id, email, firstname, lastname, password}, constuctor);
+    usersModel.updateUser({id, email, firstname, lastname, password}, constructor);
     ngDialog.closeAll();
   }
 

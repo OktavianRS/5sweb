@@ -19,11 +19,28 @@ function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ng
         name: ''
     }
 
-    // fetch all initial data
-    function constuctor() {
+    $scope.paginationSetup = {
+        page: 1,
+        pageSize: 10
+    }
+    $scope.paginationParams = {
+        totalPages: 0,
+        pageCount: Array.from(Array(1).keys()),
+        current: 0,
+        totalCount: 0
+    }
 
-        workplacesModel.fetchAllWorkPlacesByDepartment({department_id: $stateParams.department_id},(result) => {
-            $scope.workplacesList = result;
+    // fetch all initial data
+    function constructor() {
+
+        var requestParams = $scope.paginationSetup;
+        requestParams.department_id = $stateParams.department_id;
+
+        workplacesModel.fetchAllWorkPlacesByDepartment(requestParams, (result) => {
+            $scope.workplacesList = result.places;
+            $scope.paginationParams = result.page;
+            $scope.paginationParams.totalPages = result.page.pageCount;
+            $scope.paginationParams.pageCount = Array.from(Array(result.page.pageCount).keys())
         });
         checkListModel.fetchChecks(function(result) {
             $scope.checkList = result;
@@ -31,14 +48,33 @@ function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ng
         criteriasModel.fetchCriterias(function(result) {
             $scope.criteriasList = result;
         });
-        departmentsModel.fetchDepartments(function(result) {
+        departmentsModel.fetchDepartments({}, function(result) {
             $scope.departmentsList = result;
             $scope.workplace.department =   $scope.departmentsList[0];
             $scope.selectedDepartment = $scope.workplace.department;
         });
 
     }
-    constuctor();
+    constructor();
+
+    $scope.changePage = function(page) {
+        $scope.paginationSetup.page = page;
+        constructor();
+    }
+
+    $scope.prevPage = function() {
+        if ($scope.paginationSetup.page !== 1) {
+            $scope.paginationSetup.page = $scope.paginationSetup.page-1;
+            constructor();
+        }
+    }
+
+    $scope.nextPage = function() {
+        if ($scope.paginationParams.totalPages !== $scope.paginationSetup.page) {
+            $scope.paginationSetup.page = $scope.paginationSetup.page+1;
+            constructor();
+        }
+    }
 
     $scope.createWorkPlace = function() {
         $scope.workplace.department_id = $stateParams.department_id;

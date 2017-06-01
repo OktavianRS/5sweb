@@ -16,10 +16,10 @@ angular.module('model.check', [])
             })
         }
 
-        this.fetchChecks = function(callback) {
+        this.fetchChecks = function(callback, req={}) {
           api.get(
             url.fetchChecks,
-            {},
+            req,
             function(res) {
               callback(res);
             })

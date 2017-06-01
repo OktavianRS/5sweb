@@ -22,10 +22,10 @@ angular.module('model.criterias', [])
                     })
             }
 
-            this.fetchCriterias = function(callback) {
+            this.fetchCriterias = function(callback, req = {}) {
                 api.get(
                     url.fetchCriterias,
-                    {},
+                    req,
                     function(res) {
                         callback(res);
                     })
@@ -48,6 +48,8 @@ angular.module('model.criterias', [])
                         if (res.status) {
                             toast('success', 'Deleted successfully', '');
                             callback();
+                        } else if (typeof res.errors !== undefined && typeof res.errors === 'string') {
+                            toast('error', res.errors, 'Some error occured');
                         } else {
                             toast('error', 'Some error occured', 'criteria not deleted');
                         }

@@ -18,6 +18,8 @@ angular.module('model.audit', [])
                 toast('error', 'Some error occured', res.errors.name[0]);
               } else if (typeof res.errors !== undefined && typeof res.errors === 'string') {
                 toast('error', 'Some error occured', res.errors);
+              } else if (typeof res.errors !== undefined && typeof res.errors === 'object') {
+                toast('error', res.errors.error, 'Some error occured');
               } else {
                 toast('error', 'Some error occured', 'Audit not started');
               }
@@ -34,27 +36,28 @@ angular.module('model.audit', [])
               );
           }
 
-        this.fetchAudits = function(callback) {
+        this.fetchAudits = function(callback, req={}) {
           if ($rootScope.role === 'site admin') {
-            this.fetchAllAudits(callback);
+            this.fetchAllAudits(callback, req);
           } else {
-            this.fetchCompanyAudits(undefined, callback);
+            this.fetchCompanyAudits(undefined, callback, req);
           }
         }
 
-        this.fetchAllAudits = function(callback) {
+        this.fetchAllAudits = function(callback, req) {
           api.get(
           url.fetchAudits,
-          {},
+          req,
           function(res) {
             callback(res);
           })
         }
 
-        this.fetchCompanyAudits = function(company_id = $rootScope.company_id, callback) {
+        this.fetchCompanyAudits = function(company_id = $rootScope.company_id, callback, req={}) {
+            req.company_id = company_id;
           api.get(
           url.fetchCompanyAudits,
-          {company_id},
+          req,
           function(res) {
             callback(res);
           })

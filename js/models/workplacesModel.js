@@ -16,10 +16,10 @@ angular.module('model.workplaces', [])
             })
         }
 
-        this.fetchWorkPlaces = function(callback) {
+        this.fetchWorkPlaces = function(callback, req={}) {
           api.get(
             url.fetchWorkPlaces,
-            {},
+            req,
             function(res) {
               callback(res);
             })
@@ -34,7 +34,7 @@ angular.module('model.workplaces', [])
                   })
           }
           this.fetchAllWorkPlacesByDepartment = function(req, callback) {
-              api.post(
+              api.get(
                   url.fetchAllWorkPlacesByDepartment,
                   req,
                   function(res) {

@@ -16,7 +16,7 @@
                     <div class="card-block">
                         <table
                           class="table table-bordered table-striped table-sm"
-                          ng-if="AllPlacesList.length"
+                          ng-if="workplacesList.length"
                         >
                             <thead>
                             <tr>
@@ -26,10 +26,10 @@
                                 <th>Actions</th>
                             </tr>
                             </thead>
-                            <tbody ng-repeat="department in AllPlacesList track by $index">
-                            <tr ng-repeat="place in department.places track by $index">
+                            <tbody>
+                            <tr ng-repeat="place in workplacesList track by $index">
                                 <td class="workplace-name">{{place.name}}</td>
-                                <td class="department-name"> {{department.name}}</td>
+                                <td class="department-name"> {{place.department_name}}</td>
                                 <td>
                                     <button type="button" class="btn btn-outline-primary" ng-click="showCriteria(place.id, place.name)">Show Critetia</button>
                                 </td>
@@ -40,7 +40,35 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div class="empty-list" ng-if="!AllPlacesList.length">
+
+                        <ul class="pagination" ng-if="paginationParams.totalPages>1">
+
+                            <!--Prev button-->
+                            <li class="page-item" ng-click="prevPage()">
+                            <a class="page-link" href="#">Prev</a>
+                            </li>
+                            <!--end of Prev button-->
+
+                            <!--Pagination body-->
+                            <li
+                            class="page-item"
+                            ng-repeat="page in paginationParams.pageCount track by $index"
+                            ng-class="{ 'active' : page === paginationParams.current-1 }"
+                            ng-click="changePage(page+1)"
+                            >
+                                <a class="page-link" href="#">{{ page + 1 }}</a>
+                            </li>
+                            <!--end of Pagination body-->
+
+                            <!--Next button-->
+                            <li class="page-item" ng-click="nextPage()">
+                            <a class="page-link" href="#">Next</a>
+                            </li>
+                            <!--end of Next button-->
+
+                        </ul>
+
+                        <div class="empty-list" ng-if="!workplacesList.length">
                           Workplaces list is empty
                           <a
                             href="#"
