@@ -43,10 +43,10 @@ function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ng
             $scope.paginationParams.pageCount = Array.from(Array(result.page.pageCount).keys())
         });
         checkListModel.fetchChecks(function(result) {
-            $scope.checkList = result;
+            $scope.checkList = result.checklists;
         });
         criteriasModel.fetchCriterias(function(result) {
-            $scope.criteriasList = result;
+            $scope.criteriasList = result.criterias;
         });
         departmentsModel.fetchDepartments({}, function(result) {
             $scope.departmentsList = result;
@@ -142,7 +142,7 @@ function workplacesByDepartmentCtrl($scope, $rootScope, $state, $stateParams, ng
     $scope.selectCheck = function (selectedItem) {
         $scope.selectedCheckList = selectedItem;
         checkListModel.fetchCriteriasByCheckList({ checklist_id: selectedItem.id }, function(result) {
-            $scope.criteriasList = result;
+            $scope.criteriasList = result.criterias;
         });
     }
 

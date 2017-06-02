@@ -52,7 +52,7 @@ function checkListCtrl($scope, $state, toast, ngDialog, checkListModel, criteria
       $scope.paginationParams.pageCount = Array.from(Array(result.page.pageCount).keys())
     }, $scope.paginationSetup);
     criteriasModel.fetchCriterias(function(result) {
-      $scope.criteriasList = result;
+      $scope.criteriasList = result.criterias;
 
     });
   }
@@ -138,7 +138,7 @@ function checkListCtrl($scope, $state, toast, ngDialog, checkListModel, criteria
         return  checkListModel.fetchCriteriasByCheckList({
           checklist_id: checklist_id
         }, function(result) {
-           $scope.criteriasInCheckList = result;
+           $scope.criteriasInCheckList = result.criterias;
 
 
         });

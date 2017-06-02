@@ -46,7 +46,7 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
 
         });
         checkListModel.fetchChecks(function(result) {
-            $scope.checkList = result;
+            $scope.checkList = result.checklists;
         });
 
         criteriasModel.fetchCriterias(function(result) {
@@ -190,7 +190,7 @@ function workplacesCtrl($scope, $rootScope, $state, ngDialog, workplacesModel, c
     $scope.selectCheck = function (selectedItem) {
         $scope.selectedCheckList = selectedItem;
         checkListModel.fetchCriteriasByCheckList({ checklist_id: selectedItem.id }, function(result) {
-            $scope.criteriasList = result;
+            $scope.criteriasList = result.criterias;
         });
     }
 

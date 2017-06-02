@@ -40,7 +40,7 @@ function departmentsCtrl($scope, $rootScope, $state, toast, loginModel, ngDialog
       $scope.paginationParams.pageCount = Array.from(Array(result.page.pageCount).keys())
     });
     companiesModel.fetchCompanies((result) => {
-      $scope.companiesList = result;
+      $scope.companiesList = result.companies;
     });
 
   }
