@@ -36,28 +36,28 @@
                               <tr
                                 ng-repeat="audit in auditList track by $index"
                               >
-                                  <td class="audit-name">
+                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
                                      {{audit.name}}
                                    </td>
-                                  <td class="audit-name">
+                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
                                      {{audit.description}}
                                    </td>
-                                  <td class="audit-name">
+                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
                                      {{audit.department_name}}
                                    </td>
-                                  <td class="audit-name">
+                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
                                      {{audit.user_firstname}}
                                    </td>
-                                  <td class="audit-name">
+                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
                                      {{audit.user_email || audit.user_firstname}}
                                   </td>
-                                  <td class="audit-name">
+                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
                                       {{audit.target}}
                                   </td>
-                                  <td class="audit-name">
+                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
                                       {{audit.started_at * 1000 | date:'yyyy-MM-dd HH:mm'}}
                                   </td>
-                                  <td class="audit-name">
+                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
                                       {{audit.finished_at * 1000 === 0 ? 'Auditing' : audit.finished_at * 1000 | date:'yyyy-MM-dd HH:mm'}}
                                   </td>
                               </tr>

@@ -21,7 +21,8 @@
     "ng-dialog": "^1.1.0",
     "glyphicons-only-bootstrap": "^0.0.1",
     "angularjs-slider": "^6.1.1",
-    "ngSticky": "^1.8.13"
+    "ngSticky": "^1.8.13",
+    "angular-material": "^1.1.4"
   },
   "private": true
 }

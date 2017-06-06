@@ -266,6 +266,26 @@ angular
       }]
     }
   })
+  .state('app.audit-atachments', {
+    url: '/audit-atachments/{audit_id}/{audit_name}',
+    templateUrl: 'views/pages/auditAtachments.html',
+    onEnter: function($rootScope, $stateParams) {
+      $rootScope.audit_name = $stateParams.audit_name;
+      $rootScope.audit_id = $stateParams.audit_id;
+    },
+    ncyBreadcrumb: {
+      label: '{{audit_name}}',
+      parent: 'app.audit'
+    },
+    resolve: {
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load controllers
+        return $ocLazyLoad.load({
+          files: ['js/controllers/auditAtachments.js']
+        });
+      }]
+    }
+  })
   .state('appSimple', {
     abstract: true,
     templateUrl: 'views/common/layouts/simple.html',
