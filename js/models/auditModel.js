@@ -86,6 +86,16 @@ angular.module('model.audit', [])
                   })
           }
 
+          this.fetchAttachments = function(audit_id, callback) {
+            api.get(
+                url.auditAtachments,
+                {audit_id},
+                function(res) {
+                    callback(res);
+                }
+            )
+          }
+
 
           this.stopLastAudit = function(req, callback) {
               api.put(

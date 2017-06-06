@@ -8667,6 +8667,9 @@ td {
 .audit .audit__selectLabel2 {
   display: none; }
 
+.audit td {
+  cursor: pointer !important; }
+
 .audit .audit-name {
   padding: 10px 10px;
   color: #46565f; }

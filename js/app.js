@@ -24,6 +24,7 @@ angular
   'ngDialog',
   'rzModule',
   'sticky',
+  'ngMaterial',
 
   //models
   'model.login',

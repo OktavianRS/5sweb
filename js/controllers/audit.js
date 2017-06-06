@@ -2,8 +2,8 @@ angular
 .module('app')
 .controller('auditCtrl', auditCtrl)
 
-auditCtrl.$inject = ['$scope', '$rootScope', 'toast', 'ngDialog', 'usersModel', 'auditModel', 'departmentsModel', 'companiesModel', '$filter'];
-function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, departmentsModel, companiesModel, $filter) {
+auditCtrl.$inject = ['$scope', '$rootScope', 'toast', 'ngDialog', 'usersModel', 'auditModel', 'departmentsModel', 'companiesModel', '$filter', '$state'];
+function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, departmentsModel, companiesModel, $filter, $state) {
   $scope.search = [];
   $scope.companyList = [];
   $scope.scoreSlider = {
@@ -111,6 +111,10 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
 
   $scope.stopAudit = function(id, email, username, password) {
     // usersModel.stopAudit({id, email, username, password}, constructor);
+  }
+
+  $scope.openAtachments = function(audit_id, audit_name) {
+    $state.go('app.audit-atachments', {audit_id, audit_name});
   }
 
   $scope.createAuditModal = function() {
