@@ -10,16 +10,22 @@ angular.module('model.criterias', [])
                         if (typeof res.created_at !== 'undefined') {
                             toast('success', 'Created successfully', '');
                             callback();
+                        } else if (
+                            typeof res.errors !== 'undefined'
+                            && typeof res.errors.name !== 'undefined'
+                            && typeof res.errors.name.length !== 'undefined'
+                        ) {
+                            toast('error', 'Some error occured', res.errors.name[0]);
                         } else {
                             toast('error', 'Some error occured', 'criteria not created');
                         }
                     })
             }
 
-            this.fetchCriterias = function(callback) {
+            this.fetchCriterias = function(callback, req = {}) {
                 api.get(
                     url.fetchCriterias,
-                    {},
+                    req,
                     function(res) {
                         callback(res);
                     })
@@ -42,6 +48,8 @@ angular.module('model.criterias', [])
                         if (res.status) {
                             toast('success', 'Deleted successfully', '');
                             callback();
+                        } else if (typeof res.errors !== undefined && typeof res.errors === 'string') {
+                            toast('error', res.errors, 'Some error occured');
                         } else {
                             toast('error', 'Some error occured', 'criteria not deleted');
                         }

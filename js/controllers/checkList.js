@@ -13,6 +13,18 @@ function checkListCtrl($scope, $state, toast, ngDialog, checkListModel, criteria
     name: ''
   }
 
+
+  $scope.paginationSetup = {
+      page: 1,
+      pageSize: 10
+  }
+  $scope.paginationParams = {
+      totalPages: 0,
+      pageCount: Array.from(Array(1).keys()),
+      current: 0,
+      totalCount: 0
+  }
+
   $scope.settings = {
     bootstrap2: false,
     moveSelectedLabel: 'Move selected only',
@@ -32,29 +44,50 @@ function checkListCtrl($scope, $state, toast, ngDialog, checkListModel, criteria
 };
 
   // fetch all initial data
-  function constuctor() {
+  function constructor() {
     checkListModel.fetchChecks(function(result) {
-      $scope.checkList = result;
-
-    });
+      $scope.checkList = result.checklists;
+      $scope.paginationParams = result.page;
+      $scope.paginationParams.totalPages = result.page.pageCount;
+      $scope.paginationParams.pageCount = Array.from(Array(result.page.pageCount).keys())
+    }, $scope.paginationSetup);
     criteriasModel.fetchCriterias(function(result) {
-      $scope.criteriasList = result;
+      $scope.criteriasList = result.criterias;
 
     });
   }
-  constuctor();
+  constructor();
+
+  $scope.changePage = function(page) {
+      $scope.paginationSetup.page = page;
+      constructor();
+  }
+
+  $scope.prevPage = function() {
+      if ($scope.paginationSetup.page !== 1) {
+          $scope.paginationSetup.page = $scope.paginationSetup.page-1;
+          constructor();
+      }
+  }
+
+  $scope.nextPage = function() {
+      if ($scope.paginationParams.totalPages !== $scope.paginationSetup.page) {
+          $scope.paginationSetup.page = $scope.paginationSetup.page+1;
+          constructor();
+      }
+  }
 
   $scope.createCheck = function() {
-    checkListModel.createCheck($scope.check, constuctor);
+    checkListModel.createCheck($scope.check, constructor);
     ngDialog.closeAll();
   }
 
   $scope.deleteCheck = function(id) {
-    checkListModel.deleteCheck({ id }, constuctor);
+    checkListModel.deleteCheck({ id }, constructor);
   }
 
   $scope.updateCheck = function(id, name) {
-    checkListModel.updateCheck({ id, name }, constuctor);
+    checkListModel.updateCheck({ id, name }, constructor);
     ngDialog.closeAll();
   }
 
@@ -105,7 +138,7 @@ function checkListCtrl($scope, $state, toast, ngDialog, checkListModel, criteria
         return  checkListModel.fetchCriteriasByCheckList({
           checklist_id: checklist_id
         }, function(result) {
-           $scope.criteriasInCheckList = result;
+           $scope.criteriasInCheckList = result.criterias;
 
 
         });

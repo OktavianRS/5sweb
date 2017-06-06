@@ -11,25 +11,58 @@ function companiesCtrl($scope, toast, ngDialog, companiesModel) {
     name: ''
   }
 
-  // fetch all initial data
-  function constuctor() {
-    companiesModel.fetchCompanies(function(result) {
-      $scope.companiesList = result;
-    });
+  $scope.paginationSetup = {
+      page: 1,
+      pageSize: 10
   }
-  constuctor();
+  $scope.paginationParams = {
+      totalPages: 0,
+      pageCount: Array.from(Array(1).keys()),
+      current: 0,
+      totalCount: 0
+  }
+
+  // fetch all initial data
+  function constructor() {
+    companiesModel.fetchCompanies(function(result) {
+      $scope.companiesList = result.companies;
+      $scope.paginationParams = result.page;
+      $scope.paginationParams.totalPages = result.page.pageCount;
+      $scope.paginationParams.pageCount = Array.from(Array(result.page.pageCount).keys())
+    }, $scope.paginationSetup);
+  }
+  constructor();
+
+  $scope.changePage = function(page) {
+      $scope.paginationSetup.page = page;
+      constructor();
+  }
+
+  $scope.prevPage = function() {
+      if ($scope.paginationSetup.page !== 1) {
+          $scope.paginationSetup.page = $scope.paginationSetup.page-1;
+          constructor();
+      }
+  }
+
+  $scope.nextPage = function() {
+      if ($scope.paginationParams.totalPages !== $scope.paginationSetup.page) {
+          $scope.paginationSetup.page = $scope.paginationSetup.page+1;
+          constructor();
+      }
+  }
 
   $scope.createCompany = function() {
-    companiesModel.createCompany($scope.company, constuctor);
+    companiesModel.createCompany($scope.company, constructor);
     ngDialog.closeAll();
   }
 
   $scope.deleteCompany = function(id) {
-    companiesModel.deleteCompany({ id }, constuctor);
+    companiesModel.deleteCompany({ id }, constructor);
   }
 
   $scope.updateCompany = function(id, name) {
-    companiesModel.updateCompany({ id, name }, constuctor);
+    companiesModel.updateCompany({ id, name }, constructor);
     ngDialog.closeAll();
   }
 

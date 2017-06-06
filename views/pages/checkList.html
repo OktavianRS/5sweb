@@ -12,7 +12,7 @@
                         class="btn btn-primary btn-sm action-button"
                         ng-click="createCheckModal()"
                         >
-                          Add check
+                          Add check list
                       </button>
                   </div>
                   <div class="card-block">
@@ -64,13 +64,41 @@
                               </tr>
                           </tbody>
                       </table>
+
+                        <ul class="pagination" ng-if="paginationParams.totalPages>1">
+
+                            <!--Prev button-->
+                            <li class="page-item" ng-click="prevPage()">
+                            <a class="page-link" href="#">Prev</a>
+                            </li>
+                            <!--end of Prev button-->
+
+                            <!--Pagination body-->
+                            <li
+                            class="page-item"
+                            ng-repeat="page in paginationParams.pageCount track by $index"
+                            ng-class="{ 'active' : page === paginationParams.current-1 }"
+                            ng-click="changePage(page+1)"
+                            >
+                                <a class="page-link" href="#">{{ page + 1 }}</a>
+                            </li>
+                            <!--end of Pagination body-->
+
+                            <!--Next button-->
+                            <li class="page-item" ng-click="nextPage()">
+                            <a class="page-link" href="#">Next</a>
+                            </li>
+                            <!--end of Next button-->
+
+                        </ul>
+
                       <div class="empty-list" ng-if="!checkList.length">
-                        Check List is Empty
+                        Check list is empty
                         <a
                           href="#"
                           ng-click="createCheckModal()"
                         >
-                          Add new check
+                          Add new check list
                         </a>
                       </div>
                   </div>

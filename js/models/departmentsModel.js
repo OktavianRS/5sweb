@@ -16,27 +16,29 @@ angular.module('model.departments', [])
             })
         }
 
-        this.fetchDepartments = function(callback) {
+        this.fetchDepartments = function(req, callback) {
           if ($rootScope.role === 'site admin') {
-            this.fetchAllDepartments(callback);
+            this.fetchAllDepartments(req, callback);
           } else {
-            this.fetchCompanyDepartments(undefined, callback);
+            this.fetchCompanyDepartments(undefined, callback, req);
           }
         }
 
-        this.fetchAllDepartments = function(callback) {
+        this.fetchAllDepartments = function(req, callback) {
           api.get(
           url.fetchDepartments,
-          {},
+          req,
           function(res) {
             callback(res);
           });
         }
 
-        this.fetchCompanyDepartments = function(company_id = $rootScope.company_id, callback) {
+        this.fetchCompanyDepartments = function(company_id = $rootScope.company_id, callback, req = {}) {
+          params = req;
+          params.company_id = company_id;
           api.get(
           url.fetchDepartmentsByCompanyId,
-          {company_id},
+          params,
           function(res) {
             callback(res);
           })

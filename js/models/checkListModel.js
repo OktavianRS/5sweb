@@ -16,10 +16,10 @@ angular.module('model.check', [])
             })
         }
 
-        this.fetchChecks = function(callback) {
+        this.fetchChecks = function(callback, req={}) {
           api.get(
             url.fetchChecks,
-            {},
+            req,
             function(res) {
               callback(res);
             })
@@ -35,6 +35,22 @@ angular.module('model.check', [])
                 callback();
               } else {
                 toast('error', 'Some error occured', 'Check not deleted');
+              }
+              callback();
+            }
+          );
+        }
+
+        this.removeCriteria = function(req, callback) {
+          api.post(
+            url.removeCriteria,
+            req,
+            function(res) {
+              if (res.status) {
+                toast('success', 'Removed successfully', '');
+                callback();
+              } else {
+                toast('error', 'Some error occured', 'Criteria not removed');
               }
               callback();
             }
