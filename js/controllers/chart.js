@@ -6,8 +6,8 @@ angular
     .controller('DashboardChart', DashboardChart);
 
 
-DashboardChart.$inject = ['$rootScope','$scope', '$sessionStorage', '$window', '$timeout', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel', 'auditModel', 'ngDialog', 'usersModel'];
-function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, departmentsModel, workplacesModel, companiesModel, chartsModel, auditModel, ngDialog, usersModel) {
+DashboardChart.$inject = ['$rootScope','$scope', '$sessionStorage', '$window', '$timeout', '$exceptionHandler', 'departmentsModel', 'workplacesModel', 'companiesModel', 'chartsModel', 'auditModel', 'ngDialog', 'usersModel'];
+function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, $exceptionHandler, departmentsModel, workplacesModel, companiesModel, chartsModel, auditModel, ngDialog, usersModel) {
 
 
 
@@ -224,16 +224,16 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
     function constructor() {
 
         usersModel.fetchUsers(function(result) {
-            $scope.usersList = result;
+            $scope.usersList = result.users;
         });
 
         companiesModel.fetchCompanies(function (result) {
 
-            $scope.companiesList = result;
+            $scope.companiesList = result.companies;
             $scope.search.company =  $scope.companiesList[0];
             var company_id = $rootScope.role === 'site admin' ? $scope.search.company.id : $rootScope.company_id;
             companiesModel.fetchOneDepartmentList({company_id:company_id}, function callback(result) {
-                $scope.departmentsList = result;
+                $scope.departmentsList = result.departments;
                 $scope.withHeaderDepartments = $scope.departmentsList.slice();
                 $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
                 $scope.search.department = headerFilter.department;
@@ -261,7 +261,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
         });
 
         usersModel.fetchUsers(function(result) {
-            $scope.usersList = result;
+
+            $scope.usersList = result.users;
         });
 
     }
@@ -283,7 +284,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
 
         companiesModel.fetchOneDepartmentList({company_id: item.id}, function callback(result) {
-            $scope.departmentsList = result;
+            $scope.departmentsList = result.departments;
             $scope.withHeaderDepartments = $scope.departmentsList.slice();
             $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
             $scope.search.department = headerFilter.department;
@@ -317,7 +318,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             var company_id = $rootScope.role === 'site admin' ? $scope.search.company.id : $rootScope.company_id;
 
             companiesModel.fetchOneDepartmentList({company_id: company_id}, function callback(result) {
-                $scope.departmentsList = result;
+                $scope.departmentsList = result.departments;
                 $scope.withHeaderDepartments = $scope.departmentsList.slice();
                 $scope.withHeaderDepartments.splice(0, 0, headerFilter.department)
                 $scope.search.department = headerFilter.department;
@@ -357,7 +358,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
         };
 
-
+        console.log($exceptionHandler);
     }
 
     function selectPlace(item) {
