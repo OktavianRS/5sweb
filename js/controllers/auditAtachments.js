@@ -8,7 +8,7 @@ function auditAtachmentsCtrl($scope, $stateParams, $rootScope, toast, ngDialog, 
 
     $scope.fetchAtachments = function() {
         // $stateParams.audit_id
-        auditModel.fetchAttachments(40, function(result) {
+        auditModel.fetchAttachments($stateParams.audit_id, function(result) {
             const newArray = [];
             if (length > 3) {
                 let counter = 0;

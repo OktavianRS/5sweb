@@ -81,12 +81,20 @@
                       <div class="controls">
                           <div class="input-prepend input-group">
                             <div class="input-group input-group-small">
-                              <select
-                                      class="audit__select form-control" name="departmentSelect" id="departmentSelect"
-                                      ng-options="department.name for department in departmentsList track by department.id"
-                                      ng-model="search.department"
+                            <select
+                                    class="form-control"
+                                    name="prependedInputDepartment"
+                                    id="prependedInputDepartment"
+                                    ng-model="search.department"
+                                    ng-change="selectCompany()"
+                            >
+                              <option
+                                ng-value="department.id"
+                                ng-repeat="department.name for department in departmentsList track by department.id"
                               >
-                              </select>
+                                {{department.name}}
+                              </option>
+                            </select>
                             </div>
                           </div>
                       </div>
