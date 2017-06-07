@@ -101,14 +101,6 @@
             <!--/.row-->
             <div class="chart-wrapper" style="height:300px;margin-top:40px;" ng-if="!ScoreIsEmpty && !messageErrorScore">
                 <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" chart-legend="false" chart-series="series" chart-click="onClick" chart-options="options" chart-colors="colors" chart-dataset-override="datasetOverride" height="300"></canvas>
-                <!--<div>-->
-                    <!--<div id="js-legend" class="chart-legend">-->
-                        <!--<ul class="16-legend">-->
-                            <!--<li><span style="" class="fa fa-square target"></span>Target</li>-->
-                            <!--<li><span style="" class="fa fa-square last"></span>Last</li>-->
-                            <!--<li><span style="" class="fa fa-square current"></span>Current</li></ul>-->
-                    <!--</div>-->
-                <!--</div>-->
             </div>
             <div ng-if="ScoreIsEmpty && !messageErrorScore">
                 <h4>The requested place has not any started audit</h4>

@@ -441,15 +441,16 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
                     }
                     else if (i > 1 && i<4) {
-                        if ((i === 3) && (innerItem === null || innerItem === 0)) {
+
+                         if ((i === 2) && (innerItem === null || innerItem === 0)) {
                             innerItem = new Date();
+
+                        }
+                         else  if ((i === 3) && (innerItem === null || innerItem === 0)) {
+                             innerItem = new Date();
 
                              auditInProcess[countRow-1] = true;
-                        }
-
-                        else if ((i === 2) && (innerItem === null || innerItem === 0)) {
-                            innerItem = new Date();
-                        }
+                         }
                         else {
                             innerItem = new Date(innerItem * 1000);
                         }
@@ -652,7 +653,11 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             auditModel.stopLastAudit({department_id:StoppedDepartment[0].id}, function callback(result) {
                 $scope.auditInProcess[index] =  !$scope.auditInProcess[index];
                 ngDialog.closeAll();
-                constructor();
+                // constructor();
+                chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
+                    $scope.ListAuditHistoryByCompany = result;
+                    changesAuditHistory(result);
+                });
             })
         }
 
@@ -679,6 +684,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             });
         }
 
+
         $scope.startAuditFromChart = true;
         auditModel.startLastAudit({department_id:StartedDepartment[0].id}, function callback(result) {
 
@@ -698,6 +704,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
             })
             $scope.search.user = userArr[0];
 
+            var company_id = $rootScope.role === 'site admin' ? $scope.search.company.id : $rootScope.company_id;
+
             $scope.audit = {
                 name: new Date().toDateString(),
                 description: result.description,
@@ -705,13 +713,24 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 target: $scope.scoreSlider.value,
                 place_id: '',
                 user_id: $scope.search.user.id,
-                company_id: $rootScope.company_id || null,
+                company_id: company_id,
             };
+
+
 
             $scope.submit = function() {
                 $scope.audit.target = $scope.scoreSlider.value;
-                auditModel.startAudit($scope.audit, constructor);
+                auditModel.startAudit($scope.audit, afterStart);
                 ngDialog.closeAll();
+
+                function afterStart() {
+                    var company_id = $rootScope.role === 'site admin' ? $scope.search.company.id : $rootScope.company_id;
+                    chartsModel.fetchAuditHistoryByCompany({company_id:company_id}, function callback (result) {
+                        $scope.ListAuditHistoryByCompany = result;
+                        changesAuditHistory(result);
+                    })
+                }
+
             }
 
 
