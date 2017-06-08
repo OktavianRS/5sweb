@@ -1,18 +1,22 @@
-<div ng-controller="auditAtachmentsCtrl" layout="column" ng-cloak>
-    <div layout="row" ng-repeat="col in atachmentsList track by $index">
-        <md-card flex ng-repeat="item in col track by item.id">
+
+<div ng-controller="auditAtachmentsCtrl" ng-cloak>
+  <md-content class="md-padding" layout="column" flex ng-repeat="col in atachmentsList track by $index">
+    <div layout="row" >
+
+        <md-card  flex="20"  ng-repeat="item in col track by item.id">
             <md-card-title>
             <md-card-title-text>
-                <span class="md-headline">Attachment name: {{item.name}}</span>
-                <span class="md-subhead">Type: {{item.type}}</span>
+                <span class="md-headline">{{item.name}}</span>
+                <span class="md-subhead">{{item.inspectorComment}}</span>
             </md-card-title-text>
-            <md-card-title-media>
-                <div class="md-media-sm card-media">
-                    <img style="height: 80px;" src="{{'http://5s.grassbusinesslabs.com/server' + item.path + item.name + '.' + item.ext}}" alt="">
-                </div>
-            </md-card-title-media>
             </md-card-title>
+            <md-card-content layout="column" layout-align="space-between">
+            <img style="width: 100%" ng-src="{{'http://5s.grassbusinesslabs.com/server' + item.path + item.name + '.' + item.ext}}" alt="Washed Out">
+
+            </md-card-content>
         </md-card>
+
     </div>
-    <h3 ng-if="!atachmentsList.length || !atachmentsList[0].length">There is no attechments</h3>
+    <h3 ng-if="!atachmentsList.length || !atachmentsList[0].length">There is no attachments</h3>
+  </md-content>
 </div>

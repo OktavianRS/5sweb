@@ -10,7 +10,7 @@ function auditAtachmentsCtrl($scope, $stateParams, $rootScope, toast, ngDialog, 
         // $stateParams.audit_id
         auditModel.fetchAttachments($stateParams.audit_id, function(result) {
             const newArray = [];
-            if (length > 3) {
+            if (length > 5) {
                 let counter = 0;
                 result.map((val, key) => {
                     const tempArray = [];

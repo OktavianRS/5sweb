@@ -8667,9 +8667,6 @@ td {
 .audit .audit__selectLabel2 {
   display: none; }
 
-.audit td {
-  cursor: pointer !important; }
-
 .audit .audit-name {
   padding: 10px 10px;
   color: #46565f; }
@@ -9073,3 +9070,6 @@ hr.transparent {
     border-right-color: #f86c6b; }
   *[dir="rtl"] .callout-success {
     border-right-color: #4dbd74; }
+
+body {
+  background-color: #fff !important; }

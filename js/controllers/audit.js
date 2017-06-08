@@ -6,6 +6,7 @@ auditCtrl.$inject = ['$scope', '$rootScope', 'toast', 'ngDialog', 'usersModel', 
 function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, departmentsModel, companiesModel, $filter, $state) {
   $scope.search = [];
   $scope.companyList = [];
+  $scope.departmentsList = [];
   $scope.scoreSlider = {
     value: 50,
     options: {
@@ -55,10 +56,12 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
 
   // fetch all initial data
   function constructor() {
-    usersModel.fetchUsers(function(result) {
-      $scope.usersList = result.users;
-      $scope.search.user =  $scope.usersList[0];
-    });
+    if (!$rootScope.isAdmin()) {
+      usersModel.fetchUsers(function(result) {
+        $scope.usersList = result.users;
+        $scope.search.user =  $scope.usersList[0];
+      });
+    }
 
     auditModel.fetchAudits(function(result) {
       $scope.auditList = result.audits;
@@ -69,6 +72,11 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
 
     companiesModel.fetchCompanies((result) => {
       $scope.companiesList = result.companies;
+      if (result.companies.length) {
+        usersModel.fetchCompanyUsers(result.companies[0].id, function(result) {
+          $scope.usersList = result.users;
+        })
+      }
     });
 
     departmentsModel.fetchCompanyDepartments($scope.audit.company_id, function(result) {
@@ -100,11 +108,13 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
     departmentsModel.fetchCompanyDepartments($scope.audit.company_id, function(result) {
       $scope.departmentsList = result.departments;
     });
+    usersModel.fetchCompanyUsers($scope.audit.company_id, function(result) {
+      $scope.usersList = result.users;
+    })
   }
 
   $scope.submit = function() {
     $scope.audit.user_id = $scope.search.user.id;
-    $scope.audit.department_id = $scope.search.department.id;
     auditModel.startAudit($scope.audit, constructor);
     ngDialog.closeAll();
   }
