@@ -654,7 +654,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                 $scope.auditInProcess[index] =  !$scope.auditInProcess[index];
                 ngDialog.closeAll();
                 // constructor();
-                chartsModel.fetchAuditHistoryByCompany({company_id:$scope.search.company.id}, function callback (result) {
+                var company_id = $rootScope.role === 'site admin' ? $scope.search.company.id : $rootScope.company_id;
+                chartsModel.fetchAuditHistoryByCompany({company_id}, function callback (result) {
                     $scope.ListAuditHistoryByCompany = result;
                     changesAuditHistory(result);
                 });
