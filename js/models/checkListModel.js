@@ -10,8 +10,14 @@ angular.module('model.check', [])
               if (typeof res.created_at !== 'undefined') {
                 toast('success', 'Created successfully', '');
                 callback();
+              } else if (
+                  typeof res.errors !== 'undefined'
+                  && typeof res.errors.name !== 'undefined'
+                  && typeof res.errors.name.length !== 'undefined'
+              ) {
+                toast('error', res.errors.name[0], 'Some error occured');
               } else {
-                toast('error', 'Some error occured', 'Check not created');
+                toast('error', 'Some error occured', 'Check list not created');
               }
             })
         }
