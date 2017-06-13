@@ -5,6 +5,7 @@ angular
 auditAtachmentsCtrl.$inject = ['$scope', '$stateParams', '$rootScope', 'toast', 'ngDialog', 'auditModel'];
 function auditAtachmentsCtrl($scope, $stateParams, $rootScope, toast, ngDialog, auditModel) {
     $scope.atachmentsList = [];
+    $scope.detailesList = [];
 
     $scope.fetchAtachments = function() {
         // $stateParams.audit_id
@@ -29,8 +30,16 @@ function auditAtachmentsCtrl($scope, $stateParams, $rootScope, toast, ngDialog, 
         });
     }
 
+    $scope.fetchDetailes = function() {
+        auditModel.fetchDetailes($stateParams.audit_id, function(result) {
+            $scope.detailesList = result;
+        });
+    }
+
     function constructor() {
         $scope.fetchAtachments();
+        $scope.fetchDetailes();
+
     }
     constructor();
 }

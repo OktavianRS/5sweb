@@ -85,6 +85,7 @@ angular.module('factory.url', [])
           stopLastAudit: baseUrl + '/audit/stop-last',
           startLastAudit: baseUrl + '/audit/start-last',
           auditAtachments: baseUrl + '/audit/get-attachments',
+          auditDetails: baseUrl + '/audit/get-details-with-attachments',
 
           //checkListModel
           createCheck: baseUrl + '/checklist/create',

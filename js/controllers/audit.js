@@ -20,7 +20,8 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
 
   $scope.paginationSetup = {
       page: 1,
-      pageSize: 10
+      pageSize: 10,
+      department_id: null,
   }
   $scope.paginationParams = {
       totalPages: 0,
@@ -79,11 +80,20 @@ function auditCtrl($scope, $rootScope, toast, ngDialog, usersModel, auditModel, 
       }
     });
 
-    departmentsModel.fetchCompanyDepartments($scope.audit.company_id, function(result) {
+    departmentsModel.fetchDepartments({}, function(result) {
       $scope.departmentsList = result.departments;
     });
   }
   constructor();
+
+  $scope.departmentSelected = function() {
+    auditModel.fetchAudits(function(result) {
+      $scope.auditList = result.audits;
+      $scope.paginationParams = result.page;
+      $scope.paginationParams.totalPages = result.page.pageCount;
+      $scope.paginationParams.pageCount = Array.from(Array(result.page.pageCount).keys())
+    }, $scope.paginationSetup);
+  }
 
   $scope.changePage = function(page) {
       $scope.paginationSetup.page = page;

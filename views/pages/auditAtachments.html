@@ -1,22 +1,12 @@
 
-<div ng-controller="auditAtachmentsCtrl" ng-cloak>
-  <md-content class="md-padding" layout="column" flex ng-repeat="col in atachmentsList track by $index">
-    <div layout="row" >
-
-        <md-card  flex="20"  ng-repeat="item in col track by item.id">
-            <md-card-title>
-            <md-card-title-text>
-                <span class="md-headline">{{item.name}}</span>
-                <span class="md-subhead">{{item.inspectorComment}}</span>
-            </md-card-title-text>
-            </md-card-title>
-            <md-card-content layout="column" layout-align="space-between">
-            <img style="width: 100%" ng-src="{{'http://5s.grassbusinesslabs.com/server' + item.path + item.name + '.' + item.ext}}" alt="Washed Out">
-
-            </md-card-content>
-        </md-card>
-
+<div ng-controller="auditAtachmentsCtrl" ng-cloak class="audit-atachments">
+    <div class="place-item" ng-repeat="place in detailesList.places track by $index">
+        <div class="header">{{place.name}}</div>
+        <div class="audit" ng-repeat="audit in place.details.criteria track by $index">
+            <div class="text">{{audit}}</div>
+            <div class="description" ng-if="place.details.inspector_comment[$index].length">{{place.details.inspector_comment[$index]}}</div>
+            <div class="transparent" ng-if="!place.details.inspector_comment[$index].length">transparent color</div>
+            <img ng-repeat="image in place.details.attachments[$index] track by $index" class="image" ng-src="{{'http://5s.grassbusinesslabs.com/server' + image.path + image.name + '.' + image.ext}}"></img>
+        </div>
     </div>
-    <h3 ng-if="!atachmentsList.length || !atachmentsList[0].length">There is no attachments</h3>
-  </md-content>
 </div>

@@ -8698,6 +8698,47 @@ td {
 .ngdialog {
   padding-top: 100px !important; }
 
+.audit-atachments .place-item {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  margin: 10px 0; }
+  .audit-atachments .place-item .header {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 20px;
+    background: #63c2de;
+    color: #fff; }
+  .audit-atachments .place-item .audit {
+    width: 22%;
+    display: inline-block;
+    margin: 15px 15px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+    .audit-atachments .place-item .audit .text {
+      font-size: 17px;
+      padding: 5px;
+      border-bottom: 1px dashed #ccc; }
+    .audit-atachments .place-item .audit .description {
+      font-size: 15px;
+      color: #cecece;
+      padding: 5px;
+      border-bottom: 1px dashed #ccc; }
+    .audit-atachments .place-item .audit .transparent {
+      color: transparent;
+      font-size: 15px;
+      padding: 5px;
+      border-bottom: 1px dashed #ccc;
+      -moz-user-select: -moz-none;
+      -o-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      cursor: default; }
+    .audit-atachments .place-item .audit .image {
+      margin: 10px 0;
+      background-size: contain !important;
+      background-repeat: no-repeat !important;
+      background-position: center !important;
+      height: 400px; }
+
 @media all and (-ms-high-contrast: none) {
   html {
     display: flex;
