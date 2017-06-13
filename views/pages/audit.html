@@ -7,6 +7,24 @@
               <div class="card">
                   <div class="card-header" sticky offset="55">
                       <i class="fa fa-align-justify"></i> Audit list
+                      <span flex></span>
+                        <select
+                                class="form-control"
+                                name="prependedInputDepartment"
+                                id="prependedInputDepartment"
+                                ng-model="paginationSetup.department_id"
+                                ng-change="departmentSelected()"
+                                style="width: 200px; display: inline-block;"
+                                placeholder="Select department to sort"
+                        >
+                            <option value="">All departments</option>
+                            <option
+                            ng-value="department.id"
+                            ng-repeat="department in departmentsList track by $index"
+                            >
+                            {{department.name}}
+                            </option>
+                        </select>
                       <button
                         type="button"
                         class="btn btn-primary btn-sm action-button"
@@ -22,6 +40,7 @@
                     >
                           <thead>
                               <tr>
+                                  <th><i class="fa fa-paperclip" aria-hidden="true"></i></th>
                                   <th>Name</th>
                                   <th>Description</th>
                                   <th>Department</th>
@@ -36,28 +55,31 @@
                               <tr
                                 ng-repeat="audit in auditList track by $index"
                               >
-                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
+                                  <td style="cursor: pointer!important;" ng-click="openAtachments(audit.id, audit.name)">
+                                      <i ng-show="audit.has_attachments" class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </td>
+                                  <td class="audit-name">
                                      {{audit.name}}
                                    </td>
-                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
+                                  <td class="audit-name">
                                      {{audit.description}}
                                    </td>
-                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
+                                  <td class="audit-name">
                                      {{audit.department_name}}
                                    </td>
-                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
+                                  <td class="audit-name">
                                      {{audit.user_firstname}}
                                    </td>
-                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
+                                  <td class="audit-name">
                                      {{audit.user_email || audit.user_firstname}}
                                   </td>
-                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
+                                  <td class="audit-name">
                                       {{audit.target}}
                                   </td>
-                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
+                                  <td class="audit-name">
                                       {{audit.started_at * 1000 | date:'yyyy-MM-dd HH:mm'}}
                                   </td>
-                                  <td class="audit-name" ng-click="openAtachments(audit.id, audit.name)">
+                                  <td class="audit-name">
                                       {{audit.finished_at * 1000 === 0 ? 'Auditing' : audit.finished_at * 1000 | date:'yyyy-MM-dd HH:mm'}}
                                   </td>
                               </tr>

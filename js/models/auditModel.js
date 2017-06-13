@@ -96,6 +96,16 @@ angular.module('model.audit', [])
             )
           }
 
+          this.fetchDetailes = function(audit_id, callback) {
+            api.get(
+                url.auditDetails,
+                {audit_id},
+                function(res) {
+                    callback(res);
+                }
+            )
+          }
+
 
           this.stopLastAudit = function(req, callback) {
               api.put(

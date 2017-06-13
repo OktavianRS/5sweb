@@ -2,15 +2,17 @@ angular
 .module('app')
 .controller('checkListCtrl', checkListCtrl)
 
-checkListCtrl.$inject = ['$scope', '$state', 'toast', 'ngDialog', 'checkListModel', 'criteriasModel'];
-function checkListCtrl($scope, $state, toast, ngDialog, checkListModel, criteriasModel) {
+checkListCtrl.$inject = ['$scope', '$rootScope', '$state', 'toast', 'ngDialog', 'checkListModel', 'criteriasModel', 'companiesModel'];
+function checkListCtrl($scope, $rootScope, $state, toast, ngDialog, checkListModel, criteriasModel, companiesModel) {
   $scope.checkList = [];
   $scope.criteriasList = [];
+  $scope.companiesList = [];
   $scope.editElement = {};
   $scope.currentElement = null;
   $scope.viewedChecklist = [];
   $scope.check = {
-    name: ''
+    name: '',
+    company_id: $rootScope.company_id || '',
   }
 
 
@@ -53,8 +55,12 @@ function checkListCtrl($scope, $state, toast, ngDialog, checkListModel, criteria
     }, $scope.paginationSetup);
     criteriasModel.fetchCriterias(function(result) {
       $scope.criteriasList = result.criterias;
-
     });
+    if ($rootScope.isAdmin()) {
+      companiesModel.fetchCompanies(function(result) {
+        $scope.companiesList = result.companies;
+      });
+    }
   }
   constructor();
 
@@ -113,6 +119,12 @@ function checkListCtrl($scope, $state, toast, ngDialog, checkListModel, criteria
       template:'/views/components/createCheckDialog.html',
       className: 'ngdialog-theme-default',
       scope: $scope,
+      preCloseCallback:function(){
+        $scope.check = {
+          name: '',
+          company_id: $rootScope.company_id || '',
+        }
+      }
     });
   }
 
