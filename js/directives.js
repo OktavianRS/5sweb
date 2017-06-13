@@ -127,6 +127,7 @@ function layoutToggleDirective($interval, $rootScope, $timeout) {
         $timeout(function () {
           if (document.querySelector('.chart')) {
             $rootScope.$emit('changeWidthChart');
+            $timeout(function (){$('[stroke="#e6e6e5"]').remove()},0);
           }
         },200);
 
@@ -231,6 +232,7 @@ function cardCollapseDirective() {
 
       element.on('click', function(){
         element.find('i').toggleClass('r180');
+
       })
     }
   }
@@ -373,10 +375,12 @@ function heightRow($timeout, $window, $rootScope) {
              var arrHeightRow = angular.element(parentElementRow).find('rect');
              var parentElementAudit = angular.element(grandElementAudit).find('rect');
 
-
+             $('[stroke="#e6e6e5"]').remove();
              for (var i=0; i<arrHeightRow.length; i++) {
                angular.element(arrHeightRow[i]).attr("height",41);
              }
+
+
 
              // $timeout(function () {
              //   if (document.querySelector('.chart')) {

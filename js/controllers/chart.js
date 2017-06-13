@@ -82,7 +82,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
     angular.element($window).on('resize', function () {
         if (!$scope.AuditHistoryIsEmpty &&  $scope.variableForTimeLine) google.charts.setOnLoadCallback(drawChart);
-
+            $timeout(function (){$('[stroke="#e6e6e5"]').remove()},0);
         // manuall $digest required as resize event
         // is outside of angular
         $scope.$digest();
@@ -433,6 +433,8 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                     if (i === 1) {
 
                         if (arr[3] === null || arr[3] === 0){innerItem = 'inProcess'}
+                        if (arr[1] === -1 ){innerItem = 'isEmpty';}
+
                         if (criticalTarget === undefined) {
                             criticalTarget = $sessionStorage.critical_edge;
                         }
@@ -450,6 +452,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
                              innerItem = new Date();
 
                              auditInProcess[countRow-1] = true;
+                             if (arr[1] === -1 ){ auditInProcess[countRow-1] = false;}
                          }
                         else {
                             innerItem = new Date(innerItem * 1000);
@@ -510,6 +513,7 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
             $timeout(function () {
                 google.charts.setOnLoadCallback(drawChart);
+                $timeout(function (){$('[stroke="#e6e6e5"]').remove()},0);
             },0);
         }
 
@@ -786,6 +790,10 @@ function DashboardChart($rootScope, $scope, $sessionStorage, $window, $timeout, 
 
          if (innerItem === 'inProcess'){
             innerItem = "#6E73FC";
+        }
+
+        if (innerItem === 'isEmpty') {
+            innerItem = "#e6e6e5";
         }
        else if (arguments.length === 1){
             if (innerItem>1) {innerItem = "green";}
